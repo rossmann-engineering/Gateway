@@ -1,0 +1,74 @@
+{
+  "readinterval": 30.0,
+  "basicinterval": 150.0,
+  "loggingmultiplier": 2,
+  "mqttbroker": [
+    {
+      "name": "Test",
+      "address": "sre-solutions.com",
+      "port": "1885",
+      "publishtopic": "v1/devices/me/telemetry",
+      "accesstoken": "preAneTCuLkD705s12ZD",
+      "username": "inblic",
+      "password": "123456",
+      "serverid": 3
+    }
+  ],
+  "devices": [
+    {
+      "transportid": 1,
+      "type": "Modbus",
+      "ipaddress": "127.0.0.1",
+      "port": "502",
+      "unitidentifier": 1,
+      "identifier": "Meter 1",
+      "uid": "11:22:33:44:55"
+    }
+  ],
+  "modbuscommand": [
+    {
+      "functioncode": "Read Holding Registers",
+      "transportid": 1,
+      "startingaddress": 73,
+      "quantity": 59
+    },
+    {
+      "functioncode": "Read Holding Registers",
+      "transportid": 1,
+      "startingaddress": 1,
+      "quantity": 2
+    },
+    {
+      "transportid": 1,
+      "functioncode": "Read Input Registers",
+      "startingaddress": 1,
+      "quantity": 1
+    }
+  ],
+  "readorders": [
+    {
+      "averagevalues": [
+        0.0,
+        0.0
+      ],
+      "address": 114,
+      "name": "Power Input-Total",
+      "bits": 32,
+      "absolutethreshold": 0,
+      "transportid": 1,
+      "target": "Analog Input 12",
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "signed": false,
+      "dataarea": "Holding Register",
+      "threshold": 0,
+      "serverid": [
+        3
+      ],
+      "multiplefactor": 10,
+      "latestreading": 0.0
+    }
+
+  ]
+}

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 110%;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.active {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.topnav .icon {
+  display: none;
+}
+
+
+
+
+@media screen and (max-width: 600px) {
+  .topnav a:not(:first-child) {display: none;}
+  .topnav a.icon {
+    float: right;
+    display: block;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .topnav.responsive {position: relative;}
+  .topnav.responsive .icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .topnav.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+}
+
+input[type=text], select, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+  font-size: 110%;
+}
+
+label {
+    padding: 12px 12px 12px 0;
+    display: inline-block;
+}
+
+input[type=submit] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+.container {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+
+.col-25 {
+    float: left;
+    width: 15%;
+    margin-top: 6px;
+}
+
+.col-75 {
+    float: left;
+    width: 85%;
+    margin-top: 6px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+   @media (max-width: 600px) {
+    .col-25, .col-75, input[type=submit] {
+        width: 100%;
+        margin-top: 0; }}
+
+.success {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.failed {
+  background-color: red;
+  color: white;
+}
+</style>
+</head>
+<div>
+
+<div class="topnav" id="myTopnav">
+  <a href="/index">Home</a>
+  <a href="/fileuploads">Config Import/Export</a>
+  <a href="/connectivity">Connectivity</a>
+  {% if  admin %}
+  <a href="/gatewayconfiguration">GW Advance Configuration</a>
+    <a href="/modbus" class="active">Modbus configuration</a>
+   {% endif %}
+
+  <a href="/showlog">Show log</a>
+     <a href="/latestreading">Latest Readings</a>
+  <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
+    <img src="../static/wise-logo-png.png" alt="Inblic logo" align="right" style="width: 285px; height: auto; background-color:white">
+</div>
+
+
+<script>
+function myFunction() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+        x.className += " responsive";
+    } else {
+        x.className = "topnav";
+    }
+}
+</script>
+
+
+
+
+    <h2>Modbus functions</h2>
+
+<div class="container">
+  <form action="/modbuswriteform" method="post">
+    <h3>Write Holding Registers</h3>
+    <div class="row">
+      <div class="col-25">
+        <label for="register">Holding Register to write</label>
+      </div>
+      <div class="col-75">
+        <input type="text" id="register" name="register" placeholder="74">
+      </div>
+    </div>
+
+      <div class="row">
+      <div class="col-25">
+        <label for="value">Value</label>
+      </div>
+      <div class="col-75">
+        <input type="text" id="value" name="value" placeholder="0">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="transportid">Tansport-ID</label>
+      </div>
+      <div class="col-75">
+        <input type="text" id="transportid" name="transportid" placeholder="1">
+      </div>
+    </div>
+
+    <div class="row">
+      <input type="submit" value="Write Register">
+    </div>
+            <script>
+var user = JSON.parse('{{ parameter | tojson | safe}}');
+if(user.hasOwnProperty('success'))
+{
+    document.write("<br><div class=\"success\">Status: "+ user.success)+"</div>";
+
+}
+  if(user.hasOwnProperty('failed'))
+{
+    document.write("<br><div class=\"failed\">Status: "+ user.failed)+"</div>";
+
+} </script>
+  </form>
+
+</div></div>
+
+    <br><br>
+<div class="container">
+  <form action="/modbusreadform" method="post">
+      <h3>Read Input and Holding Registers</h3>
+    <div class="row">
+        <div class="col-25">
+
+      </div>
+      <div class="col-75">
+        <select id="dataarea" name="dataarea" style="width: 100%">
+          <option value="inputregistes">Input Registers (3x)</option>
+          <option value="holdingregisters">Holding Registers (4x)</option>
+        </select>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-25">
+        <label for="register">Register to read</label>
+      </div>
+      <div class="col-75">
+        <input type="text" id="register" name="register" placeholder="74">
+      </div>
+    </div>
+
+      <div class="row">
+      <div class="col-25">
+        <label for="quantity">Quantity</label>
+      </div>
+      <div class="col-75">
+        <input type="text" id="quantity" name="quantity" placeholder="1">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="transportid">Tansport-ID</label>
+      </div>
+      <div class="col-75">
+        <input type="text" id="transportid" name="transportid" placeholder="1">
+      </div>
+    </div>
+
+    <div class="row">
+      <input type="submit" value="Read Registers">
+    </div>
+  </form>
+            <script>
+var user = JSON.parse('{{ parameter2 | tojson | safe}}');
+if(user.hasOwnProperty('success'))
+{
+    document.write("<br><div class=\"success\">Status: "+ user.success)+"</div>";
+
+}
+  if(user.hasOwnProperty('failed'))
+{
+    document.write("<br><div class=\"failed\">Status: "+ user.failed)+"</div>";
+
+} </script>
+</div>
+{% if response|length %}
+    <br>
+    <h5><u>Answer from Modbus-Slave</u></h5>
+   {% for key, value in response.items() %}
+
+Register Number: {{key}}, Value: {{value}}<br>
+
+
+   {% endfor %}
+{% endif %}
+  </form>
+
+</div><br>
+<div class="container">
+
+  <form action="/modbuscheckconnectivity" method="post">
+      <h3>Check connectivity</h3>
+        <div class="row">
+      <div class="col-25">
+        <label for="transportid">Tansport-ID</label>
+      </div>
+      <div class="col-75">
+        <input type="text" id="transportid" name="transportid" placeholder="1">
+      </div>
+    </div>
+    <div class="row">
+      <input type="submit" value="Check connectivity">
+    </div>
+  </form>
+  {% if "modbuscheckconnectivitysuccess" in parameter %}
+    <br><div class="success">Connection available</div><br>
+  {% endif %}
+      {% if "modbuscheckconnectivityfailed" in parameter %}
+    <br><div class="failed">Connection error: {{parameter.modbuscheckconnectivityfailed}}</div><br>
+  {% endif %}
+</div>
+<br>
+<div class="container">
+  <form action="/modbussendalldata" method="post">
+      <h3>Upload All active Registers</h3>
+    <div class="row">
+      <input type="submit" value="Upload Registers">
+    </div>
+  </form>
+  {% if "modbusuploadregisterssuccess" in parameter %}
+    <br><div class="success">All Registers transferred</div><br>
+  {% endif %}
+      {% if "modbusuploadregistersfailed" in parameter %}
+    <br><div class="failed">Connection error: {{parameter.modbusuploadregistersfailed}}</div><br>
+  {% endif %}
+</div>
+
+
+
+
+</div>
+</body>
+</html>

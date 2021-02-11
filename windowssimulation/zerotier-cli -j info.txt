@@ -1,0 +1,24 @@
+{
+ "address": "ace96dda41",
+ "clock": 1607271488188,
+ "config": {
+  "physical": null,
+  "settings": {
+   "allowTcpFallbackRelay": true,
+   "portMappingEnabled": true,
+   "primaryPort": 9993,
+   "softwareUpdate": "disable",
+   "softwareUpdateChannel": "release"
+  }
+ },
+ "online": true,
+ "planetWorldId": 149604618,
+ "planetWorldTimestamp": 1591823606334,
+ "publicIdentity": "ace96dda41:0:79c986f97e483d2648354859b8f0e77125c657f27f95e9fd713fef820baf4b3ca9f3e7554fb07ec4cef9853f06849823727d04abebd518e46ab666ced5960eb6",
+ "tcpFallbackActive": false,
+ "version": "1.4.6",
+ "versionBuild": 0,
+ "versionMajor": 1,
+ "versionMinor": 4,
+ "versionRev": 6
+}

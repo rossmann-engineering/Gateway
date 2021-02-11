@@ -1,0 +1,1473 @@
+2021-02-11 18:51:24;Webserver Read Version (ReadVersion()
+2021-02-11 18:51:24;Thread MQTT started
+2021-02-11 18:51:24;Starting new HTTP connection (1): www.google.com:80
+2021-02-11 18:51:24;http://www.google.com:80 "GET / HTTP/1.1" 200 5897
+2021-02-11 18:51:25;Initialize MQTT Client to Broker sre-solutions.com, Port: 1885
+2021-02-11 18:53:36;Webserver Read Version (ReadVersion()
+2021-02-11 18:53:36;Thread MQTT started
+2021-02-11 18:53:36;Starting new HTTP connection (1): www.google.com:80
+2021-02-11 18:53:36;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 18:53:36;http://www.google.com:80 "GET / HTTP/1.1" 200 5910
+2021-02-11 18:53:36;Initialize MQTT Client to Broker sre-solutions.com, Port: 1885
+2021-02-11 18:53:37;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 18:53:38;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 18:54:25;Webserver Read Version (ReadVersion()
+2021-02-11 18:54:25;Thread MQTT started
+2021-02-11 18:54:25;Starting new HTTP connection (1): www.google.com:80
+2021-02-11 18:54:25;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 18:54:25;http://www.google.com:80 "GET / HTTP/1.1" 200 5882
+2021-02-11 18:54:25;Initialize MQTT Client to Broker sre-solutions.com, Port: 1885
+2021-02-11 18:54:26;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 18:54:27;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 18:54:32;Added MQTT Client at initialization to List
+2021-02-11 18:54:32;database - table "mqttuploads" created"
+2021-02-11 18:54:43;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 18:54:44;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 18:54:45;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 18:55:00;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 18:55:01;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 18:55:02;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 18:55:02;Thread Main stopped 
+2021-02-11 19:01:45;Webserver Read Version (ReadVersion()
+2021-02-11 19:01:45;Thread MQTT started
+2021-02-11 19:01:45;Using selector: KqueueSelector
+2021-02-11 19:01:45;Starting new HTTP connection (1): www.google.com:80
+2021-02-11 19:01:45;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:01:45;http://www.google.com:80 "GET / HTTP/1.1" 200 5887
+2021-02-11 19:01:45;Initialize MQTT Client to Broker sre-solutions.com, Port: 1885
+2021-02-11 19:01:46;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:01:47;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:01:52;Added MQTT Client at initialization to List
+2021-02-11 19:01:52;database - table "mqttuploads" created"
+2021-02-11 19:02:03;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:02:04;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:02:05;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:02:30;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:02:31;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:02:32;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:03:00;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:03:01;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:03:02;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:03:30;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:03:31;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:03:32;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:04:00;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:04:01;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:04:02;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:04:07;Thread Main stopped 
+2021-02-11 19:04:11;Webserver Read Version (ReadVersion()
+2021-02-11 19:04:11;Thread MQTT started
+2021-02-11 19:04:11;Using selector: KqueueSelector
+2021-02-11 19:04:11;Starting new HTTP connection (1): www.google.com:80
+2021-02-11 19:04:11;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:04:11;Thread Webserver started
+2021-02-11 19:04:11;http://www.google.com:80 "GET / HTTP/1.1" 200 5912
+2021-02-11 19:04:11;Initialize MQTT Client to Broker sre-solutions.com, Port: 1885
+2021-02-11 19:04:12;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:04:13;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:04:17;200 GET / (127.0.0.1) 26.30ms
+2021-02-11 19:04:17;404 GET /static/Vertical.png (127.0.0.1) 2.03ms
+2021-02-11 19:04:18;404 GET /favicon.ico (127.0.0.1) 0.51ms
+2021-02-11 19:04:18;Added MQTT Client at initialization to List
+2021-02-11 19:04:18;database - table "mqttuploads" created"
+2021-02-11 19:04:30;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:04:31;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:04:32;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:04:40;Thread Main stopped 
+2021-02-11 19:04:40;Thread Webserver stopped
+2021-02-11 19:04:43;Webserver Read Version (ReadVersion()
+2021-02-11 19:04:43;Thread MQTT started
+2021-02-11 19:04:43;Using selector: KqueueSelector
+2021-02-11 19:04:43;Starting new HTTP connection (1): www.google.com:80
+2021-02-11 19:04:44;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:04:44;Thread Webserver started
+2021-02-11 19:04:44;http://www.google.com:80 "GET / HTTP/1.1" 200 5907
+2021-02-11 19:04:44;Initialize MQTT Client to Broker sre-solutions.com, Port: 1885
+2021-02-11 19:04:45;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:04:45;200 GET / (127.0.0.1) 14.32ms
+2021-02-11 19:04:45;404 GET /static/Vertical.png (127.0.0.1) 0.90ms
+2021-02-11 19:04:46;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:04:51;Added MQTT Client at initialization to List
+2021-02-11 19:04:51;database - table "mqttuploads" created"
+2021-02-11 19:04:54;Exception on / [POST]
+Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/webserver.py", line 494, in do_admin_login
+    return index()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/webserver.py", line 84, in index
+    datalogger.logData('Webserver request to open page "index"')
+AttributeError: module 'datalogger' has no attribute 'logData'
+2021-02-11 19:04:54;500 POST / (127.0.0.1) 63.11ms
+2021-02-11 19:05:42;Webserver Read Version (ReadVersion()
+2021-02-11 19:05:42;Thread MQTT started
+2021-02-11 19:05:42;Using selector: KqueueSelector
+2021-02-11 19:05:42;Starting new HTTP connection (1): www.google.com:80
+2021-02-11 19:05:42;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:05:42;Thread Webserver started
+2021-02-11 19:05:42;http://www.google.com:80 "GET / HTTP/1.1" 200 5899
+2021-02-11 19:05:42;Initialize MQTT Client to Broker sre-solutions.com, Port: 1885
+2021-02-11 19:05:43;200 GET / (127.0.0.1) 10.21ms
+2021-02-11 19:05:43;200 GET /static/wise-logo-png.png (127.0.0.1) 17.69ms
+2021-02-11 19:05:43;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:05:44;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:05:49;Added MQTT Client at initialization to List
+2021-02-11 19:05:49;database - table "mqttuploads" created"
+2021-02-11 19:06:00;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:06:01;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:06:02;Exception on / [POST]
+Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/flask/app.py", line 2447, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/flask/app.py", line 1952, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/flask/app.py", line 1821, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/flask/app.py", line 1950, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/flask/app.py", line 1936, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/webserver.py", line 494, in do_admin_login
+    return index()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/webserver.py", line 84, in index
+    datalogger.logData('Webserver request to open page "index"')
+AttributeError: module 'datalogger' has no attribute 'logData'
+2021-02-11 19:06:02;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:06:02;500 POST / (127.0.0.1) 27.07ms
+2021-02-11 19:06:24;Thread Main stopped 
+2021-02-11 19:06:24;Thread Webserver stopped
+2021-02-11 19:10:47;Webserver Read Version (ReadVersion()
+2021-02-11 19:10:47;Thread MQTT started
+2021-02-11 19:10:47;Using selector: KqueueSelector
+2021-02-11 19:10:47;Starting new HTTP connection (1): www.google.com:80
+2021-02-11 19:10:47;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:10:47;Thread Webserver started
+2021-02-11 19:10:47;http://www.google.com:80 "GET / HTTP/1.1" 200 5927
+2021-02-11 19:10:47;Initialize MQTT Client to Broker sre-solutions.com, Port: 1885
+2021-02-11 19:10:48;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:10:48;200 GET / (127.0.0.1) 11.90ms
+2021-02-11 19:10:49;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:10:54;Added MQTT Client at initialization to List
+2021-02-11 19:10:54;database - table "mqttuploads" created"
+2021-02-11 19:10:55;Webserver request to open page "index"
+2021-02-11 19:10:55;Webserver (osinterface): Unable to read values (mmcli -b 0): Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/osinterface.py", line 149, in readmodemstatus
+    mmcli_b = mmcli_b.splitlines()
+UnboundLocalError: local variable 'mmcli_b' referenced before assignment
+
+2021-02-11 19:10:55;Unable to send AT commandTraceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/serial/serialposix.py", line 322, in open
+    self.fd = os.open(self.portstr, os.O_RDWR | os.O_NOCTTY | os.O_NONBLOCK)
+FileNotFoundError: [Errno 2] No such file or directory: '/dev/ttyUSB2'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/osinterface.py", line 291, in sendatcommand
+    ser = serial.Serial(port, timeout=0.2,write_timeout=1,  baudrate=9600, xonxoff=False, rtscts=False, bytesize=serial.EIGHTBITS, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE)
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/serial/serialutil.py", line 244, in __init__
+    self.open()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/serial/serialposix.py", line 325, in open
+    raise SerialException(msg.errno, "could not open port {}: {}".format(self._port, msg))
+serial.serialutil.SerialException: [Errno 2] could not open port /dev/ttyUSB2: [Errno 2] No such file or directory: '/dev/ttyUSB2'
+
+2021-02-11 19:10:55;Webserver Read Version (ReadVersion()
+2021-02-11 19:10:55;200 POST / (127.0.0.1) 329.19ms
+2021-02-11 19:10:55;404 GET /static/Horizontal.png (127.0.0.1) 2.66ms
+2021-02-11 19:11:05;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:11:06;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:11:07;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:11:30;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:11:31;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:11:32;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:12:00;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:12:01;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:12:02;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:12:30;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:12:31;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:12:32;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:13:00;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:13:01;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:13:02;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:13:30;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:13:31;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:13:32;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:13:54;Thread Main stopped 
+2021-02-11 19:13:59;Webserver Read Version (ReadVersion()
+2021-02-11 19:13:59;Thread MQTT started
+2021-02-11 19:13:59;Using selector: KqueueSelector
+2021-02-11 19:13:59;Starting new HTTP connection (1): www.google.com:80
+2021-02-11 19:13:59;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:13:59;Thread Webserver started
+2021-02-11 19:13:59;http://www.google.com:80 "GET / HTTP/1.1" 200 5888
+2021-02-11 19:13:59;Initialize MQTT Client to Broker sre-solutions.com, Port: 1885
+2021-02-11 19:13:59;200 GET / (127.0.0.1) 13.46ms
+2021-02-11 19:14:00;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:14:01;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:14:06;Added MQTT Client at initialization to List
+2021-02-11 19:14:06;database - table "mqttuploads" created"
+2021-02-11 19:14:13;Webserver request to open page "index"
+2021-02-11 19:14:13;Webserver (osinterface): Unable to read values (mmcli -b 0): Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/osinterface.py", line 149, in readmodemstatus
+    mmcli_b = mmcli_b.splitlines()
+UnboundLocalError: local variable 'mmcli_b' referenced before assignment
+
+2021-02-11 19:14:13;Unable to send AT commandTraceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/serial/serialposix.py", line 322, in open
+    self.fd = os.open(self.portstr, os.O_RDWR | os.O_NOCTTY | os.O_NONBLOCK)
+FileNotFoundError: [Errno 2] No such file or directory: '/dev/ttyUSB2'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/osinterface.py", line 291, in sendatcommand
+    ser = serial.Serial(port, timeout=0.2,write_timeout=1,  baudrate=9600, xonxoff=False, rtscts=False, bytesize=serial.EIGHTBITS, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE)
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/serial/serialutil.py", line 244, in __init__
+    self.open()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/serial/serialposix.py", line 325, in open
+    raise SerialException(msg.errno, "could not open port {}: {}".format(self._port, msg))
+serial.serialutil.SerialException: [Errno 2] could not open port /dev/ttyUSB2: [Errno 2] No such file or directory: '/dev/ttyUSB2'
+
+2021-02-11 19:14:13;Webserver Read Version (ReadVersion()
+2021-02-11 19:14:13;200 POST / (127.0.0.1) 265.34ms
+2021-02-11 19:14:17;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:14:18;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:14:19;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:14:30;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:14:31;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:14:32;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:14:40;Webserver (osinterface): Unable to read values (mmcli -b 0): Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/osinterface.py", line 149, in readmodemstatus
+    mmcli_b = mmcli_b.splitlines()
+UnboundLocalError: local variable 'mmcli_b' referenced before assignment
+
+2021-02-11 19:14:40;Unable to send AT commandTraceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/serial/serialposix.py", line 322, in open
+    self.fd = os.open(self.portstr, os.O_RDWR | os.O_NOCTTY | os.O_NONBLOCK)
+FileNotFoundError: [Errno 2] No such file or directory: '/dev/ttyUSB2'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/osinterface.py", line 291, in sendatcommand
+    ser = serial.Serial(port, timeout=0.2,write_timeout=1,  baudrate=9600, xonxoff=False, rtscts=False, bytesize=serial.EIGHTBITS, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE)
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/serial/serialutil.py", line 244, in __init__
+    self.open()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/serial/serialposix.py", line 325, in open
+    raise SerialException(msg.errno, "could not open port {}: {}".format(self._port, msg))
+serial.serialutil.SerialException: [Errno 2] could not open port /dev/ttyUSB2: [Errno 2] No such file or directory: '/dev/ttyUSB2'
+
+2021-02-11 19:14:40;200 GET /connectivity (127.0.0.1) 169.20ms
+2021-02-11 19:14:40;200 GET /static/00.jpg (127.0.0.1) 7.56ms
+2021-02-11 19:14:40;404 GET /favicon.ico (127.0.0.1) 1.31ms
+2021-02-11 19:14:42;200 GET /modbus (127.0.0.1) 24.26ms
+2021-02-11 19:14:42;404 GET /favicon.ico (127.0.0.1) 0.67ms
+2021-02-11 19:14:44;Thread Main stopped 
+2021-02-11 19:14:45;Thread Webserver stopped
+2021-02-11 19:20:57;Webserver Read Version (ReadVersion()
+2021-02-11 19:20:57;Thread MQTT started
+2021-02-11 19:20:57;Using selector: KqueueSelector
+2021-02-11 19:20:57;Starting new HTTP connection (1): www.google.com:80
+2021-02-11 19:20:57;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:20:57;Thread Webserver started
+2021-02-11 19:20:57;http://www.google.com:80 "GET / HTTP/1.1" 200 5908
+2021-02-11 19:20:58;Initialize MQTT Client to Broker sre-solutions.com, Port: 1885
+2021-02-11 19:20:58;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:20:59;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:21:02;200 GET /modbus (127.0.0.1) 18.80ms
+2021-02-11 19:21:05;Added MQTT Client at initialization to List
+2021-02-11 19:21:05;database - table "mqttuploads" created"
+2021-02-11 19:21:09;Webserver request to open page "index"
+2021-02-11 19:21:09;Webserver (osinterface): Unable to read values (mmcli -b 0): Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/osinterface.py", line 149, in readmodemstatus
+    mmcli_b = mmcli_b.splitlines()
+UnboundLocalError: local variable 'mmcli_b' referenced before assignment
+
+2021-02-11 19:21:09;Unable to send AT commandTraceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/serial/serialposix.py", line 322, in open
+    self.fd = os.open(self.portstr, os.O_RDWR | os.O_NOCTTY | os.O_NONBLOCK)
+FileNotFoundError: [Errno 2] No such file or directory: '/dev/ttyUSB2'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/osinterface.py", line 291, in sendatcommand
+    ser = serial.Serial(port, timeout=0.2,write_timeout=1,  baudrate=9600, xonxoff=False, rtscts=False, bytesize=serial.EIGHTBITS, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE)
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/serial/serialutil.py", line 244, in __init__
+    self.open()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/serial/serialposix.py", line 325, in open
+    raise SerialException(msg.errno, "could not open port {}: {}".format(self._port, msg))
+serial.serialutil.SerialException: [Errno 2] could not open port /dev/ttyUSB2: [Errno 2] No such file or directory: '/dev/ttyUSB2'
+
+2021-02-11 19:21:09;Webserver Read Version (ReadVersion()
+2021-02-11 19:21:09;200 POST / (127.0.0.1) 291.19ms
+2021-02-11 19:21:15;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:21:16;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:21:17;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:21:24;Thread Main stopped 
+2021-02-11 19:21:28;Webserver Read Version (ReadVersion()
+2021-02-11 19:21:28;Thread MQTT started
+2021-02-11 19:21:28;Using selector: KqueueSelector
+2021-02-11 19:21:28;Starting new HTTP connection (1): www.google.com:80
+2021-02-11 19:21:28;Thread Webserver started
+2021-02-11 19:21:28;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:21:28;http://www.google.com:80 "GET / HTTP/1.1" 200 5910
+2021-02-11 19:21:28;Initialize MQTT Client to Broker sre-solutions.com, Port: 1885
+2021-02-11 19:21:29;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:21:29;200 GET / (127.0.0.1) 13.68ms
+2021-02-11 19:21:30;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:21:35;Added MQTT Client at initialization to List
+2021-02-11 19:21:35;database - table "mqttuploads" created"
+2021-02-11 19:21:36;Webserver request to open page "index"
+2021-02-11 19:21:36;Webserver (osinterface): Unable to read values (mmcli -b 0): Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/osinterface.py", line 149, in readmodemstatus
+    mmcli_b = mmcli_b.splitlines()
+UnboundLocalError: local variable 'mmcli_b' referenced before assignment
+
+2021-02-11 19:21:36;Unable to send AT commandTraceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/serial/serialposix.py", line 322, in open
+    self.fd = os.open(self.portstr, os.O_RDWR | os.O_NOCTTY | os.O_NONBLOCK)
+FileNotFoundError: [Errno 2] No such file or directory: '/dev/ttyUSB2'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/osinterface.py", line 291, in sendatcommand
+    ser = serial.Serial(port, timeout=0.2,write_timeout=1,  baudrate=9600, xonxoff=False, rtscts=False, bytesize=serial.EIGHTBITS, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE)
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/serial/serialutil.py", line 244, in __init__
+    self.open()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/serial/serialposix.py", line 325, in open
+    raise SerialException(msg.errno, "could not open port {}: {}".format(self._port, msg))
+serial.serialutil.SerialException: [Errno 2] could not open port /dev/ttyUSB2: [Errno 2] No such file or directory: '/dev/ttyUSB2'
+
+2021-02-11 19:21:36;Webserver Read Version (ReadVersion()
+2021-02-11 19:21:36;200 POST / (127.0.0.1) 263.26ms
+2021-02-11 19:21:46;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:21:47;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:21:48;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:22:00;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:22:01;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:22:02;Thread Main stopped 
+2021-02-11 19:22:06;Webserver Read Version (ReadVersion()
+2021-02-11 19:22:06;Thread MQTT started
+2021-02-11 19:22:06;Using selector: KqueueSelector
+2021-02-11 19:22:06;Starting new HTTP connection (1): www.google.com:80
+2021-02-11 19:22:06;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:22:06;Thread Webserver started
+2021-02-11 19:22:06;http://www.google.com:80 "GET / HTTP/1.1" 200 5922
+2021-02-11 19:22:06;Initialize MQTT Client to Broker sre-solutions.com, Port: 1885
+2021-02-11 19:22:07;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:22:08;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:22:10;200 GET / (127.0.0.1) 15.96ms
+2021-02-11 19:22:13;Added MQTT Client at initialization to List
+2021-02-11 19:22:13;database - table "mqttuploads" created"
+2021-02-11 19:22:18;Webserver request to open page "index"
+2021-02-11 19:22:18;Webserver (osinterface): Unable to read values (mmcli -b 0): Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/osinterface.py", line 149, in readmodemstatus
+    mmcli_b = mmcli_b.splitlines()
+UnboundLocalError: local variable 'mmcli_b' referenced before assignment
+
+2021-02-11 19:22:18;Unable to send AT commandTraceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/serial/serialposix.py", line 322, in open
+    self.fd = os.open(self.portstr, os.O_RDWR | os.O_NOCTTY | os.O_NONBLOCK)
+FileNotFoundError: [Errno 2] No such file or directory: '/dev/ttyUSB2'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/osinterface.py", line 291, in sendatcommand
+    ser = serial.Serial(port, timeout=0.2,write_timeout=1,  baudrate=9600, xonxoff=False, rtscts=False, bytesize=serial.EIGHTBITS, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE)
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/serial/serialutil.py", line 244, in __init__
+    self.open()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/serial/serialposix.py", line 325, in open
+    raise SerialException(msg.errno, "could not open port {}: {}".format(self._port, msg))
+serial.serialutil.SerialException: [Errno 2] could not open port /dev/ttyUSB2: [Errno 2] No such file or directory: '/dev/ttyUSB2'
+
+2021-02-11 19:22:18;Webserver Read Version (ReadVersion()
+2021-02-11 19:22:19;200 POST / (127.0.0.1) 266.22ms
+2021-02-11 19:22:28;Thread Main stopped 
+2021-02-11 19:22:29;Thread Webserver stopped
+2021-02-11 19:22:32;Webserver Read Version (ReadVersion()
+2021-02-11 19:22:32;Thread MQTT started
+2021-02-11 19:22:32;Using selector: KqueueSelector
+2021-02-11 19:22:32;Starting new HTTP connection (1): www.google.com:80
+2021-02-11 19:22:32;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:22:32;Thread Webserver started
+2021-02-11 19:22:32;http://www.google.com:80 "GET / HTTP/1.1" 200 5883
+2021-02-11 19:22:32;Initialize MQTT Client to Broker sre-solutions.com, Port: 1885
+2021-02-11 19:22:32;200 GET /showlog (127.0.0.1) 17.04ms
+2021-02-11 19:22:32;404 GET /favicon.ico (127.0.0.1) 0.60ms
+2021-02-11 19:22:33;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:22:34;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:22:35;Webserver request to open page "index"
+2021-02-11 19:22:35;Webserver (osinterface): Unable to read values (mmcli -b 0): Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/osinterface.py", line 149, in readmodemstatus
+    mmcli_b = mmcli_b.splitlines()
+UnboundLocalError: local variable 'mmcli_b' referenced before assignment
+
+2021-02-11 19:22:35;Unable to send AT commandTraceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/serial/serialposix.py", line 322, in open
+    self.fd = os.open(self.portstr, os.O_RDWR | os.O_NOCTTY | os.O_NONBLOCK)
+FileNotFoundError: [Errno 2] No such file or directory: '/dev/ttyUSB2'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/osinterface.py", line 291, in sendatcommand
+    ser = serial.Serial(port, timeout=0.2,write_timeout=1,  baudrate=9600, xonxoff=False, rtscts=False, bytesize=serial.EIGHTBITS, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE)
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/serial/serialutil.py", line 244, in __init__
+    self.open()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/serial/serialposix.py", line 325, in open
+    raise SerialException(msg.errno, "could not open port {}: {}".format(self._port, msg))
+serial.serialutil.SerialException: [Errno 2] could not open port /dev/ttyUSB2: [Errno 2] No such file or directory: '/dev/ttyUSB2'
+
+2021-02-11 19:22:35;Webserver Read Version (ReadVersion()
+2021-02-11 19:22:35;200 GET /index (127.0.0.1) 244.04ms
+2021-02-11 19:22:35;404 GET /favicon.ico (127.0.0.1) 0.89ms
+2021-02-11 19:22:39;Added MQTT Client at initialization to List
+2021-02-11 19:22:39;database - table "mqttuploads" created"
+2021-02-11 19:22:42;Webserver request to open page "index"
+2021-02-11 19:22:42;Webserver (osinterface): Unable to read values (mmcli -b 0): Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/osinterface.py", line 149, in readmodemstatus
+    mmcli_b = mmcli_b.splitlines()
+UnboundLocalError: local variable 'mmcli_b' referenced before assignment
+
+2021-02-11 19:22:42;Unable to send AT commandTraceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/serial/serialposix.py", line 322, in open
+    self.fd = os.open(self.portstr, os.O_RDWR | os.O_NOCTTY | os.O_NONBLOCK)
+FileNotFoundError: [Errno 2] No such file or directory: '/dev/ttyUSB2'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/osinterface.py", line 291, in sendatcommand
+    ser = serial.Serial(port, timeout=0.2,write_timeout=1,  baudrate=9600, xonxoff=False, rtscts=False, bytesize=serial.EIGHTBITS, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE)
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/serial/serialutil.py", line 244, in __init__
+    self.open()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/serial/serialposix.py", line 325, in open
+    raise SerialException(msg.errno, "could not open port {}: {}".format(self._port, msg))
+serial.serialutil.SerialException: [Errno 2] could not open port /dev/ttyUSB2: [Errno 2] No such file or directory: '/dev/ttyUSB2'
+
+2021-02-11 19:22:42;Webserver Read Version (ReadVersion()
+2021-02-11 19:22:42;200 POST / (127.0.0.1) 264.64ms
+2021-02-11 19:22:51;Thread Main stopped 
+2021-02-11 19:22:55;Webserver Read Version (ReadVersion()
+2021-02-11 19:22:55;Thread MQTT started
+2021-02-11 19:22:55;Using selector: KqueueSelector
+2021-02-11 19:22:55;Starting new HTTP connection (1): www.google.com:80
+2021-02-11 19:22:55;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:22:55;Thread Webserver started
+2021-02-11 19:22:56;http://www.google.com:80 "GET / HTTP/1.1" 200 5912
+2021-02-11 19:22:56;Initialize MQTT Client to Broker sre-solutions.com, Port: 1885
+2021-02-11 19:22:56;200 GET / (127.0.0.1) 9.66ms
+2021-02-11 19:22:56;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:22:57;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:23:03;Added MQTT Client at initialization to List
+2021-02-11 19:23:03;database - table "mqttuploads" created"
+2021-02-11 19:23:04;Webserver request to open page "index"
+2021-02-11 19:23:04;Webserver (osinterface): Unable to read values (mmcli -b 0): Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/osinterface.py", line 149, in readmodemstatus
+    mmcli_b = mmcli_b.splitlines()
+UnboundLocalError: local variable 'mmcli_b' referenced before assignment
+
+2021-02-11 19:23:04;Unable to send AT commandTraceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/serial/serialposix.py", line 322, in open
+    self.fd = os.open(self.portstr, os.O_RDWR | os.O_NOCTTY | os.O_NONBLOCK)
+FileNotFoundError: [Errno 2] No such file or directory: '/dev/ttyUSB2'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/osinterface.py", line 291, in sendatcommand
+    ser = serial.Serial(port, timeout=0.2,write_timeout=1,  baudrate=9600, xonxoff=False, rtscts=False, bytesize=serial.EIGHTBITS, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE)
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/serial/serialutil.py", line 244, in __init__
+    self.open()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/serial/serialposix.py", line 325, in open
+    raise SerialException(msg.errno, "could not open port {}: {}".format(self._port, msg))
+serial.serialutil.SerialException: [Errno 2] could not open port /dev/ttyUSB2: [Errno 2] No such file or directory: '/dev/ttyUSB2'
+
+2021-02-11 19:23:04;Webserver Read Version (ReadVersion()
+2021-02-11 19:23:04;200 POST / (127.0.0.1) 258.31ms
+2021-02-11 19:23:14;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:23:15;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:23:16;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:23:30;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:23:31;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:23:32;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:24:00;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:24:01;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:24:02;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:24:02;Thread Main stopped 
+2021-02-11 19:24:02;Thread Webserver stopped
+2021-02-11 19:24:07;Webserver Read Version (ReadVersion()
+2021-02-11 19:24:07;Thread MQTT started
+2021-02-11 19:24:07;Using selector: KqueueSelector
+2021-02-11 19:24:07;Starting new HTTP connection (1): www.google.com:80
+2021-02-11 19:24:07;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:24:07;Thread Webserver started
+2021-02-11 19:24:07;http://www.google.com:80 "GET / HTTP/1.1" 200 5916
+2021-02-11 19:24:07;Initialize MQTT Client to Broker sre-solutions.com, Port: 1885
+2021-02-11 19:24:08;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:24:08;200 GET / (127.0.0.1) 12.33ms
+2021-02-11 19:24:09;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:24:14;Added MQTT Client at initialization to List
+2021-02-11 19:24:14;database - table "mqttuploads" created"
+2021-02-11 19:24:15;Webserver request to open page "index"
+2021-02-11 19:24:15;Webserver (osinterface): Unable to read values (mmcli -b 0): Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/osinterface.py", line 149, in readmodemstatus
+    mmcli_b = mmcli_b.splitlines()
+UnboundLocalError: local variable 'mmcli_b' referenced before assignment
+
+2021-02-11 19:24:16;Unable to send AT commandTraceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/serial/serialposix.py", line 322, in open
+    self.fd = os.open(self.portstr, os.O_RDWR | os.O_NOCTTY | os.O_NONBLOCK)
+FileNotFoundError: [Errno 2] No such file or directory: '/dev/ttyUSB2'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/osinterface.py", line 291, in sendatcommand
+    ser = serial.Serial(port, timeout=0.2,write_timeout=1,  baudrate=9600, xonxoff=False, rtscts=False, bytesize=serial.EIGHTBITS, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE)
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/serial/serialutil.py", line 244, in __init__
+    self.open()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/serial/serialposix.py", line 325, in open
+    raise SerialException(msg.errno, "could not open port {}: {}".format(self._port, msg))
+serial.serialutil.SerialException: [Errno 2] could not open port /dev/ttyUSB2: [Errno 2] No such file or directory: '/dev/ttyUSB2'
+
+2021-02-11 19:24:16;Webserver Read Version (ReadVersion()
+2021-02-11 19:24:16;200 POST / (127.0.0.1) 256.59ms
+2021-02-11 19:24:17;200 GET /gatewayconfiguration (127.0.0.1) 65.93ms
+2021-02-11 19:24:17;404 GET /favicon.ico (127.0.0.1) 0.60ms
+2021-02-11 19:24:18;200 GET /modbus (127.0.0.1) 13.29ms
+2021-02-11 19:24:18;404 GET /favicon.ico (127.0.0.1) 0.76ms
+2021-02-11 19:24:19;200 GET /showlog (127.0.0.1) 29.44ms
+2021-02-11 19:24:21;200 GET /latestreading (127.0.0.1) 26.17ms
+2021-02-11 19:24:21;200 GET /static/Chart.bundle.js (127.0.0.1) 89.03ms
+2021-02-11 19:24:21;404 GET /favicon.ico (127.0.0.1) 0.83ms
+2021-02-11 19:24:22;Webserver request to open page "index"
+2021-02-11 19:24:23;Webserver (osinterface): Unable to read values (mmcli -b 0): Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/osinterface.py", line 149, in readmodemstatus
+    mmcli_b = mmcli_b.splitlines()
+UnboundLocalError: local variable 'mmcli_b' referenced before assignment
+
+2021-02-11 19:24:23;Unable to send AT commandTraceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/serial/serialposix.py", line 322, in open
+    self.fd = os.open(self.portstr, os.O_RDWR | os.O_NOCTTY | os.O_NONBLOCK)
+FileNotFoundError: [Errno 2] No such file or directory: '/dev/ttyUSB2'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/osinterface.py", line 291, in sendatcommand
+    ser = serial.Serial(port, timeout=0.2,write_timeout=1,  baudrate=9600, xonxoff=False, rtscts=False, bytesize=serial.EIGHTBITS, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE)
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/serial/serialutil.py", line 244, in __init__
+    self.open()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/venv/lib/python3.8/site-packages/serial/serialposix.py", line 325, in open
+    raise SerialException(msg.errno, "could not open port {}: {}".format(self._port, msg))
+serial.serialutil.SerialException: [Errno 2] could not open port /dev/ttyUSB2: [Errno 2] No such file or directory: '/dev/ttyUSB2'
+
+2021-02-11 19:24:23;Webserver Read Version (ReadVersion()
+2021-02-11 19:24:23;200 GET /index (127.0.0.1) 212.42ms
+2021-02-11 19:24:30;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:24:31;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:24:32;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:25:00;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:25:01;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:25:02;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:25:30;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:25:31;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:25:32;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:26:00;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:26:01;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:26:02;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:26:30;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:26:31;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:26:32;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:27:00;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:27:01;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:27:02;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:27:30;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:27:31;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:27:32;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:28:00;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:28:01;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:28:02;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:28:30;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:28:31;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:28:32;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:29:00;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:29:01;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:29:02;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:29:30;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:29:31;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:29:32;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+

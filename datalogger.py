@@ -1,0 +1,141 @@
+'''
+Created on 12.01.2018
+
+@author: Stefan Rossmann
+'''
+import csv
+import logging
+from logging.handlers import RotatingFileHandler
+import config as cfg
+import traceback
+import datetime
+import os, errno
+import database
+
+try:
+    os.makedirs('unitdatabase')
+except OSError as e:
+    if e.errno != errno.EEXIST:
+        raise
+
+my_logger3 = logging.getLogger('MyMQTTPayloadLogger')
+my_logger3.setLevel(logging.DEBUG)
+my_logger3.propagate = False
+
+# Add the log message handler to the logger
+packagedir = os.path.dirname(os.path.abspath(__file__))     #get the Package directory, from there we get the subdirectoties
+directory = os.path.join(packagedir, 'unitdatabase')                 #Subdirectory
+
+
+
+
+# Add the log message handler for the Payload logger
+filename = os.path.join(directory, 'serveruploadMQTTlogdata.txt')
+
+handler3 = logging.handlers.RotatingFileHandler(
+filename, maxBytes=20000000, backupCount=5)
+formatter3 = logging.Formatter("%(asctime)s;%(message)s",
+                                      "%Y-%m-%d %H:%M:%S")
+handler3.setFormatter(formatter3)
+my_logger3.addHandler(handler3)
+
+
+
+
+def logMQTTRegisterData(dataToWrite):
+    """
+    Stores the Payload send to Thingsboard via MQTT to the cloud
+    :param Payload to store in file:
+    :return:
+    """
+    try:
+        # Set up a specific logger with our desired output level
+
+        my_logger3.debug(dataToWrite)
+
+        #print (dataToWrite)
+
+    except:
+        pass
+
+
+
+
+def registerLogFileCSV():
+    try:
+        config = cfg.Config.getInstance()
+        maxfilesize = 1073741824 / 2 #1 Gigabyte = 1073741824 bytes
+
+        currentDateTime = datetime.datetime.now()
+        currentDay = currentDateTime.day
+        currentMonth = currentDateTime.month
+        currentYear = currentDateTime.year
+
+        packagedir = os.path.dirname(os.path.abspath(__file__))     #get the Package directory, from there we get the subdirectoties
+        directory = os.path.join(packagedir, 'unitdatabase')
+        directory = os.path.join(directory, 'csv')                 #Subdirectory /csv
+        filename = os.path.join(directory, 'registerlogdata'+ str(currentYear) + str(currentMonth) + str(currentDay) +'.csv')
+        #--------------------------Check path, create the path if it doesn't exist
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+        if (__getDirSize(directory) > maxfilesize):      #Delete Files if max. size of directory is reached
+            __deleteOldestFile(directory)
+
+
+        #--------------------------Check if file exists, else create and write header
+        if (not os.path.isfile(filename)):
+            with open(filename, 'w') as csvfile:
+                fieldnames = list()
+                fieldnames.append('timestamp')
+                for s in config.ReadOrders:
+                    readorder = dict(s)
+                    if ('logmodbusdata' in readorder):
+                        if (readorder['logmodbusdata']):
+                            fieldnames.append(readorder['name'])
+
+                writer = csv.DictWriter(csvfile, fieldnames=fieldnames, lineterminator='\n')
+                writer.writeheader()
+
+        config.registerlogfilecounter = config.registerlogfilecounter + 1
+
+        if (config.registerlogfilecounter >= config.loggingmultiplier):
+            config.registerlogfilecounter = 0
+            with open(filename, 'a') as csvfile:
+                writerows = dict()
+                fieldnames = list()
+                fieldnames.append('timestamp')
+                writerows['timestamp'] = ('{0:%Y-%m-%dT%H:%M:%SZ}'.format(datetime.datetime.now()))
+                for s in config.ReadOrders:
+                    readorder = dict(s)
+                    db_conn = database.connect("eh.db")
+                    database.add_daily_value(db_conn, readorder['name'], readorder.get('value', 0))
+                    if ('logmodbusdata' in readorder):
+                        if (readorder['logmodbusdata']):
+                            fieldnames.append(readorder['name'])
+                            if ('value' in readorder):      #We only write 65535 into the CSV if the value does not exist. Most of the case there is
+                                                            #is a Register without readOrder
+                                writerows[readorder['name']] = readorder['value']
+                                db_conn = database.connect("eh.db")
+                                database.add_daily_value(db_conn, readorder['name'], readorder['value'])
+                            else:
+                                writerows[readorder['name']] = 65535
+                writer = csv.DictWriter(csvfile, fieldnames=fieldnames, lineterminator='\n')
+                writer.writerow(writerows)
+
+    except Exception as e:
+        logging.error('Exception in writing CSV-Logdata: ' + str(traceback.format_exc()))
+
+def __getDirSize(path):
+    totalsize = 0
+    for dirpath, dirnames, filenames in os.walk(path):
+        for f in filenames:
+            fp = os.path.join(dirpath, f)
+            totalsize += os.path.getsize(fp)
+    return totalsize
+
+def __deleteOldestFile(path):
+    list_of_files = os.listdir(path)
+
+    list_of_files.sort()
+    os.remove((path+"//"+list_of_files[0]))
+    logging.info('Folder size exceeded of CSV-Logdata Deleted File: ' + path+"//"+list_of_files[0])

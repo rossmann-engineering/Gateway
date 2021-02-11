@@ -1,0 +1,42 @@
+  --------------------------------
+  General  |            dbus path: /org/freedesktop/ModemManager1/Modem/0
+           |            device id: c2eb647d8854c9320b8cd7c3db66e1e002a82205
+  --------------------------------
+  Hardware |         manufacturer: SIMCOM INCORPORATED
+           |                model: SIMCOM_SIM7600G
+           |             revision: LE20B02SIM7600M21-A
+           |            supported: gsm-umts, lte
+           |              current: gsm-umts, lte
+           |         equipment id: 868822040228882
+  --------------------------------
+  System   |               device: /sys/devices/platform/soc@0/soc@0:bus@32c00000/32e50000.usb/ci_hdrc.1/usb2/2-1/2-1.5
+           |              drivers: qmi_wwan, option1
+           |               plugin: SimTech
+           |         primary port: ttyUSB2
+           |                ports: ttyUSB0 (qcdm), ttyUSB2 (at), ttyUSB3 (at), wwan0 (net)
+  --------------------------------
+  Numbers  |                  own: +52
+  --------------------------------
+  Status   |       unlock retries: sim-pin (5), sim-pin2 (5), sim-puk (3), sim-puk2 (3)
+           |                state: registered
+           |          power state: on
+           |       signal quality: 80% (recent)
+  --------------------------------
+  Modes    |            supported: allowed: 2g; preferred: none
+           |                       allowed: 3g; preferred: none
+           |                       allowed: 2g, 3g; preferred: none
+           |                       allowed: 2g, 3g; preferred: 2g
+           |                       allowed: 2g, 3g; preferred: 3g
+           |                       allowed: 2g, 3g, 4g; preferred: none
+           |              current: allowed: any; preferred: none
+  --------------------------------
+  IP       |            supported: ipv4, ipv6, ipv4v6
+  --------------------------------
+  3GPP     |                 imei: 868822040228882
+           |          operator id: 334020
+           |        operator name: TELCEL TELCEL
+           |         registration: home
+  --------------------------------
+  3GPP EPS | ue mode of operation: csps-2
+  --------------------------------
+  SIM      |            dbus path: /org/freedesktop/ModemManager1/SIM/0
