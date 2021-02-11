@@ -1471,3 +1471,150 @@ OSError: [Errno 22] Invalid argument
     self.tcpClientSocket.connect((self._ipAddress, self._port))
 OSError: [Errno 22] Invalid argument
 
+2021-02-11 19:30:00;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:30:01;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:30:02;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:30:30;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:30:31;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:30:32;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:31:00;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:31:01;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:31:02;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:31:30;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:31:31;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:31:32;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:32:00;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:32:01;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:32:02;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:32:30;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:32:31;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:32:32;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:33:00;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+ConnectionRefusedError: [Errno 61] Connection refused
+
+2021-02-11 19:33:01;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
+2021-02-11 19:33:02;Unable to read Registers from Modbus Slave: Traceback (most recent call last):
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/execute_readorders.py", line 144, in execute_readorders
+    modbusClient.connect()
+  File "/Volumes/Rossmann-Engineering/Projekte/Wise Energy/Gateway/ModbusClient.py", line 89, in connect
+    self.tcpClientSocket.connect((self._ipAddress, self._port))
+OSError: [Errno 22] Invalid argument
+
