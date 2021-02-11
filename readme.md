@@ -65,7 +65,7 @@ systemctl status gateway
 - Depending on the Fieldbus, the Gateway can be tested locally.
 - To Run a Modbus-TCP Server or Modbus-RTU Slave locally (for example www.EasyModbusTCP.NET), the IP-Address of the device has to be set to localhost for Modbus TCP, or a serial Bridge has to be set up for Modbus RTU
 - The Server Parameter has to be set to the MQTT-Broker the Data should be send to.
-- The default access credentials for the webserver are "inblic" as username "123456" as password
+- The default access credentials for the webserver are "wiseenergy" as username "123456" as password
 
 <div id="configjsonstructure"/>
 
@@ -206,7 +206,7 @@ Root Element: "mqttbroker"
   "port": "1885",
   "publishtopic": "v1/devices/me/telemetry",
   "accesstoken": "preAneTCuLkD705s12ZD",
-  "username": "inblic",
+  "username": "wiseenergy",
   "password": "123456",
   "serverid": 3
 ```
