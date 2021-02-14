@@ -12,18 +12,18 @@ from collections import OrderedDict
 import struct
 
 def execute_writeorders():
-    config = cfg.Config.getInstance()
+    config = cfg.Config.getConfig()
 
-    for read_order in config.ReadOrders:
+    for read_order in config['readorders']:
         if read_order.get('value', 0xFFFF) == 0xFFFF:
             continue
         if read_order.get('target', '') != '':
             # ----------------------------------Search for the Target Read-Order
-            for target_readorder in config.ReadOrders:
+            for target_readorder in config['readorders']:
                 if read_order.get('target', '') == target_readorder['name']:
                     transportid = int(target_readorder.get('transportid',1))
                     # ---------------------------------------------Serch for the Transport ID
-                    for device in config.Devices:
+                    for device in config['devices']:
                         if device['transportid'] == transportid:
                             address = target_readorder['address']
                             type = device.get('type', 'Modbus')

@@ -212,8 +212,8 @@ IP-Address eth0: {{ parameter.eth0ipaddress }}<br>
 Subnet-mask eth0: {{ parameter.eth0mask }}<br>
     {% endif %}
     {% if  parameter.eth1ipaddress != "no IP-Address" %}
-    IP-Address eth1: {{ parameter.eth1ipaddress }}<br>
-Subnet-mask eth1: {{ parameter.eth1mask }}<br>
+    IP-Address wlan0: {{ parameter.wlan0ipaddress }}<br>
+Subnet-mask eth1: {{ parameter.wlan0mask }}<br>
     {% endif %}
 </div>
 <br>
@@ -225,7 +225,6 @@ Subnet-mask eth1: {{ parameter.eth1mask }}<br>
 <div class="container">
   <b>Gateway Properties</b><br><br>
 GW CPU-Architecture: {{ parameter.gwarchitecture }}<br>
-GW CPU-Vendor: {{ parameter.gwvendor }}<br>
 GW CPU-Model: {{ parameter.gwmodelname }}<br>
 GW CPU-Max (MHz): {{ parameter.gwcpumaxmhz }}<br>
 GW CPU-Min (MHz): {{ parameter.gwcpuminmhz }}<br>

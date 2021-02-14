@@ -442,11 +442,15 @@ def readeth0status():
     returnvalue['ipaddress'] = 'no IP-Address'
     returnvalue['mask'] = 'No Mask'
     try:
-        if (os.name != 'nt'):
+        is_linux = False
+        if (platform.system() == 'Linux'):
+            is_linux = True
+        if (is_linux):
             ifconfig = console("ifconfig eth0")
         else:
-            file = open("ifconfig_eth0.txt", "r")
+            file = open("windowssimulation/ifconfig eth0.txt", "rb")
             ifconfig = file.read()
+        ifconfig = str(ifconfig, 'utf-8')
         ifconfig = ifconfig.splitlines()
         firstline = ifconfig[1].split("  ")
         for i in range(0, len(firstline)):
@@ -458,16 +462,20 @@ def readeth0status():
         logging.error('Webserver (osinterface): Unable to read eth0 values (ifconfig eth0): ' + str(traceback.format_exc()))
     return returnvalue
 
-def readeth1status():
+def readwlan0status():
     returnvalue = dict();
     returnvalue['ipaddress'] = 'no IP-Address'
     returnvalue['mask'] = 'No Mask'
     try:
-        if (os.name != 'nt'):
-            ifconfig = console("ifconfig eth1")
+        is_linux = False
+        if (platform.system() == 'Linux'):
+            is_linux = True
+        if (is_linux):
+            ifconfig = console("ifconfig wlan0")
         else:
-            file = open("ifconfig_eth1.txt", "r")
+            file = open("windowssimulation/ifconfig wlan0.txt", "rb")
             ifconfig = file.read()
+        ifconfig = str(ifconfig, 'utf-8')
         ifconfig = ifconfig.splitlines()
         firstline = ifconfig[1].split("  ")
         for i in range(0, len(firstline)):
@@ -476,5 +484,5 @@ def readeth1status():
             if "netmask" in firstline[i]:
                 returnvalue['mask'] = firstline[i].split("netmask")[1].strip()
     except Exception as e:
-        logging.error('Webserver (osinterface): Unable to read eth0 values (ifconfig eth1): ' + str(traceback.format_exc()))
+        logging.error('Webserver (osinterface): Unable to read wlan0 values (ifconfig eth1): ' + str(traceback.format_exc()))
     return returnvalue

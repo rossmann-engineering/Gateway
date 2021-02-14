@@ -33,15 +33,15 @@ class Clients(object):
         else:
             Clients.__instance = self
         logging.info('Thread MQTT started')
-        config = cfg.Config.getInstance()
-        config.mqttconnectionlost = True
+        config = cfg.Config.getConfig()
+        cfg.Config.getInstance().mqttconnectionlost = True
         self.clients = list()
 
 
         # Contains the client instance (instance) and the server id (serverid)
         self.client = dict()
         loopcounter = 0
-        for t in config.mqttbroker:
+        for t in config['mqttbroker']:
             self.clients.append(dict())
             mqttbroker = dict(t)
             self.clients[loopcounter]['instance'] = mqtt.Client('client' + str(loopcounter))
@@ -51,8 +51,8 @@ class Clients(object):
             self.clients[loopcounter]['instance'].on_publish = self.on_publish
             #self.clients[loopcounter]['instance'].username_pw_set(mqttbroker['accesstoken'], '')
             while (not internet_on()):
-                config.mqttconnectionlost = True
-                datalogger.logData('MQTT-Client - Wait for Internet connection available')
+                cfg.Config.getInstance().mqttconnectionlost = True
+                logging.info('MQTT-Client - Wait for Internet connection available')
                 time.sleep(2)
             try:
                 if 'username' in mqttbroker and 'password' in mqttbroker:
@@ -110,7 +110,7 @@ def internet_on():
 
 
 def publish_message(serverid, topic, payload):
-    config = cfg.Config.getInstance()
+    config = cfg.Config.getConfig()
     try:
 
         logging.info('Store Message to Database, ServerID ' + str(serverid) + ' Message: ' + payload)
@@ -138,7 +138,7 @@ def publish_message(serverid, topic, payload):
                     break
                 if not internet_on():
                     datalogger.logData('MQTT-Client - Wait for Internet connection available')
-                    config.mqttconnectionlost = True
+                    cfg.Config.getInstance().mqttconnectionlost = True
                     break
                 logging.info('Message from Queue restored ' + str(element))
 
@@ -158,7 +158,7 @@ def publish_message(serverid, topic, payload):
                                         response.mid))
 
                                     datalogger.logMQTTRegisterData('MQTT send Payload to Serverid ' + str(serverid) + " Topic: " + str(element['topic']) + " Payload: " + str(element['payload']))
-                                    config.mqttconnectionlost = False
+                                    cfg.Config.getInstance().mqttconnectionlost = False
                                     database.delete_message_queue(db_conn, element['rowid'])
                                     break
                                 else:
@@ -176,13 +176,13 @@ def publish_message(serverid, topic, payload):
 
 
     except:
-        datalogger.logData('Exception Restoring MQTT Messages  ' + str(traceback.format_exc()))
+        logging.error('Exception Restoring MQTT Messages  ' + str(traceback.format_exc()))
 
 def send_mqtt_data(disconnected = False, connected = False):
-    config = cfg.Config.getInstance()
+    config = cfg.Config.getConfig()
     logging.info('Sending MQTT-Data...')
-    for s in config.mqttbroker:
-        for u in config.Devices:
+    for s in config['mqttbroker']:
+        for u in config['devices']:
             mqttbroker = dict(s)
             logging.info('Sending MQTT-Data to serverid' + str(mqttbroker['serverid']))
             payload = '{"ts":' + str(int(datetime_to_unix_timestamp(datetime.datetime.now())))
@@ -211,11 +211,11 @@ def send_mqtt_data(disconnected = False, connected = False):
                 payload = payload + '"Modbus Connected":1'
 
             if (not connected and not disconnected):
-                config.lock.acquire()
+                cfg.Config.getInstance().lock.acquire()
                 #Send Readorders
                 try:
                     read_order_count = 0
-                    for t in config.ReadOrders:
+                    for t in config['readorders']:
                         readOrder = dict(t)
                         active = (readOrder['active'] == True)
                         if 'serverid' in readOrder:
@@ -235,7 +235,7 @@ def send_mqtt_data(disconnected = False, connected = False):
                 except Exception:
                     logging.error('Exception send_mqtt_data to MQTT-Broker: ' + str(traceback.format_exc()))
                 finally:
-                    config.lock.release()
+                    cfg.Config.getInstance().lock.release()
 
             payload = payload + '}}'
             if (read_order_count > 0):

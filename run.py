@@ -12,7 +12,6 @@ import execute_readorders
 import datetime
 import calendar
 import webserver
-import datalogger
 import traceback
 import threading
 import mqtt
@@ -39,9 +38,7 @@ logging.getLogger().addHandler(console)
 # ------------------------- Initiate logging End
 
 
-config = cfg.Config.getInstance()
-config.ReadConfig()
-config.ReadVersion()
+config = cfg.Config.getConfig()
 
 #Write Softwareversion (commandline argument "writeswversion"
 if (len(sys.argv) > 1):
@@ -52,11 +49,11 @@ if (len(sys.argv) > 1):
 thread = threading.Thread(target=webserver.start, args=())
 thread.start()
 
-if (len(config.mqttbroker) > 0):
+if (len(config['mqttbroker']) > 0):
     thread4 = threading.Thread(target=mqtt.Clients.getInstance, args=())
     thread4.start()
 
-intervall = config.ReadInterval
+intervall = config['readinterval']
 currentDateTime = datetime.datetime.now()
 currentSecond = currentDateTime.second
 currentMinute = currentDateTime.minute
@@ -99,7 +96,7 @@ while (True):
             logging.info('Resend all value at ' + str(resendhour) + ':' + str(resendminute))
 
         #Send all values from the Webserver Button
-        if config.uploadalldata:
+        if cfg.Config.getInstance().uploadalldata:
             resendValues = True
             logging.info('Resend all values request from Webserver')
 
@@ -111,17 +108,17 @@ while (True):
 
             execute_readorders.execute_readorders()
 
-        config.lock.acquire()
+        cfg.Config.getInstance().lock.acquire()
         send_value = False
-        for i in range(0, len (config.ReadOrders)):
-            readOrder = dict(config.ReadOrders[i])
+        for i in range(0, len (config['readorders'])):
+            readOrder = dict(config['readorders'][i])
             #Looking for the key "registerintervaltime", if not present: write "1"
             if not ('registerintervaltime' in readOrder):
                 readOrder['registerintervaltime'] = 1
 
 
             readOrder['sendValue'] = False
-            interval = readOrder['registerintervaltime']*config.BasicInterval
+            interval = readOrder['registerintervaltime']*config['basicinterval']
 
             #at 01:00 each day we upload all values -> reset the nextwakeup
             if (resendValues):
@@ -186,18 +183,18 @@ while (True):
                     readOrder['latestreading'] = readOrder['value']  # This is only for the webserver
                 if (readOrder['value'] < readOrder['alarmthreshold']):
                     readOrder['valueinalarm'] = False
-            config.ReadOrders[i] = readOrder
+            config['readorders'][i] = readOrder
 
 
-        config.lock.release()
+        cfg.Config.getInstance().lock.release()
         if (send_value):
-            if (len(config.mqttbroker) > 0):
+            if (len(config['mqttbroker']) > 0):
                 thread5 = threading.Thread(target=mqtt.send_mqtt_data(), args=())
                 thread5.start()
 
 
-        if (config.uploadalldata & resendValues):
-            config.uploadalldata = False
+        if (cfg.Config.getInstance().uploadalldata & resendValues):
+            cfg.Config.getInstance().uploadalldata = False
 
 
 

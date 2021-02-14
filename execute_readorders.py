@@ -15,101 +15,16 @@ import logging
 
 def execute_readorders():
 
-    config = cfg.Config.getInstance()
+    config = cfg.Config.getConfig()
 
-    config.lock.acquire()
-
-    # Read Configuration (First store the last values
-    _valuesList = list()
-    _wakeupList = list()
-    _oldvalueList = list()
-    _lastpatchedList = list()
-    _latestreading = list()
-    _averagevaluesList = list()
-    _valueinalarmList = list()
-
-    for s in config.ReadOrders:
-        _oldreadOrder = OrderedDict(s)
-        if ('value' in _oldreadOrder):
-            _valuesList.append(_oldreadOrder['value'])
-        else:
-            _valuesList.append(None)
-
-        if ('nextwakeup' in _oldreadOrder):
-            _wakeupList.append(_oldreadOrder['nextwakeup'])
-        else:
-            _wakeupList.append(None)
-
-        if ('oldvalue' in _oldreadOrder):
-            _oldvalueList.append(_oldreadOrder['oldvalue'])
-        else:
-            _oldvalueList.append(None)
-
-        if ('lastpatchedvalue' in _oldreadOrder):
-            _lastpatchedList.append(_oldreadOrder['lastpatchedvalue'])
-        else:
-            _lastpatchedList.append(None)
-
-        if ('latestreading' in _oldreadOrder):
-            _latestreading.append(_oldreadOrder['latestreading'])
-        else:
-            _latestreading.append(None)
-
-        if ('averagevalues' in _oldreadOrder):
-            _averagevaluesList.append(_oldreadOrder['averagevalues'])
-        else:
-            _averagevaluesList.append(None)
-
-        if ('valueinalarm' in _oldreadOrder):
-            _valueinalarmList.append(_oldreadOrder['valueinalarm'])
-        else:
-            _valueinalarmList.append(None)
-
-        #else:
-        #    _valuesList.append(0)
-    # Read new configuration
-    config.ReadConfig()
-    _count = 0
-    for s in config.ReadOrders:
-        _readOrder = OrderedDict(s)
-        if len(_valuesList) > _count:
-            if (_valuesList[_count] is not None):
-                _readOrder['value'] = _valuesList[_count]
-
-        if len(_wakeupList) > _count:
-            if (_wakeupList[_count] is not None):
-                _readOrder['nextwakeup'] = _wakeupList[_count]
-
-        if len(_oldvalueList) > _count:
-            if (_oldvalueList[_count] is not None):
-                _readOrder['oldvalue'] = _oldvalueList[_count]
-
-        if len(_latestreading) > _count:
-            if (_latestreading[_count] is not None):
-                _readOrder['latestreading'] = _latestreading[_count]
-
-        if len(_lastpatchedList) > _count:
-            if (_lastpatchedList[_count] is not None):
-                _readOrder['lastpatchedvalue'] = _lastpatchedList[_count]
-
-        if len(_averagevaluesList) > _count:
-            if (_averagevaluesList[_count] is not None):
-                _readOrder['averagevalues'] = _averagevaluesList[_count]
-
-        if len(_valueinalarmList) > _count:
-            if (_valueinalarmList[_count] is not None):
-                _readOrder['valueinalarm'] = _valueinalarmList[_count]
-        config.ReadOrders[_count] = _readOrder
-        _count = _count + 1
-
-
+    cfg.Config.getInstance().lock.acquire()
 
 
     inputRegisters = [[None for i in range(5)] for j in range (15000)]
     holdingRegisters = [[None for i in range(5)] for j in range (15000)]
     registerValues = list()
     retryCounter = 0        #This counter is to ensure  to try 3 times to read data from the Server
-    for s in config.ModbusCommand:
+    for s in config['modbuscommand']:
         ModbusCommand = OrderedDict(s)
         functionCode = (ModbusCommand['functioncode'])
         startingAddress = (ModbusCommand['startingaddress'])
@@ -121,21 +36,21 @@ def execute_readorders():
 
 
         #This is Modbus-RTU
-        if ('serialPort' in config.Devices[transportid-1]):
-            modbusClient = ModbusClient.ModbusClient(str(config.Devices[transportid-1]['serialPort']))
-            modbusClient.Parity = config.Devices[transportid-1]['parity']
-            modbusClient.Baudrate = config.Devices[transportid-1]['baudrate']
-            modbusClient.Stopbits = config.Devices[transportid-1]['stopbits']
-            if ('type' in config.Devices[transportid-1]):
-                if (config.Devices[transportid - 1]['type'] == 'RS485'):
+        if ('serialPort' in config['devices'][transportid-1]):
+            modbusClient = ModbusClient.ModbusClient(str(config['devices'][transportid-1]['serialPort']))
+            modbusClient.Parity = config['devices'][transportid-1]['parity']
+            modbusClient.Baudrate = config['devices'][transportid-1]['baudrate']
+            modbusClient.Stopbits = config['devices'][transportid-1]['stopbits']
+            if ('type' in config['devices'][transportid-1]):
+                if (config['devices'][transportid - 1]['type'] == 'RS485'):
                     modbusClient.RS485 = True
         # This is Modbus-TCP
-        if ('ipaddress' in config.Devices[transportid - 1]):
-            if (not ('port' in config.Devices[transportid - 1])):
-                config.Devices[transportid - 1]['port'] = 502
-            modbusClient = ModbusClient.ModbusClient(str(config.Devices[transportid - 1]['ipaddress']), int(config.Devices[transportid - 1]['port']))
-        if ('unitidentifier' in config.Devices[transportid - 1]):
-            modbusClient.UnitIdentifier = config.Devices[transportid - 1]['unitidentifier']
+        if ('ipaddress' in config['devices'][transportid - 1]):
+            if (not ('port' in config['devices'][transportid - 1])):
+                config['devices'][transportid - 1]['port'] = 502
+            modbusClient = ModbusClient.ModbusClient(str(config['devices'][transportid - 1]['ipaddress']), int(config['devices'][transportid - 1]['port']))
+        if ('unitidentifier' in config['devices'][transportid - 1]):
+            modbusClient.UnitIdentifier = config['devices'][transportid - 1]['unitidentifier']
         modbusClient.Timeout = 5
         success = False
         while (not success and retryCounter < 3):
@@ -182,13 +97,13 @@ def execute_readorders():
 
 
 
-    for i in range(0, len (config.ReadOrders)):
-        readOrder = OrderedDict(config.ReadOrders[i])
+    for i in range(0, len (config['readorders'])):
+        readOrder = OrderedDict(config['readorders'][i])
 
 
         transportid = readOrder.get('transportid', 1)
         # Search for devices with the given transportid
-        device = next(device for device in config.Devices if device['transportid'] == transportid)
+        device = next(device for device in config['devices'] if device['transportid'] == transportid)
         if device.get('type', 'modbus').lower() == 'bacnet' or device.get('type', 'modbus').lower() == 'ethernetip':
             continue
 
@@ -281,14 +196,14 @@ def execute_readorders():
                     if (readOrder['transmissionmode'] == 'averagereading'):
                         if (not ('averagevalues' in readOrder)):
                             readOrder['averagevalues'] = list()
-                        numberOfReadings = config.BasicInterval / config.ReadInterval
+                        numberOfReadings = config['basicinterval'] / config['readinterval']
                         if (numberOfReadings < 1):
                             numberOfReadings = 1
                         readOrder['averagevalues'].append(readOrder['value'])
                         if (len(readOrder['averagevalues']) > numberOfReadings):
                             del(readOrder['averagevalues'][0])          #Delete the first entry of the list if the size exceeded the maximum size -> We wantg to ha ve only the latest readings
 
-        config.ReadOrders[i] = readOrder
+        config['readorders'][i] = readOrder
 
 
     execute_writeorders.execute_writeorders()
@@ -297,7 +212,7 @@ def execute_readorders():
     #--------------------------Store data in LogFile
     datalogger.registerLogFileCSV()
 
-    config.lock.release()
+    cfg.Config.getInstance().lock.release()
 
 
 if __name__ == "__main__":

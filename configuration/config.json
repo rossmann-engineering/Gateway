@@ -9,7 +9,7 @@
       "port": "1885",
       "publishtopic": "v1/devices/me/telemetry",
       "accesstoken": "preAneTCuLkD705s12ZD",
-      "username": "inblic",
+      "username": "wiseenergy",
       "password": "123456",
       "serverid": 3
     }

@@ -62,43 +62,22 @@ def upload(filename):
 def downloadFile ():
     path = "configuration/config.json"
     return send_file(path, as_attachment=True)
-
 #----------------------This is the Main Page
 @app.route('/index', methods=['GET', 'POST'])
 def index():
-    comecversion = "Can't read Comec Version"
-    comecid = "Can't read Comec ID"
-    comecnominalcurrent = "Can't read Comec Nominal current"
     pythonswversion = "Can't read Python Version"
     webserverversion = "Can't read Webserver Version"
-    mobileapn = "Can't read APN"
-    mobilenumber ="Can't read Mobile number"
-    mobileipaddress = "Can't read mobile IP-Address"
-    mobilegateway = "Can't read Mobile Gateway"
-    mobileimei = "Can't read Mobile IMEI"
 
-    config = cfg.Config.getInstance()
+
+    config = cfg.Config.getConfig()
 
     if (request.method == 'POST') & (request.path == '/index') :
-        config.eventcounter = 0;
+        cfg.Config.getInstance().eventcounter = 0;
     logging.info('Webserver request to open page "index"')
+
     exception = ''
     modemstatus = dict()
     deviceinformations = dict()
-    try:
-        modemstatus['connected'] = "Error"
-        modemstatus['apn'] = "Error"
-        modemstatus['number'] = "Error"
-        modemstatus['ipv4address'] = "Error"
-        modemstatus['ipv4gateway'] = "Error"
-        modemstatus['imei'] = "Error"
-        modemstatus['duration'] = '0'
-        modemstatus['signalquality'] = "Error"
-        modemstatus['operatorname'] = "Error"
-        modemstatus = osinterface.readmodemstatus()
-        time.sleep(0.1)
-    except Exception:
-        logging.error('Webserver: Unable to Read Mdemstatus from device: ' + str(traceback))
 
 
 
@@ -109,63 +88,29 @@ def index():
     except Exception:
         logging.error('Webserver: Unable to Read Deviceinformations from device: ' + str(traceback))
 
-    pythonswversion = config.pythonswversion
-    webserverversion = config.webserverversion
+    pythonswversion = cfg.Config.getInstance().pythonswversion
+    webserverversion = cfg.Config.getInstance().webserverversion
     gwarchitecture = deviceinformations['architecture']
-    gwvendor = deviceinformations['vendor']
     gwmodelname = deviceinformations['modelname']
     gwcpumaxmhz = deviceinformations['cpumaxmhz']
     gwcpuminmhz = deviceinformations['cpuminmhz']
     # ------------------------------ Read Gateway CPU Data End ----------------------
 
+    # ------------------------------ Read Wlan0 config ------------------------------
+    wlan0status = osinterface.readwlan0status()
+    wlan0ipaddress = wlan0status['ipaddress']
+    wlan0mask = wlan0status['mask']
+    # ------------------------------ Read Wlan0 config ------------------------------
 
-
-    if modemstatus['connected'] == 'yes':
-        mobileconnectionstatus = 'connected'
-    else:
-        mobileconnectionstatus = 'not connected'
-    mobileapn = modemstatus['apn']
-    mobilenumber = modemstatus['number']
-    mobileipaddress = modemstatus['ipv4address']
-    mobilegateway = modemstatus['ipv4gateway']
-    mobileimei = modemstatus['imei']
-    try:
-        totalseconds = int(modemstatus['duration'])
-        seconds = totalseconds % 60
-        minutes = (totalseconds / 60) % 60
-        hours = ((totalseconds / 60) / 60) % 24
-        days = ((totalseconds / 60) / 60) / 24
-
-        duration = ''
-        if (days > 0):
-            duration = duration + str(days) + ' d '
-        if (hours > 0):
-            duration = duration + str(hours) + ' h '
-        if (minutes > 0):
-            duration = duration + str(minutes) + ' m '
-        if (seconds > 0):
-            duration = duration + str(seconds) + ' s'
-
-
-        mobileconnectionduration =duration
-    except:
-        mobileconnectionduration = 0
-    try:
-        mobilebytessend = "%.3f" % (float(modemstatus['bytestransmitted'])/1048576.000)
-    except:
-        mobilebytessend = 0
-    try:
-        mobilebytesreceived = "%.3f" % (float(modemstatus['bytesreceived'])/1048576.000)
-    except:
-        mobilebytesreceived = 0
+    # ------------------------------ Read eth0 config ------------------------------
+    eth0status = osinterface.readeth0status()
+    eth0ipaddress = eth0status['ipaddress']
+    eth0mask = eth0status['mask']
+    # ------------------------------ Read eth0 config ------------------------------
 
     try:
-        mobilesignalquility =modemstatus['signalquality']
-        mobileoperatorname = modemstatus['operatorname']
-        eventcounter = config.eventcounter
+        eventcounter = cfg.Config.getInstance().eventcounter
     except:
-        mobilesignalquility = '0'
-        mobileoperatorname = 'Error'
         eventcounter = 'Error'
 
 
@@ -173,32 +118,24 @@ def index():
 
 
 
-    parameter = {'enable3g': str (config.enable3g),
-                 'comecversion': str(comecversion),
-                 'comecid': str(comecid),
-                 'comecnominalcurrent': str(comecnominalcurrent),
+    parameter = {
                  'eventcounter': str(eventcounter),
                  'pythonswversion': str(pythonswversion),
                  'webserverversion': str(webserverversion),
                  'gwarchitecture': str(gwarchitecture),
-                 'gwvendor': str(gwvendor),
                  'gwmodelname': str(gwmodelname),
                  'gwcpumaxmhz': str(gwcpumaxmhz),
                  'gwcpuminmhz': str(gwcpuminmhz),
-                 'mobileconnectionstatus': str(mobileconnectionstatus),
-                 'mobileipaddress': str(mobileipaddress),
-                 'mobileapn': str(mobileapn),
-                 'mobilenumber': str(mobilenumber),
-                 'mobilesignalstrength': str(mobilesignalquility),
-                 'mobilegateway': str(mobilegateway),
-                 'mobileconnectionduration': str(mobileconnectionduration),
-                 'mobileoperatorname': str(mobileoperatorname),
-                 'mobileimei': str(mobileimei)
+                 'wlan0ipaddress': str(wlan0ipaddress),
+                 'wlan0mask': str(wlan0mask),
+                 'eth0ipaddress': str(eth0ipaddress),
+                'eth0mask': str(eth0mask)
                 }
     if (logindistributor or loginadmin):
         return render_template('index.html', parameter=parameter, admin = loginadmin)
     else:
         return do_admin_login()
+
 
 
 conectivityparameter = {}
@@ -213,32 +150,23 @@ def index2():
                 osinterface.console('zerotier-cli join {0}'.format(request.form['networkID']))
                 time.sleep(5)
         except Exception:
-            logging.info('Webserver: Unable to Leave or Join Zerotier Network: ' + str(traceback.format_exc()))
+            logging.error('Webserver: Unable to Leave or Join Zerotier Network: ' + str(traceback.format_exc()))
     config = cfg.Config.getInstance()
 
-    try:
+
+    # ------------------------------ Read Wlan0 config ------------------------------
+    wlan0status = osinterface.readwlan0status()
+    wlan0ipaddress = wlan0status['ipaddress']
+    wlan0mask = wlan0status['mask']
+    # ------------------------------ Read Wlan0 config ------------------------------
+
+    # ------------------------------ Read eth0 config ------------------------------
+    eth0status = osinterface.readeth0status()
+    eth0ipaddress = eth0status['ipaddress']
+    eth0mask = eth0status['mask']
+    # ------------------------------ Read eth0 config ------------------------------
 
 
-        modemstatus = osinterface.readmodemstatus()
-
-        totalseconds = int(modemstatus['duration'])
-        seconds = totalseconds % 60
-        minutes = (totalseconds / 60) % 60
-        hours = ((totalseconds / 60) / 60) % 24
-        days = ((totalseconds / 60) / 60) / 24
-
-        duration = ''
-        if (days > 0):
-            duration = duration + str(days) + ' d '
-        if (hours > 0):
-            duration = duration + str(hours) + ' h '
-        if (minutes > 0):
-            duration = duration + str(minutes) + ' m '
-        if (seconds > 0):
-            duration = duration + str(seconds) + ' s'
-
-    except Exception as e:
-        logging.error('Webserver: Unable to Read modemstatus from device: ' + str(traceback.format_exc()))
 
 #    try:
 #        phonenumber = osinterface.readphonenumber()
@@ -251,25 +179,9 @@ def index2():
         logging.error('Webserver: Unable to Read vpnstatus from device: ' + str(traceback.format_exc()))
 
 
-    mobileconnectionstatus = str()
-    if modemstatus['connected'] == 'yes':
-        mobileconnectionstatus = 'connected'
-    else:
-        mobileconnectionstatus = 'not connected'
-
 
     conectivityparameter = {
-                            'enable3g': str(config.enable3g),
-                             'mobileconnectionstatus': str(mobileconnectionstatus),
-                             'mobileipaddress': str(modemstatus['ipv4address']),
-                             'mobileapn': str(modemstatus['apn']),
-                             'mobileimei': str(modemstatus['imei']),
-                             'mobilenumber': str(modemstatus['number']),
-                             'mobilesignalstrength': str(int(round(float(modemstatus['signalquality'])))),
-                             'mobilegateway': str(modemstatus['ipv4gateway']),
-                             'mobileconnectionduration': duration,
-                             'mobileoperatorname': str(modemstatus['operatorname']),
-                             'mobileoperatorid': str(modemstatus['operatorid']),
+
                              'vpnipaddress': vpnstatus['ipaddress'],
                              'vpnsubnetmask': vpnstatus['mask'],
                              'vpnconnected': vpnstatus['connected'],
@@ -277,12 +189,16 @@ def index2():
                              'vpnversion': vpnstatus['version'],
                              'vpnnetworkid': vpnstatus['networkid'],
                              'vpnnetworkname': vpnstatus['networkname'],
-                             'mobilepin': config.Pin
+                            'wlan0ipaddress': str(wlan0ipaddress),
+                            'wlan0mask': str(wlan0mask),
+                            'eth0ipaddress': str(eth0ipaddress),
+                            'eth0mask': str(eth0mask)
                              }
     if (logindistributor or loginadmin):
         return render_template('connectivity.html', parameter=conectivityparameter, admin = loginadmin)
     else:
         return do_admin_login()
+
 
 
 @app.route('/mobilesendpin',methods = ['GET', 'POST'])
@@ -404,9 +320,9 @@ def index4():
 def latestreadings():
     parameter = {}
     parameter['latestreadings'] = list()
-    config = cfg.Config.getInstance()
+    config = cfg.Config.getConfig()
     db_conn = database.connect("eh.db")
-    for s in config.ReadOrders:
+    for s in config['readorders']:
         readOrder = dict(s)
         reading = {}
 

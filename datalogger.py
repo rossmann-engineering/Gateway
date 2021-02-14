@@ -63,7 +63,7 @@ def logMQTTRegisterData(dataToWrite):
 
 def registerLogFileCSV():
     try:
-        config = cfg.Config.getInstance()
+        config = cfg.Config.getConfig()
         maxfilesize = 1073741824 / 2 #1 Gigabyte = 1073741824 bytes
 
         currentDateTime = datetime.datetime.now()
@@ -87,7 +87,7 @@ def registerLogFileCSV():
             with open(filename, 'w') as csvfile:
                 fieldnames = list()
                 fieldnames.append('timestamp')
-                for s in config.ReadOrders:
+                for s in config['readorders']:
                     readorder = dict(s)
                     if ('logmodbusdata' in readorder):
                         if (readorder['logmodbusdata']):
@@ -96,16 +96,16 @@ def registerLogFileCSV():
                 writer = csv.DictWriter(csvfile, fieldnames=fieldnames, lineterminator='\n')
                 writer.writeheader()
 
-        config.registerlogfilecounter = config.registerlogfilecounter + 1
+        cfg.Config.getInstance().registerlogfilecounter = cfg.Config.getInstance().registerlogfilecounter + 1
 
-        if (config.registerlogfilecounter >= config.loggingmultiplier):
-            config.registerlogfilecounter = 0
+        if (cfg.Config.getInstance().registerlogfilecounter >= config['loggingmultiplier']):
+            cfg.Config.getInstance().registerlogfilecounter = 0
             with open(filename, 'a') as csvfile:
                 writerows = dict()
                 fieldnames = list()
                 fieldnames.append('timestamp')
                 writerows['timestamp'] = ('{0:%Y-%m-%dT%H:%M:%SZ}'.format(datetime.datetime.now()))
-                for s in config.ReadOrders:
+                for s in config['readorders']:
                     readorder = dict(s)
                     db_conn = database.connect("eh.db")
                     database.add_daily_value(db_conn, readorder['name'], readorder.get('value', 0))
