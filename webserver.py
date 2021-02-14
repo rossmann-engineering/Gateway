@@ -370,8 +370,8 @@ def showmore():
    global showcontentlogfile
    packagedir = os.path.dirname(
    os.path.abspath(__file__))  # get the Package directory, from there we get the subdirectoties
-   directory = os.path.join(packagedir, constants.LOGFILEFOLDER)  # Subdirectory
-   logfilename = os.path.join(directory, constants.LOGFILENAME)
+   directory = os.path.join(packagedir, 'unitdatabase')  # Subdirectory
+   logfilename = os.path.join(directory, 'logdata.txt')
 
 
    if request.method == 'POST':
