@@ -2,6 +2,7 @@
   "readinterval": 30.0,
   "basicinterval": 150.0,
   "loggingmultiplier": 2,
+  "loglevel": "error",
   "mqttbroker": [
     {
       "name": "Test",
@@ -27,36 +28,336 @@
   ],
   "modbuscommand": [
     {
-      "functioncode": "Read Holding Registers",
-      "transportid": 1,
-      "startingaddress": 73,
-      "quantity": 59
-    },
-    {
-      "functioncode": "Read Holding Registers",
-      "transportid": 1,
-      "startingaddress": 1,
-      "quantity": 2
-    },
-    {
-      "transportid": 1,
       "functioncode": "Read Input Registers",
-      "startingaddress": 1,
-      "quantity": 1
+      "transportid": 1,
+      "startingaddress": 0,
+      "quantity": 100
+    },
+    {
+      "functioncode": "Read Input Registers",
+      "transportid": 1,
+      "startingaddress": 100,
+      "quantity": 26
+    },
+    {
+      "functioncode": "Read Holding Registers",
+      "transportid": 1,
+      "startingaddress": 0,
+      "quantity": 3
     }
   ],
   "readorders": [
     {
-      "averagevalues": [
-        0.0,
-        0.0
-      ],
-      "address": 114,
-      "name": "Power Input-Total",
+      "address": 1,
+      "name": "Total AC Energy",
       "bits": 32,
       "absolutethreshold": 0,
       "transportid": 1,
-      "target": "Analog Input 12",
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "signed": false,
+      "dataarea": "Input Register",
+      "threshold": 0,
+      "serverid": [
+        1
+      ],
+      "multiplefactor": 1
+    },{
+      "address": 3,
+      "name": "Hours up and running",
+      "bits": 32,
+      "absolutethreshold": 0,
+      "transportid": 1,
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "signed": false,
+      "dataarea": "Input Register",
+      "threshold": 0,
+      "serverid": [
+        1
+      ],
+      "multiplefactor": 1
+    },{
+      "address": 8,
+      "name": "Inverter Alarms",
+      "bits": 16,
+      "absolutethreshold": 0,
+      "transportid": 1,
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "signed": false,
+      "dataarea": "Input Register",
+      "threshold": 0,
+      "serverid": [
+        1
+      ],
+      "multiplefactor": 1
+    },{
+      "address": 9,
+      "name": "DC input voltage",
+      "bits": 16,
+      "absolutethreshold": 0,
+      "transportid": 1,
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "signed": false,
+      "dataarea": "Input Register",
+      "threshold": 0,
+      "serverid": [
+        1
+      ],
+      "multiplefactor": 1
+    },{
+      "address": 10,
+      "name": "Average input current estimation",
+      "bits": 16,
+      "absolutethreshold": 0,
+      "transportid": 1,
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "signed": false,
+      "dataarea": "Input Register",
+      "threshold": 0,
+      "serverid": [
+        1
+      ],
+      "multiplefactor": 1
+    },{
+      "address": 11,
+      "name": "Grid RMS Voltage, phase 1",
+      "bits": 16,
+      "absolutethreshold": 0,
+      "transportid": 1,
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "signed": false,
+      "dataarea": "Input Register",
+      "threshold": 0,
+      "serverid": [
+        1
+      ],
+      "multiplefactor": 1
+    },{
+      "address": 12,
+      "name": "Grid RMS Voltage, phase 2",
+      "bits": 16,
+      "absolutethreshold": 0,
+      "transportid": 1,
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "signed": false,
+      "dataarea": "Input Register",
+      "threshold": 0,
+      "serverid": [
+        1
+      ],
+      "multiplefactor": 1
+    },{
+      "address": 13,
+      "name": "Grid RMS Voltage, phase 3",
+      "bits": 16,
+      "absolutethreshold": 0,
+      "transportid": 1,
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "signed": false,
+      "dataarea": "Input Register",
+      "threshold": 0,
+      "serverid": [
+        1
+      ],
+      "multiplefactor": 1
+    },{
+      "address": 14,
+      "name": "Grid RMS Current, phase 1",
+      "bits": 16,
+      "absolutethreshold": 0,
+      "transportid": 1,
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "signed": false,
+      "dataarea": "Input Register",
+      "threshold": 0,
+      "serverid": [
+        1
+      ],
+      "multiplefactor": 1
+    },{
+      "address": 15,
+      "name": "Grid RMS Current, phase 2",
+      "bits": 16,
+      "absolutethreshold": 0,
+      "transportid": 1,
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "signed": false,
+      "dataarea": "Input Register",
+      "threshold": 0,
+      "serverid": [
+        1
+      ],
+      "multiplefactor": 1
+    },{
+      "address": 16,
+      "name": "Grid RMS Current, phase 3",
+      "bits": 16,
+      "absolutethreshold": 0,
+      "transportid": 1,
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "signed": false,
+      "dataarea": "Input Register",
+      "threshold": 0,
+      "serverid": [
+        1
+      ],
+      "multiplefactor": 1
+    },{
+      "address": 17,
+      "name": "Cos Phi",
+      "bits": 16,
+      "absolutethreshold": 0,
+      "transportid": 1,
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "signed": false,
+      "dataarea": "Input Register",
+      "threshold": 0,
+      "serverid": [
+        1
+      ],
+      "multiplefactor": 1000
+    },{
+      "address": 19,
+      "name": "Active Power",
+      "bits": 16,
+      "absolutethreshold": 0,
+      "transportid": 1,
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "signed": false,
+      "dataarea": "Input Register",
+      "threshold": 0,
+      "serverid": [
+        1
+      ],
+      "multiplefactor": 10
+    },{
+      "address": 59,
+      "name": "Energy Resetable Counter",
+      "bits": 32,
+      "absolutethreshold": 0,
+      "transportid": 1,
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "signed": false,
+      "dataarea": "Input Register",
+      "threshold": 0,
+      "serverid": [
+        1
+      ],
+      "multiplefactor": 10
+    },{
+      "address": 72,
+      "name": "Power electronics temperatur",
+      "bits": 16,
+      "absolutethreshold": 0,
+      "transportid": 1,
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "signed": false,
+      "dataarea": "Input Register",
+      "threshold": 0,
+      "serverid": [
+        1
+      ],
+      "multiplefactor": 1
+    },{
+      "address": 73,
+      "name": "Control electronics temperature",
+      "bits": 16,
+      "absolutethreshold": 0,
+      "transportid": 1,
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "signed": false,
+      "dataarea": "Input Register",
+      "threshold": 0,
+      "serverid": [
+        1
+      ],
+      "multiplefactor": 1
+    }
+    ,{
+      "address": 77,
+      "name": "Nominal Power",
+      "bits": 16,
+      "absolutethreshold": 0,
+      "transportid": 1,
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "signed": false,
+      "dataarea": "Input Register",
+      "threshold": 0,
+      "serverid": [
+        1
+      ],
+      "multiplefactor": 1
+    },{
+      "address": 117,
+      "name": "Power reduction register",
+      "bits": 16,
+      "absolutethreshold": 0,
+      "transportid": 1,
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "signed": false,
+      "dataarea": "Input Register",
+      "threshold": 0,
+      "serverid": [
+        1
+      ],
+      "multiplefactor": 1
+    },{
+      "address": 118,
+      "name": "RedPotencia",
+      "bits": 16,
+      "absolutethreshold": 0,
+      "transportid": 1,
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "signed": false,
+      "dataarea": "Input Register",
+      "threshold": 0,
+      "serverid": [
+        1
+      ],
+      "multiplefactor": 1
+    },{
+      "address": 1,
+      "name": "Command code",
+      "bits": 16,
+      "absolutethreshold": 0,
+      "transportid": 1,
       "logmodbusdata": true,
       "active": true,
       "registerintervaltime": 1,
@@ -64,11 +365,41 @@
       "dataarea": "Holding Register",
       "threshold": 0,
       "serverid": [
-        3
+        1
       ],
-      "multiplefactor": 10,
-      "latestreading": 0.0
+      "multiplefactor": 1
+    },{
+      "address": 2,
+      "name": "Command Data 1",
+      "bits": 16,
+      "absolutethreshold": 0,
+      "transportid": 1,
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "signed": false,
+      "dataarea": "Holding Register",
+      "threshold": 0,
+      "serverid": [
+        1
+      ],
+      "multiplefactor": 1
+    },{
+      "address": 3,
+      "name": "Command Data 2",
+      "bits": 16,
+      "absolutethreshold": 0,
+      "transportid": 1,
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "signed": false,
+      "dataarea": "Holding Register",
+      "threshold": 0,
+      "serverid": [
+        1
+      ],
+      "multiplefactor": 1
     }
-
   ]
 }

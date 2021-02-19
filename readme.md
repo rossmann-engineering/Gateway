@@ -74,12 +74,14 @@ systemctl status gateway
 ```json
   "readinterval": 30.0, 
   "basicinterval": 150.0, 
-  "loggingmultiplier": 2, 
+  "loggingmultiplier": 2,
+  "loglevel": "error"
 ```
 Element description:
 - readinterval: The Interval data will be polled from the Fielbus devices
 - basicinterval: The Interval Tags will be uploaded to the MQTT-Broker
 - loggingmultiplier: The Data will be stored in a CSV-File with every Modbus request if the logging multiplier is set to "1". To keep the Amount of data small, the loggingmultiplier can be increased to save the data with every loggingmultiplier Poll.
+- loglevel: can be "critical", "error", "warning", "info", "debug", "notset" - The Gateway application uses the loglevels "error" and "info" and "debug". The logentries are stored in the journal and the file "unitdatabase/logdata.txt"
 
 <div id="readorder"/>
 

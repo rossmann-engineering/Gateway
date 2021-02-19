@@ -25,6 +25,16 @@ try:
 except OSError as e:
     if e.errno != errno.EEXIST:
         raise
+
+config = cfg.Config.getConfig()
+loglevel = logging.DEBUG
+if config.get('loglevel', 'debug') == 'error':
+    loglevel = logging.ERROR
+if config.get('loglevel', 'debug') == 'info':
+    loglevel = logging.INFO
+
+logging.getLogger().setLevel(loglevel)
+
 logging.getLogger().setLevel(logging.DEBUG)
 # Add the log message handler to the logger
 handler1 = logging.handlers.RotatingFileHandler(
@@ -82,6 +92,15 @@ oneshot = False
 
 while (True):
     try:
+
+        loglevel = logging.DEBUG
+        if config.get('loglevel', 'debug') == 'error':
+            loglevel = logging.ERROR
+        if config.get('loglevel', 'debug') == 'info':
+            loglevel = logging.INFO
+
+        logging.getLogger().setLevel(loglevel)
+
         timeInAbsoluteSeconds = calendar.timegm(time.gmtime())
         currentDateTime = datetime.datetime.now()
         currentSecond = currentDateTime.second

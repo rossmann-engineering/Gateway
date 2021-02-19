@@ -631,11 +631,12 @@ def configform():
    if request.method == 'POST':
         try:
             configuration = request.form
-            config = cfg.Config.getInstance()
+            config = cfg.Config.getConfig()
 
-            config.BasicInterval = float(configuration['basicinterval'])
-            config.ReadInterval = float(configuration['readinterval'])
-            config.StoreConfig()
+            config['basicinterval'] = float(configuration['basicinterval'])
+            config['readinterval'] = float(configuration['readinterval'])
+            config['loglevel'] = (configuration['loglevel'])
+            cfg.Config.getInstance().write_config()
         except ValueError:
             pass
    with open('configuration/config.json') as json_data:
@@ -651,15 +652,15 @@ def configformmqttservers():
    if request.method == 'POST':
         try:
             configuration = request.form
-            config = cfg.Config.getInstance()
-            for mqttbroker in config.mqttbroker:
+            config = cfg.Config.getConfig()
+            for mqttbroker in config['mqttbroker']:
                 for key, value in mqttbroker.items():
                     if (key == "serverid"):
                         mqttbroker[key] = int(configuration['serverid'+str(mqttbroker['serverid'])+'_'+key])
                     else:
                         mqttbroker[key] = configuration['serverid' + str(mqttbroker['serverid']) + '_' + key]
 
-            config.StoreConfig()
+            cfg.Config.getInstance().write_config()
         except ValueError:
             pass
    with open('configuration/config.json') as json_data:
@@ -672,14 +673,14 @@ def configformdevices():
    if request.method == 'POST':
         try:
             configuration = request.form
-            config = cfg.Config.getInstance()
-            for device in config.Devices:
+            config = cfg.Config.getConfig()
+            for device in config['devices']:
                 for key, value in device.items():
                     if (key == "parity") or (key == "baudrate") or (key == "databits") or (key == "transportid") or (key == "unitidentifier") or (key == "stopbits"):
                         device[key] = int(configuration['transportid'+str(device['transportid'])+'_'+key])
                     else:
                         device[key] = configuration['transportid' + str(device['transportid']) + '_' + key]
-            config.StoreConfig()
+            cfg.Config.getInstance().write_config()
         except ValueError:
             pass
    with open('configuration/config.json') as json_data:
@@ -693,7 +694,7 @@ def adddevice():
    if request.method == 'POST':
         try:
             configuration = request.form
-            config = cfg.Config.getInstance()
+            config = cfg.Config.getConfig()
             device = dict()
             device['transportid'] = int(configuration['newDeviceTransportId'])
             if (configuration['newDeviceFieldbus'] == 'ModbusRTU') or (configuration['newDeviceFieldbus'] == 'ModbusTCP'):
@@ -729,8 +730,8 @@ def adddevice():
                 device['ipaddress'] = configuration['newDeviceIpAddress']
                 device['port'] = int(configuration['newDevicePort'])
 
-            config.Devices.append(device)
-            config.StoreConfig()
+            config['devices'].append(device)
+            cfg.Config.getInstance().write_config()
         except ValueError:
             pass
    with open('configuration/config.json') as json_data:
@@ -744,7 +745,7 @@ def addreadorder():
    if request.method == 'POST':
         try:
             configuration = request.form
-            config = cfg.Config.getInstance()
+            config = cfg.Config.getConfig()
             read_order = dict()
             read_order['name'] = configuration['newReadOrderName']
             read_order['active'] = True if configuration['newReadOrderEnableUpload'].lower() == 'true' else False
@@ -772,8 +773,8 @@ def addreadorder():
             read_order['startingbyte'] = configuration['newReadOrderCIPStartingByte']
             read_order['numberofbytes'] = configuration['newReadOrderCIPNumberOfBytes']
 
-            config.ReadOrders.append(read_order)
-            config.StoreConfig()
+            config['readorders'].append(read_order)
+            cfg.Config.getInstance().write_config()
         except ValueError:
             pass
    with open('configuration/config.json') as json_data:
@@ -786,14 +787,14 @@ def addmodbuscommand():
    if request.method == 'POST':
         try:
             configuration = request.form
-            config = cfg.Config.getInstance()
+            config = cfg.Config.getConfig()
             modbus_command = dict()
             modbus_command['transportid'] = int(configuration['newModbusCommandTransportID'])
             modbus_command['functioncode'] = configuration['newModbusCommandFunctioncode']
             modbus_command['startingaddress'] = int(configuration['newModbusCommandStartingAddress'])
             modbus_command['quantity'] = int(configuration['newModbusCommandQuantity'])
-            config.ModbusCommand.append(modbus_command)
-            config.StoreConfig()
+            config['modbuscommand'].append(modbus_command)
+            cfg.Config.getInstance().write_config()
         except ValueError:
             pass
    with open('configuration/config.json') as json_data:
@@ -806,14 +807,14 @@ def addmodbuscommand():
 def configformmodbuscommand():
    if request.method == 'POST':
         try:
-            config = cfg.Config.getInstance()
+            config = cfg.Config.getConfig()
             configuration = request.form
             selectedindex =  int(configuration['modbuscommands'])-1
 
-            config.ModbusCommand[selectedindex]['functioncode'] = configuration['functioncode']
-            config.ModbusCommand[selectedindex]['quantity'] = int(configuration['quantity'])
-            config.ModbusCommand[selectedindex]['startingaddress'] = int(configuration['startingaddress'])
-            config.StoreConfig()
+            config['modbuscommand'][selectedindex]['functioncode'] = configuration['functioncode']
+            config['modbuscommand'][selectedindex]['quantity'] = int(configuration['quantity'])
+            config['modbuscommand'][selectedindex]['startingaddress'] = int(configuration['startingaddress'])
+            cfg.Config.getInstance().write_config()
         except ValueError:
             pass
    with open('configuration/config.json') as json_data:
@@ -825,70 +826,70 @@ def configformmodbuscommand():
 def configformreadorders():
    if request.method == 'POST':
         try:
-            config = cfg.Config.getInstance()
+            config = cfg.Config.getConfig()
             configuration = request.form
-            for s in range(0, len(config.ReadOrders)):
+            for s in range(0, len(config['readorders'])):
             #for s in config.ReadOrders:
                 #ReadOrder = dict(s)
-                name = (config.ReadOrders[s]['name'])
+                name = (config['readorders'][s]['name'])
                 if (name == configuration['name']):
 
-                    config.ReadOrders[s]['address'] = int(configuration['address'])
+                    config['readorders'][s]['address'] = int(configuration['address'])
                     if ('transportid' in configuration):
                         if configuration['transportid'] != "":
-                            config.ReadOrders[s]['transportid'] = int(configuration['transportid'])
+                            config['readorders'][s]['transportid'] = int(configuration['transportid'])
                     if ('registerintervaltime' in configuration):
                         if configuration['registerintervaltime'] != "":
-                            config.ReadOrders[s]['registerintervaltime'] = int(configuration['registerintervaltime'])
+                            config['readorders'][s]['registerintervaltime'] = int(configuration['registerintervaltime'])
                     if ('absolutethreshold' in configuration):
                         if configuration['absolutethreshold'] != "":
-                            config.ReadOrders[s]['absolutethreshold'] = int(configuration['absolutethreshold'])
+                            config['readorders'][s]['absolutethreshold'] = int(configuration['absolutethreshold'])
                     if ('relativethreshold' in configuration):
                         if configuration['relativethreshold'] != "":
-                            config.ReadOrders[s]['relativethreshold'] = int(configuration['relativethreshold'])
+                            config['readorders'][s]['relativethreshold'] = int(configuration['relativethreshold'])
                     if ('parameter' in configuration):
                         if configuration['parameter'] != "":
-                            config.ReadOrders[s]['parameter'] = bool(configuration['parameter'])
+                            config['readorders'][s]['parameter'] = bool(configuration['parameter'])
                     if ('signed' in configuration):
                         if configuration['signed'] != "":
                             if (str(configuration['signed']).lower() == 'true'):
-                                config.ReadOrders[s]['signed'] = True
+                                config['readorders'][s]['signed'] = True
                             else:
-                                config.ReadOrders[s]['signed'] = False
+                                config['readorders'][s]['signed'] = False
                     if ('interval' in configuration):
                         if configuration['interval'] != "":
-                            config.ReadOrders[s]['interval'] = int(configuration['interval'])
+                            config['readorders'][s]['interval'] = int(configuration['interval'])
                     if ('multiplefactor' in configuration):
                         if configuration['multiplefactor'] != "":
-                            config.ReadOrders[s]['multiplefactor'] = int(configuration['multiplefactor'])
+                            config['readorders'][s]['multiplefactor'] = int(configuration['multiplefactor'])
                     if ('transmissionmode' in configuration):
                         if configuration['transmissionmode'] != "":
-                            config.ReadOrders[s]['transmissionmode'] = (configuration['transmissionmode'])
+                            config['readorders'][s]['transmissionmode'] = (configuration['transmissionmode'])
                     if ('type' in configuration):
                         if configuration['type'] != "":
-                            config.ReadOrders[s]['type'] = int(configuration['type'])
+                            config['readorders'][s]['type'] = int(configuration['type'])
                     if ('active' in configuration):
                         if (str(configuration['active']).lower() == 'true'):
-                            config.ReadOrders[s]['active'] = True
+                            config['readorders'][s]['active'] = True
                         else:
-                            config.ReadOrders[s]['active'] = False
+                            config['readorders'][s]['active'] = False
                     if ('serverid' in configuration):
                         if configuration['serverid'] != "":
                             serverids = configuration['serverid'].replace("[","").replace("]", "").split(',')
 
-                            config.ReadOrders[s]['serverid'] = list()
+                            config['readorders'][s]['serverid'] = list()
                             for serverid in serverids:
-                                config.ReadOrders[s]['serverid'].append(int(serverid))
+                                config['readorders'][s]['serverid'].append(int(serverid))
 
 
-                    config.ReadOrders[s]['multiplefactor'] = int(configuration['multiplefactor'])
+                    config['readorders'][s]['multiplefactor'] = int(configuration['multiplefactor'])
                     if (configuration['bits'].isdigit()):
-                        config.ReadOrders[s]['bits'] = int(configuration['bits'])
+                        config['readorders'][s]['bits'] = int(configuration['bits'])
                     if 'dataarea' in configuration:
-                        config.ReadOrders[s]['dataarea'] = configuration['dataarea']
+                        config['readorders'][s]['dataarea'] = configuration['dataarea']
                     if 'target' in configuration:
-                        config.ReadOrders[s]['target'] = configuration['target']
-                    config.StoreConfig()
+                        config['readorders'][s]['target'] = configuration['target']
+                    cfg.Config.getInstance().write_config()
 
 
         except ValueError:
