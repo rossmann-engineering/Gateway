@@ -10,6 +10,7 @@
    5.2 [Modbus command](#modbuscommand)  
    5.3 [Devices](#devices)  
       >5.3.1 [Modbus Devices](#modbusdevices)
+   
    5.4 [MQTT-Broker](#mqttbroker)  
 6. [Webserver](#webserver)  
     6.1 [Main Screen](#webservermainscreen)  
@@ -133,13 +134,7 @@ Element description:
 - signed: not used
 - active: Enables to usage of the Readorder
 - absolutethreshold: Defines the difference between the last sent value and the current value, before the value will be uploaded
-- relativethreshold: threshold in percent (choose between absolutetreshold). If the deviation between the last sent value and the current value exceeds the threshold, the value will be updated.  
-- classid: For Ethernet/IP; class ID of the connection Path.   
-- instanceid: For Ethernet/IP; Instance ID of the connection Path.  
--  attributeid: For Ethernet/UP; Attribute ID of the connection Path.  
--  mask: For Ethernet/IP; Mask of the bits used to determine the Readorder value.  
--  startingbyte: For Ethernet/IP; Starting byte of the byte array which is received from the Remote Device used to determine the Readorder value.  
--  numberofbytes: For Ethernet/IP number of bytes of the byte array which is received from the Remote Device used to determine the Readorder value.  
+- relativethreshold: threshold in percent (choose between absolutetreshold). If the deviation between the last sent value and the current value exceeds the threshold, the value will be updated.
 
 
 <div id="modbuscommand"/>
@@ -180,9 +175,7 @@ Root Element: "devices"
       "type": "Modbus",
       "ipaddress": "127.0.0.1",
       "port": "502",
-      "unitidentifier": 1,
-      "identifier": "Meter 1",
-      "uid": "11:22:33:44:55"
+      "unitidentifier": 1
 ```
 
 Element Description:  
@@ -190,9 +183,7 @@ Element Description:
 - type: "Modbus" or "Bacnet". If the element is missing it is Modbus.  
 - ipaddress: IP-Address of the Modbus device.  
 - port: Port were the Modbus Server is listenening for incomming requests.  
-- unitidentifier: Modbus Slave-ID.  
-- identifier: Identifier which is attached to the MQTT message.  
-- uid: uid which is attached to the MQTT message.
+- unitidentifier: Modbus Slave-ID.
 
 <div id="mqttbroker"/>
 
@@ -260,7 +251,7 @@ The "Config Import/Export" tab allows the user to download the current configura
 
 ![image info](./pictures/webserver3.png)
 
-The Connectivity Tab provides Ingormation about the connection Status of the Modem sonnection and the Zerotier VPN Status. For test purposes AT-Commands can be send manually to the modem. The Response is displayed underneath the Input field.
+The Connectivity Tab provides Ingormation about the connection Status of the Modem connection and the Zerotier VPN Status. For test purposes AT-Commands can be send manually to the modem. The Response is displayed underneath the Input field.
 
 <div id="webserveradvanceconfiguration"/>
 

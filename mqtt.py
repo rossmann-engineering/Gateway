@@ -9,6 +9,8 @@ import database
 import traceback
 import datetime
 import logging
+import json
+import ModbusClient
 
 
 class Clients(object):
@@ -48,8 +50,9 @@ class Clients(object):
             self.clients[loopcounter]['instance'].max_queued_messages_set(1)
             self.clients[loopcounter]['instance'].on_connect = self.on_connect
             self.clients[loopcounter]['instance'].on_disconnect = self.on_disconnect
+            self.clients[loopcounter]['instance'].on_message = self.on_message
             self.clients[loopcounter]['instance'].on_publish = self.on_publish
-            #self.clients[loopcounter]['instance'].username_pw_set(mqttbroker['accesstoken'], '')
+            self.clients[loopcounter]['instance'].username_pw_set(mqttbroker['accesstoken'], '')
             while (not internet_on()):
                 cfg.Config.getInstance().mqttconnectionlost = True
                 logging.info('MQTT-Client - Wait for Internet connection available')
@@ -79,17 +82,20 @@ class Clients(object):
     def on_connect(self, client, userdata, flags, rc):
         cfg.mqttconnectionlost = False
 
-        #client.subscribe('v1/devices/me/telemetry/#')
-
-
-        #DataLogger.logData('Connected to MQTT-Broker with Status code ' + str(rc))
+        client.subscribe('v1/devices/me/rpc/request/+')
+        client.subscribe('v1/devices/me/attributes')
         pass
     def on_disconnect(self, client, userdata, flags, rc):
         logging.info('Disconnected from MQTT-Broker')
 
         pass
 
+    def on_message(self, client, userdata, msg):
 
+        logging.info('Message Received from MQTT Broker ' + str(msg.payload))
+        requestId = msg.topic.replace('v1/devices/me/rpc/request/', '')
+        client.publish('v1/devices/me/rpc/response/' + requestId, msg.payload)
+        execute_write_order(msg.payload)
 
     def on_publish(self, client, userdata, mid):
 
@@ -152,7 +158,7 @@ def publish_message(serverid, topic, payload):
                         if (response.rc == 0):
                             for x in range(6):
                                 if  response.is_published():
-                                    datalogger.logData('Message Deleted from queue ' + str(
+                                    logging.info('Message Deleted from queue ' + str(
                                         element['payload']) + " topic: " + str(
                                         element['topic']) + " Server-Response: " + str(response.rc) + "mid: " + str(
                                         response.mid))
@@ -166,10 +172,7 @@ def publish_message(serverid, topic, payload):
                             if (x >= 5):
                                 cancelSend = True
                                 break
-
-
                             pass
-
                         else:
                             cancelSend = True
                             break
@@ -186,20 +189,8 @@ def send_mqtt_data(disconnected = False, connected = False):
             mqttbroker = dict(s)
             logging.info('Sending MQTT-Data to serverid' + str(mqttbroker['serverid']))
             payload = '{"ts":' + str(int(datetime_to_unix_timestamp(datetime.datetime.now())))
-            if 'identifier' in u:
-                payload = payload + ',' + ' "identifier": "' + u['identifier'] + '"'
-            if 'uid' in u:
-                payload = payload + ',' + ' "uid": : "' + u['uid'] + '"'
-            else:
-                payload = payload + ',' + ' "type": "' + 'Modbus' + '"'
-            if 'ipaddress' in u:
-                payload = payload + ',' + ' "localaddress": "' + u['ipaddress'] + '"'
-            if 'port' in u:
-                payload = payload + ',' + ' "localport": ' + str(u['port'])
-            if 'unitidentifier' in u:
-                payload = payload + ',' + ' "slaveid": ' + str(u['unitidentifier'])
 
-            payload = payload + ', "sampledata":{'
+            payload = payload + ', "values":{'
 
 
             # This is the Message we send if the Modbus Device is not connected
@@ -241,6 +232,76 @@ def send_mqtt_data(disconnected = False, connected = False):
             if (read_order_count > 0):
                 publish_message(mqttbroker['serverid'], mqttbroker['publishtopic'], payload)
 
+def execute_write_order(payload):
+    '''
+    Example Message:{"method":"setValue","params":true}
+    or {"method":"toggle3","params":{"toggle3":1}
+    :param payload: message received from MQTT-Broker
+    '''
+    d = json.loads(payload)
+    method = d['method']
+    params = d['params']
+    config = cfg.Config.getConfig()
+    #Search for matching RadOrder
+    cfg.Config.getInstance().lock.acquire()
+    try:
+        if (not isinstance(params, dict)):      #Convert "params" to dictionary if Message Format: {"method":"setValue","params":true}
+            converted_dict = dict()
+            converted_dict[method] = params
+            params = converted_dict
+        for param in params:
+            dict_key = param
+            dict_value = params[param]
+            for t in config['readorders']:
+                readOrder = dict(t)
+                if ('dataarea' in readOrder) & ('address' in readOrder):
+                    if (readOrder['name'] == str(dict_key)) and (readOrder['dataarea'] == "Holding Register"):
+                        if 'serialPort' in config['devices'][0]:
+                            modbusClient = ModbusClient.ModbusClient(str(config.Devices[0]['serialPort']))
+                        # This is Modbus-TCP
+                        if 'ipaddress' in config['devices'][0]:
+                            if not ('port' in config['devices'][0]):
+                                config['devices'][0]['port'] = 502
+                            modbusClient = ModbusClient.ModbusClient(str(config['devices'][0]['ipaddress']),
+                                                                     int(config['devices'][0]['port']))
+                        #if not isinstance(params, dict):      # Message Format: {"method":"setValue","params":true}
+                        #    value = int(params)               # commented, because Message Format is converted at beginning
+                        #else:                                 # Message Format: {"method":"toggle3","params":{"toggle3":1}
+                        value = int(dict_value)
+                        valueChanged = False
+                        if 'value' in readOrder:
+                            valueChanged = True#(value != readOrder['value'])
+                        else:
+                            valueChanged = True
+                        if valueChanged:
+                            # This is Modbus-RTU
+                            if ('serialPort' in config['devices'][0]):
+                                modbusClient.Parity = (config['devices'][0]['parity'])
+                                modbusClient.Baudrate = (config['devices'][0]['baudrate'])
+                                modbusClient.Stopbits = (config['devices'][0]['stopbits'])
+                            if ('ipaddress' in config['devices'][0]):
+                                if (not ('port' in config['devices'][0])):
+                                    config['devices']['port'] = 502
+                                modbusClient = ModbusClient.ModbusClient(
+                                    str(config['devices'][0]['ipaddress']),
+                                    int(config['devices'][0]['port']))
+                            if ('unitidentifier' in config['devices'][0]):
+                                modbusClient.UnitIdentifier = (config['devices'][0]['unitidentifier'])
+                            if (not modbusClient.is_connected()):
+                                modbusClient.connect()
+                        register = (readOrder['address'])
+                        if not ('multiplefactor' in readOrder):
+                            readOrder['multiplefactor'] = 1
+                        valueToWrite = int(round(value * readOrder['multiplefactor']))
+                        modbusClient.write_single_register(register - 1, valueToWrite)
+                        readOrder['value'] = value
+                        logging.info(
+                            'Write Order Executed Value: ' + str(valueToWrite) + " Register: " + str(register))
+    except Exception as e:
+        logging.error('Exception Execute Write Order received from MQTT-Broker: ' + str(traceback.format_exc()))
+        return
+    finally:
+        cfg.Config.getInstance().lock.release()
 
 def datetime_to_unix_timestamp(dt):
     return (dt - datetime.datetime(1970,1,1)).total_seconds() * 1000

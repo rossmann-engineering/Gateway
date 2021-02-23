@@ -1,14 +1,14 @@
 [Unit]
-Description=Industrial Data collector
+Description=Modbus MQTT Gateway
 After=syslog.target
 
 [Service]
 Type=simple
 User=root
 Group=root
-WorkingDirectory=/home/collector
-ExecStart=/home/collector/run.py
-SyslogIdentifier=collector
+WorkingDirectory=/home/gateway
+ExecStart=/home/gateway/run.py
+SyslogIdentifier=gateway
 StandardOutput=syslog
 StandardError=syslog
 Restart=always

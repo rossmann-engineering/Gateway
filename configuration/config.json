@@ -2,17 +2,15 @@
   "readinterval": 30.0,
   "basicinterval": 150.0,
   "loggingmultiplier": 2,
-  "loglevel": "error",
+  "loglevel": "debug",
   "mqttbroker": [
     {
-      "name": "Test",
-      "address": "sre-solutions.com",
-      "port": "1885",
+      "name": "Wise Energy Gateway 1",
+      "address": "167.172.58.209",
+      "port": "1883",
       "publishtopic": "v1/devices/me/telemetry",
-      "accesstoken": "preAneTCuLkD705s12ZD",
-      "username": "wiseenergy",
-      "password": "123456",
-      "serverid": 3
+      "accesstoken": "riGZ6pCswSHu3kzRAfKM",
+      "serverid": 1
     }
   ],
   "devices": [
@@ -21,9 +19,7 @@
       "type": "Modbus",
       "ipaddress": "127.0.0.1",
       "port": "502",
-      "unitidentifier": 1,
-      "identifier": "Meter 1",
-      "uid": "11:22:33:44:55"
+      "unitidentifier": 1
     }
   ],
   "modbuscommand": [
@@ -62,8 +58,14 @@
       "serverid": [
         1
       ],
-      "multiplefactor": 1
-    },{
+      "multiplefactor": 1,
+      "oldvalue": 0,
+      "value": 0,
+      "sendValue": false,
+      "nextwakeup": 1614063630.0,
+      "latestreading": 0
+    },
+    {
       "address": 3,
       "name": "Hours up and running",
       "bits": 32,
@@ -78,8 +80,14 @@
       "serverid": [
         1
       ],
-      "multiplefactor": 1
-    },{
+      "multiplefactor": 1,
+      "oldvalue": 0,
+      "value": 0,
+      "sendValue": false,
+      "nextwakeup": 1614063630.0,
+      "latestreading": 0
+    },
+    {
       "address": 8,
       "name": "Inverter Alarms",
       "bits": 16,
@@ -94,8 +102,14 @@
       "serverid": [
         1
       ],
-      "multiplefactor": 1
-    },{
+      "multiplefactor": 1,
+      "oldvalue": 0,
+      "value": 0,
+      "sendValue": false,
+      "nextwakeup": 1614063630.0,
+      "latestreading": 0
+    },
+    {
       "address": 9,
       "name": "DC input voltage",
       "bits": 16,
@@ -110,8 +124,14 @@
       "serverid": [
         1
       ],
-      "multiplefactor": 1
-    },{
+      "multiplefactor": 1,
+      "oldvalue": 0,
+      "value": 0,
+      "sendValue": false,
+      "nextwakeup": 1614063630.0,
+      "latestreading": 0
+    },
+    {
       "address": 10,
       "name": "Average input current estimation",
       "bits": 16,
@@ -126,8 +146,14 @@
       "serverid": [
         1
       ],
-      "multiplefactor": 1
-    },{
+      "multiplefactor": 1,
+      "oldvalue": 0,
+      "value": 0,
+      "sendValue": false,
+      "nextwakeup": 1614063630.0,
+      "latestreading": 0
+    },
+    {
       "address": 11,
       "name": "Grid RMS Voltage, phase 1",
       "bits": 16,
@@ -142,8 +168,14 @@
       "serverid": [
         1
       ],
-      "multiplefactor": 1
-    },{
+      "multiplefactor": 1,
+      "oldvalue": 0,
+      "value": 0,
+      "sendValue": false,
+      "nextwakeup": 1614063630.0,
+      "latestreading": 0
+    },
+    {
       "address": 12,
       "name": "Grid RMS Voltage, phase 2",
       "bits": 16,
@@ -158,8 +190,14 @@
       "serverid": [
         1
       ],
-      "multiplefactor": 1
-    },{
+      "multiplefactor": 1,
+      "oldvalue": 0,
+      "value": 0,
+      "sendValue": false,
+      "nextwakeup": 1614063630.0,
+      "latestreading": 0
+    },
+    {
       "address": 13,
       "name": "Grid RMS Voltage, phase 3",
       "bits": 16,
@@ -174,8 +212,14 @@
       "serverid": [
         1
       ],
-      "multiplefactor": 1
-    },{
+      "multiplefactor": 1,
+      "oldvalue": 0,
+      "value": 0,
+      "sendValue": false,
+      "nextwakeup": 1614063630.0,
+      "latestreading": 0
+    },
+    {
       "address": 14,
       "name": "Grid RMS Current, phase 1",
       "bits": 16,
@@ -190,8 +234,14 @@
       "serverid": [
         1
       ],
-      "multiplefactor": 1
-    },{
+      "multiplefactor": 1,
+      "oldvalue": 0,
+      "value": 0,
+      "sendValue": false,
+      "nextwakeup": 1614063630.0,
+      "latestreading": 0
+    },
+    {
       "address": 15,
       "name": "Grid RMS Current, phase 2",
       "bits": 16,
@@ -206,8 +256,14 @@
       "serverid": [
         1
       ],
-      "multiplefactor": 1
-    },{
+      "multiplefactor": 1,
+      "oldvalue": 0,
+      "value": 0,
+      "sendValue": false,
+      "nextwakeup": 1614063630.0,
+      "latestreading": 0
+    },
+    {
       "address": 16,
       "name": "Grid RMS Current, phase 3",
       "bits": 16,
@@ -222,8 +278,14 @@
       "serverid": [
         1
       ],
-      "multiplefactor": 1
-    },{
+      "multiplefactor": 1,
+      "oldvalue": 0,
+      "value": 0,
+      "sendValue": false,
+      "nextwakeup": 1614063630.0,
+      "latestreading": 0
+    },
+    {
       "address": 17,
       "name": "Cos Phi",
       "bits": 16,
@@ -238,8 +300,14 @@
       "serverid": [
         1
       ],
-      "multiplefactor": 1000
-    },{
+      "multiplefactor": 1000,
+      "oldvalue": 0.0,
+      "value": 0.0,
+      "sendValue": false,
+      "nextwakeup": 1614063630.0,
+      "latestreading": 0.0
+    },
+    {
       "address": 19,
       "name": "Active Power",
       "bits": 16,
@@ -254,8 +322,14 @@
       "serverid": [
         1
       ],
-      "multiplefactor": 10
-    },{
+      "multiplefactor": 10,
+      "oldvalue": 0.0,
+      "value": 0.0,
+      "sendValue": false,
+      "nextwakeup": 1614063630.0,
+      "latestreading": 0.0
+    },
+    {
       "address": 59,
       "name": "Energy Resetable Counter",
       "bits": 32,
@@ -270,8 +344,14 @@
       "serverid": [
         1
       ],
-      "multiplefactor": 10
-    },{
+      "multiplefactor": 10,
+      "oldvalue": 0.0,
+      "value": 0.0,
+      "sendValue": false,
+      "nextwakeup": 1614063630.0,
+      "latestreading": 0.0
+    },
+    {
       "address": 72,
       "name": "Power electronics temperatur",
       "bits": 16,
@@ -286,8 +366,14 @@
       "serverid": [
         1
       ],
-      "multiplefactor": 1
-    },{
+      "multiplefactor": 1,
+      "oldvalue": 0,
+      "value": 0,
+      "sendValue": false,
+      "nextwakeup": 1614063630.0,
+      "latestreading": 0
+    },
+    {
       "address": 73,
       "name": "Control electronics temperature",
       "bits": 16,
@@ -302,9 +388,14 @@
       "serverid": [
         1
       ],
-      "multiplefactor": 1
-    }
-    ,{
+      "multiplefactor": 1,
+      "oldvalue": 0,
+      "value": 0,
+      "sendValue": false,
+      "nextwakeup": 1614063630.0,
+      "latestreading": 0
+    },
+    {
       "address": 77,
       "name": "Nominal Power",
       "bits": 16,
@@ -319,8 +410,14 @@
       "serverid": [
         1
       ],
-      "multiplefactor": 1
-    },{
+      "multiplefactor": 1,
+      "oldvalue": 0,
+      "value": 0,
+      "sendValue": false,
+      "nextwakeup": 1614063630.0,
+      "latestreading": 0
+    },
+    {
       "address": 117,
       "name": "Power reduction register",
       "bits": 16,
@@ -335,8 +432,14 @@
       "serverid": [
         1
       ],
-      "multiplefactor": 1
-    },{
+      "multiplefactor": 1,
+      "oldvalue": 0,
+      "value": 0,
+      "sendValue": false,
+      "nextwakeup": 1614063630.0,
+      "latestreading": 0
+    },
+    {
       "address": 118,
       "name": "RedPotencia",
       "bits": 16,
@@ -351,8 +454,14 @@
       "serverid": [
         1
       ],
-      "multiplefactor": 1
-    },{
+      "multiplefactor": 1,
+      "oldvalue": 0,
+      "value": 0,
+      "sendValue": false,
+      "nextwakeup": 1614063630.0,
+      "latestreading": 0
+    },
+    {
       "address": 1,
       "name": "Command code",
       "bits": 16,
@@ -367,8 +476,14 @@
       "serverid": [
         1
       ],
-      "multiplefactor": 1
-    },{
+      "multiplefactor": 1,
+      "oldvalue": 0,
+      "value": 0,
+      "sendValue": false,
+      "nextwakeup": 1614063630.0,
+      "latestreading": 0
+    },
+    {
       "address": 2,
       "name": "Command Data 1",
       "bits": 16,
@@ -383,8 +498,14 @@
       "serverid": [
         1
       ],
-      "multiplefactor": 1
-    },{
+      "multiplefactor": 1,
+      "oldvalue": 0,
+      "value": 0,
+      "sendValue": false,
+      "nextwakeup": 1614063630.0,
+      "latestreading": 0
+    },
+    {
       "address": 3,
       "name": "Command Data 2",
       "bits": 16,
@@ -399,7 +520,31 @@
       "serverid": [
         1
       ],
-      "multiplefactor": 1
+      "multiplefactor": 1,
+      "oldvalue": 0,
+      "value": 0,
+      "sendValue": false,
+      "nextwakeup": 1614063630.0,
+      "latestreading": 0
+    },
+    {
+      "address": 4,
+      "name": "setPowerReduction",
+      "bits": 32,
+      "absolutethreshold": 0,
+      "transportid": 1,
+      "logmodbusdata": false,
+      "active": false,
+      "registerintervaltime": 1,
+      "signed": false,
+      "dataarea": "Holding Register",
+      "threshold": 0,
+      "serverid": [
+        1
+      ],
+      "multiplefactor": 1,
+      "datatype": "float"
+
     }
   ]
 }
