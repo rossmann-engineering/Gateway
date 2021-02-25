@@ -372,7 +372,7 @@ def readvpnstatus ():
     try:
         zerotier = ""
         if is_linux:
-            zerotier = console("zerotier-cli -j info")
+            zerotier = console("sudo zerotier-cli -j info")
         else:
             file = open("windowssimulation/zerotier-cli -j info.txt", "rb")
             zerotier = file.read()
