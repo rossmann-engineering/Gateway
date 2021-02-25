@@ -84,9 +84,9 @@ def index():
     #------------------------------ Read Gateway CPU Data Start ----------------------
     try:
         deviceinformations = osinterface.readdeviceinformations()
-        config.ReadVersion()
+        cfg.Config.getInstance().read_version()
     except Exception:
-        logging.error('Webserver: Unable to Read Deviceinformations from device: ' + str(traceback))
+        logging.error('Webserver: Unable to Read Deviceinformations from device: ' + str(traceback.format_exc()))
 
     pythonswversion = cfg.Config.getInstance().pythonswversion
     webserverversion = cfg.Config.getInstance().webserverversion
@@ -481,21 +481,21 @@ def modbuswrite():
 
             try:
                 logging.debug('Webserver: Request to Write Holding Register: ' + request.form['register'] + ', value: ' + request.form['value'])
-                config = cfg.Config.getInstance()
-                config.lock.acquire()
+                config = cfg.Config.getConfig()
+                cfg.Config.getInstance().lock.acquire()
 
-                if ('serialPort' in config.Devices[transportid - 1]):
-                    modbusClient = ModbusClient.ModbusClient(str(config.Devices[transportid - 1]['serialPort']))
-                    modbusClient.Parity = config.Devices[transportid - 1]['parity']
-                    modbusClient.Baudrate = config.Devices[transportid - 1]['baudrate']
-                    modbusClient.Stopbits = config.Devices[transportid - 1]['stopbits']
-                if ('ipaddress' in config.Devices[transportid - 1]):
-                    if (not ('port' in config.Devices[transportid - 1])):
-                        config.Devices[transportid - 1]['port'] = 502
-                    modbusClient = ModbusClient.ModbusClient(str(config.Devices[transportid - 1]['ipaddress']),
-                                                             int(config.Devices[transportid - 1]['port']))
-                if ('unitidentifier' in config.Devices[transportid - 1]):
-                    modbusClient.UnitIdentifier = config.Devices[transportid - 1]['unitidentifier']
+                if ('serialPort' in config['devices'][transportid - 1]):
+                    modbusClient = ModbusClient.ModbusClient(str(config['devices'][transportid - 1]['serialPort']))
+                    modbusClient.Parity = config['devices'][transportid - 1]['parity']
+                    modbusClient.Baudrate = config['devices'][transportid - 1]['baudrate']
+                    modbusClient.Stopbits = config['devices'][transportid - 1]['stopbits']
+                if ('ipaddress' in config['devices'][transportid - 1]):
+                    if (not ('port' in config['devices'][transportid - 1])):
+                        config['devices'][transportid - 1]['port'] = 502
+                    modbusClient = ModbusClient.ModbusClient(str(config['devices'][transportid - 1]['ipaddress']),
+                                                             int(config['devices'][transportid - 1]['port']))
+                if ('unitidentifier' in config['devices'][transportid - 1]):
+                    modbusClient.UnitIdentifier = config['devices'][transportid - 1]['unitidentifier']
 
                 modbusClient.Timeout = 5
                 modbusClient.connect()
@@ -506,7 +506,7 @@ def modbuswrite():
                 logging.error('Webserver: Unable to write Registers to Modbus Slave: ' + str(e))
             finally:
                 modbusClient.close()
-                config.lock.release()
+                cfg.Config.getInstance().lock.release()
         elif (value == ''):
             parameter = {'failed' : 'Please enter a valid value'}
             logging.error('Webserver: Unable to write Registers to Modbus Slave, invalid value')
@@ -538,20 +538,20 @@ def modbusread():
             quantity=''
         if (register != '' and quantity != ''):
             try:
-                config = cfg.Config.getInstance()
-                config.lock.acquire()
-                if ('serialPort' in config.Devices[transportid - 1]):
-                    modbusClient = ModbusClient.ModbusClient(str(config.Devices[transportid - 1]['serialPort']))
-                    modbusClient.Parity = config.Devices[transportid - 1]['parity']
-                    modbusClient.Baudrate = config.Devices[transportid - 1]['baudrate']
-                    modbusClient.Stopbits = config.Devices[transportid - 1]['stopbits']
-                if ('ipaddress' in config.Devices[transportid - 1]):
-                    if (not ('port' in config.Devices[transportid - 1])):
-                        config.Devices[transportid - 1]['port'] = 502
-                    modbusClient = ModbusClient.ModbusClient(str(config.Devices[transportid - 1]['ipaddress']),
-                                                             int(config.Devices[transportid - 1]['port']))
-                if ('unitidentifier' in config.Devices[transportid - 1]):
-                    modbusClient.UnitIdentifier = config.Devices[transportid - 1]['unitidentifier']
+                config = cfg.Config.getConfig()
+                cfg.Config.getInstance().lock.acquire()
+                if ('serialPort' in config['devices'][transportid - 1]):
+                    modbusClient = ModbusClient.ModbusClient(str(config['devices'][transportid - 1]['serialPort']))
+                    modbusClient.Parity = config['devices'][transportid - 1]['parity']
+                    modbusClient.Baudrate = config['devices'][transportid - 1]['baudrate']
+                    modbusClient.Stopbits = config['devices'][transportid - 1]['stopbits']
+                if ('ipaddress' in config['devices'][transportid - 1]):
+                    if (not ('port' in config['devices'][transportid - 1])):
+                        config['devices'][transportid - 1]['port'] = 502
+                    modbusClient = ModbusClient.ModbusClient(str(config['devices'][transportid - 1]['ipaddress']),
+                                                             int(config['devices'][transportid - 1]['port']))
+                if ('unitidentifier' in config['devices'][transportid - 1]):
+                    modbusClient.UnitIdentifier = config['devices'][transportid - 1]['unitidentifier']
                 modbusClient.Timeout = 5
                 modbusClient.connect()
                 if (datatype == 'holdingregisters'):
@@ -567,7 +567,7 @@ def modbusread():
                 logging.error('Webserver: Unable to Read Registers from Modbus Slave: ' + str(traceback.format_exc()))
             finally:
                 modbusClient.close()
-                config.lock.release()
+                cfg.Config.getInstance().lock.release()
 
         elif (quantity == ''):
             readparameter = {'failed' : 'Please enter a quantity'}
@@ -583,35 +583,35 @@ def modbuscheckconnectivity():
    readparameter = {}
    response = dict()
    parameter = {}
-   config = cfg.Config.getInstance()
+   config = cfg.Config.getConfig()
    if request.method == 'POST':
-        if ('serialPort' in config.Devices[0]):
-            modbusClient = ModbusClient.ModbusClient(str(config.Devices[0]['serialPort']))
-        if ('ipaddress' in config.Devices[0]):
-            if (not ('port' in config.Devices[0])):
-                config.Devices[0]['port'] = 502
-            modbusClient = ModbusClient.ModbusClient(str(config.Devices[0]['ipaddress']),config.Devices[0]['port'])
+        if ('serialPort' in config['devices'][0]):
+            modbusClient = ModbusClient.ModbusClient(str(config['devices'][0]['serialPort']))
+        if ('ipaddress' in config['devices'][0]):
+            if (not ('port' in config['devices'][0])):
+                config['devices'][0]['port'] = 502
+            modbusClient = ModbusClient.ModbusClient(str(config['devices'][0]['ipaddress']),config['devices'][0]['port'])
 
         try:
             if request.form['transportid'] == "":
                 transportid = 1
             else:
                 transportid = int(request.form['transportid'])
-            config.lock.acquire()
+            cfg.Config.getInstance().lock.acquire()
 
 
-            if ('serialPort' in config.Devices[transportid - 1]):
-                modbusClient = ModbusClient.ModbusClient(str(config.Devices[transportid - 1]['serialPort']))
-                modbusClient.Parity = config.Devices[transportid - 1]['parity']
-                modbusClient.Baudrate = config.Devices[transportid - 1]['baudrate']
-                modbusClient.Stopbits = config.Devices[transportid - 1]['stopbits']
-            if ('ipaddress' in config.Devices[transportid - 1]):
-                if (not ('port' in config.Devices[transportid - 1])):
+            if ('serialPort' in config['devices'][transportid - 1]):
+                modbusClient = ModbusClient.ModbusClient(str(config['devices'][transportid - 1]['serialPort']))
+                modbusClient.Parity = config['devices'][transportid - 1]['parity']
+                modbusClient.Baudrate = config['devices'][transportid - 1]['baudrate']
+                modbusClient.Stopbits = config['devices'][transportid - 1]['stopbits']
+            if ('ipaddress' in config['devices'][transportid - 1]):
+                if (not ('port' in config['devices'][transportid - 1])):
                     config.Devices[transportid - 1]['port'] = 502
-                modbusClient = ModbusClient.ModbusClient(str(config.Devices[transportid - 1]['ipaddress']),
-                                                         int(config.Devices[transportid - 1]['port']))
-            if ('unitidentifier' in config.Devices[transportid - 1]):
-                modbusClient.UnitIdentifier = config.Devices[transportid - 1]['unitidentifier']
+                modbusClient = ModbusClient.ModbusClient(str(config['devices'][transportid - 1]['ipaddress']),
+                                                         int(config['devices'][transportid - 1]['port']))
+            if ('unitidentifier' in config['devices'][transportid - 1]):
+                modbusClient.UnitIdentifier = config['devices'][transportid - 1]['unitidentifier']
 
             modbusClient.Timeout = 5
             modbusClient.connect()
@@ -622,7 +622,7 @@ def modbuscheckconnectivity():
         finally:
             if (modbusClient.is_connected()):
                 modbusClient.close()
-            config.lock.release()
+            cfg.Config.getInstance().lock.release()
    return render_template('modbus.html', parameter=parameter, parameter2=readparameter, response=response, admin = loginadmin)
 
 
