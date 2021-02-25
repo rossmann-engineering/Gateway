@@ -891,8 +891,9 @@ def configformreadorders():
 
 
                     config['readorders'][s]['multiplefactor'] = int(configuration['multiplefactor'])
-                    if (configuration['bits'].isdigit()):
-                        config['readorders'][s]['bits'] = int(configuration['bits'])
+                    if 'bits' in configuration:
+                        if (configuration['bits'].isdigit()):
+                            config['readorders'][s]['bits'] = int(configuration['bits'])
                     if 'dataarea' in configuration:
                         config['readorders'][s]['dataarea'] = configuration['dataarea']
                     if 'target' in configuration:

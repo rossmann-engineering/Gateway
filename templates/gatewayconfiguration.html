@@ -382,12 +382,12 @@ function myFunction() {
                         <option value="Input Register" {% if parameter.readorders[0].dataarea == "Input Register" %} selected {% endif %}>Input Register</option>
                         <option value="Holding Register" {% if parameter.readorders[0].dataarea == "Holding Register" %} selected {% endif %}>Holding Register</option>
                     {% else %}
-                        <option value="Analog Value" {% if parameter.readorders[0].dataarea == "analogValue" %} selected {% endif %}>Analog Value</option>
-                        <option value="Analog Input" {% if parameter.readorders[0].dataarea == "analogInput" %} selected {% endif %}>Analog Input</option>
-                        <option value="Analog Value" {% if parameter.readorders[0].dataarea == "binaryValue" %} selected {% endif %}>Binary Value</option>
-                        <option value="Analog Input" {% if parameter.readorders[0].dataarea == "binaryInput" %} selected {% endif %}>Binary Input</option>
-                        <option value="Multi-State Value" {% if parameter.readorders[0].dataarea == "multiStateValue" %} selected {% endif %}>Multi-State Value</option>
-                        <option value="Multi-State Input" {% if parameter.readorders[0].dataarea == "multiStateInput" %} selected {% endif %}>Multi-State Input</option>
+                        <option value="analogValue" {% if parameter.readorders[0].dataarea == "analogValue" %} selected {% endif %}>Analog Value</option>
+                        <option value="analogInput" {% if parameter.readorders[0].dataarea == "analogInput" %} selected {% endif %}>Analog Input</option>
+                        <option value="binaryValue" {% if parameter.readorders[0].dataarea == "binaryValue" %} selected {% endif %}>Binary Value</option>
+                        <option value="binaryInput" {% if parameter.readorders[0].dataarea == "binaryInput" %} selected {% endif %}>Binary Input</option>
+                        <option value="multiStateValue" {% if parameter.readorders[0].dataarea == "multiStateValue" %} selected {% endif %}>Multi-State Value</option>
+                        <option value="multiStateInput" {% if parameter.readorders[0].dataarea == "multiStateInput" %} selected {% endif %}>Multi-State Input</option>
                     {% endif %}
                 </select>
             </div>
@@ -1498,17 +1498,28 @@ function readOrderSelctionChanged() {
     document.getElementById("absolutethreshold").value = "";
     document.getElementById("relativethreshold").value = "";
     document.getElementById("registerintervaltime").value = "";
-    document.getElementById("signed").value = "";
-    document.getElementById("multiplefactor").value = "";
-    document.getElementById("bits").value = "";
-    document.getElementById("serverid").value = "";
-    document.getElementById("target").value = "";
-    document.getElementById("active").value = "";
-    document.getElementById("sourceLabel").innerHTML = "";
-    document.getElementById("classid").innerHTML = "";
-    document.getElementById("instanceid").innerHTML = "";
-    document.getElementById("attributeid").innerHTML = "";
-    document.getElementById("mask").innerHTML = "";
+    if (document.getElementById("signed") !== null)
+        document.getElementById("signed").value = "";
+    if (document.getElementById("multiplefactor") !== null)
+        document.getElementById("multiplefactor").value = "";
+    if (document.getElementById("bits") !== null)
+        document.getElementById("bits").value = "";
+    if (document.getElementById("serverid") !== null)
+        document.getElementById("serverid").value = "";
+    if (document.getElementById("target") !== null)
+        document.getElementById("target").value = "";
+    if (document.getElementById("active") !== null)
+        document.getElementById("active").value = "";
+    if (document.getElementById("sourceLabel") !== null)
+        document.getElementById("sourceLabel").innerHTML = "";
+    if (document.getElementById("classid") !== null)
+        document.getElementById("classid").innerHTML = "";
+    if (document.getElementById("instanceid") !== null)
+        document.getElementById("instanceid").innerHTML = "";
+    if (document.getElementById("attributeid") !== null)
+        document.getElementById("attributeid").innerHTML = "";
+    if (document.getElementById("mask") !== null)
+        document.getElementById("mask").innerHTML = "";
     var user = JSON.parse('{{ parameter | tojson | safe}}');
     var selectedindex = document.getElementById("readorders").selectedIndex;
     for (var ro in user.readorders) {
@@ -1526,15 +1537,21 @@ function readOrderSelctionChanged() {
     console.log(selectedindex);
     if (user.readorders[selectedindex].fieldbustype == "Modbus")
     {
-        document.getElementById("classidrow").style.display = "none";
-        document.getElementById("instanceidrow").style.display = "none";
-        document.getElementById("attributeidrow").style.display = "none";
-        document.getElementById("maskrow").style.display = "none";
-        document.getElementById("numberofbytesrow").style.display = "none";
-        document.getElementById("startingbyterow").style.display = "none";
+        if (document.getElementById("classidrow") !== null)
+            document.getElementById("classidrow").style.display = "none";
+        if (document.getElementById("instanceidrow") !== null)
+            document.getElementById("instanceidrow").style.display = "none";
+        if (document.getElementById("attributeidrow") !== null)
+            document.getElementById("attributeidrow").style.display = "none";
+        if (document.getElementById("maskrow") !== null)
+            document.getElementById("maskrow").style.display = "none";
+        if (document.getElementById("numberofbytesrow") !== null)
+            document.getElementById("numberofbytesrow").style.display = "none";
+        if (document.getElementById("startingbyterow") !== null)
+            document.getElementById("startingbyterow").style.display = "none";
 
-
-        document.getElementById("readordersmodbus").style.display = "block";
+        if (document.getElementById("readordersmodbus") !== null)
+            document.getElementById("readordersmodbus").style.display = "block";
         document.getElementById("dataarea").options.length = 0;
         var option = document.createElement("option");
         option.text = "Input Register";
@@ -1545,23 +1562,37 @@ function readOrderSelctionChanged() {
     }
     else if (user.readorders[selectedindex].fieldbustype == "EthernetIP")
     {
-        document.getElementById("classidrow").style.display = "block";
-        document.getElementById("instanceidrow").style.display = "block";
-        document.getElementById("attributeidrow").style.display = "block";
-        document.getElementById("maskrow").style.display = "block";
-        document.getElementById("numberofbytesrow").style.display = "block";
-        document.getElementById("startingbyterow").style.display = "block";
+        if (document.getElementById("classidrow") !== null)
+            document.getElementById("classidrow").style.display = "block";
+        if (document.getElementById("instanceidrow") !== null)
+            document.getElementById("instanceidrow").style.display = "block";
+        if (document.getElementById("attributeidrow") !== null)
+            document.getElementById("attributeidrow").style.display = "block";
+        if (document.getElementById("maskrow") !== null)
+            document.getElementById("maskrow").style.display = "block";
+        if (document.getElementById("numberofbytesrow") !== null)
+            document.getElementById("numberofbytesrow").style.display = "block";
+        if (document.getElementById("startingbyterow") !== null)
+            document.getElementById("startingbyterow").style.display = "block";
     }
     else
     {
-        document.getElementById("classidrow").style.display = "none";
-        document.getElementById("instanceidrow").style.display = "none";
-        document.getElementById("attributeidrow").style.display = "none";
-        document.getElementById("maskrow").style.display = "none";
-        document.getElementById("numberofbytesrow").style.display = "none";
-        document.getElementById("startingbyterow").style.display = "none";
-        document.getElementById("readordersmodbus").style.display = "none";
-        document.getElementById("dataarea").options.length = 0;
+        if (document.getElementById("classidrow") !== null)
+            document.getElementById("classidrow").style.display = "none";
+        if (document.getElementById("instanceidrow") !== null)
+            document.getElementById("instanceidrow").style.display = "none";
+        if (document.getElementById("attributeidrow") !== null)
+            document.getElementById("attributeidrow").style.display = "none";
+        if (document.getElementById("maskrow") !== null)
+            document.getElementById("maskrow").style.display = "none";
+        if (document.getElementById("numberofbytesrow") !== null)
+            document.getElementById("numberofbytesrow").style.display = "none";
+        if (document.getElementById("startingbyterow") !== null)
+            document.getElementById("startingbyterow").style.display = "none";
+        if (document.getElementById("readordersmodbus") !== null)
+            document.getElementById("readordersmodbus").style.display = "none";
+        if (document.getElementById("dataarea") !== null)
+            document.getElementById("dataarea").options.length = 0;
         var option = document.createElement("option");
         option.value = "analogValue";
         option.text = "Analog Value";
