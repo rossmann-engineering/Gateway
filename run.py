@@ -18,6 +18,7 @@ import mqtt
 import logging
 import os, errno
 import pos_edge
+import datalogger
 
 # ------------------------- Initiate logging Start
 try:
@@ -45,6 +46,13 @@ formatter1 = logging.Formatter("%(asctime)s;%(message)s",
 handler1.setFormatter(formatter1)
 console = logging.StreamHandler()
 logging.getLogger().addHandler(console)
+
+
+handler2 = datalogger.MailHandler()
+handler2.setLevel(logging.ERROR)
+logging.getLogger().addHandler(handler2)
+handler2.setFormatter(formatter1)
+
 # ------------------------- Initiate logging End
 
 

@@ -12,6 +12,7 @@ import datetime
 import os, errno
 import database
 import mail
+from logging import StreamHandler
 
 try:
     os.makedirs('unitdatabase')
@@ -154,3 +155,23 @@ def __deleteOldestFile(path):
     list_of_files.sort()
     os.remove((path+"//"+list_of_files[0]))
     logging.info('Folder size exceeded of CSV-Logdata Deleted File: ' + path+"//"+list_of_files[0])
+
+
+
+
+class MailHandler(StreamHandler):
+
+    def __init__(self):
+        StreamHandler.__init__(self)
+        self.lastdtsend = None
+
+
+    def emit(self, record):
+        if self.lastdtsend == None:
+            self.lastdtsend = datetime.datetime(year=1970, month=1, day=1)
+        if (datetime.datetime.now() > (self.lastdtsend + datetime.timedelta(hours=1))):
+            config = cfg.Config.getConfig()
+            msg = self.format(record)
+            if config.get('emailerrornotification', '') != '':
+                mail.send_mail(config['emailerrornotification'], body='Gateway error: {0}'.format(msg))
+            self.lastdtsend = datetime.datetime.now()
