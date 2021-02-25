@@ -11,6 +11,7 @@ import traceback
 import datetime
 import os, errno
 import database
+import mail
 
 try:
     os.makedirs('unitdatabase')
@@ -59,8 +60,6 @@ def logMQTTRegisterData(dataToWrite):
         pass
 
 
-
-
 def registerLogFileCSV():
     try:
         config = cfg.Config.getConfig()
@@ -70,6 +69,12 @@ def registerLogFileCSV():
         currentDay = currentDateTime.day
         currentMonth = currentDateTime.month
         currentYear = currentDateTime.year
+
+        yestardayDateTime = (datetime.datetime.now() - datetime.timedelta(days=1))
+        yesterdayDay = yestardayDateTime.day
+        yesterdayMonth = yestardayDateTime.month
+        yestardayYear = yestardayDateTime.year
+
 
         packagedir = os.path.dirname(os.path.abspath(__file__))     #get the Package directory, from there we get the subdirectoties
         directory = os.path.join(packagedir, 'unitdatabase')
@@ -95,6 +100,16 @@ def registerLogFileCSV():
 
                 writer = csv.DictWriter(csvfile, fieldnames=fieldnames, lineterminator='\n')
                 writer.writeheader()
+
+            #----------------------------------------------Check if yestardays File exist, if yes send if via mail start
+            yestardayfilename = os.path.join(directory,
+                                             'registerlogdata' + str(yestardayYear) + str(yesterdayMonth) + str(
+                                                 yesterdayDay) + '.csv')
+            if (os.path.isfile(yestardayfilename)):
+                if config.get('emailregisterlogfiles', '') != '':
+                    mail.send_mail(config['emailregisterlogfiles'], yestardayfilename)
+            #----------------------------------------------Check if yestardays File exist, if yes send if via mail end
+
 
         cfg.Config.getInstance().registerlogfilecounter = cfg.Config.getInstance().registerlogfilecounter + 1
 

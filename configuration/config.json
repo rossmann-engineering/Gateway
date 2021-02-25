@@ -3,6 +3,14 @@
   "basicinterval": 150.0,
   "loggingmultiplier": 2,
   "loglevel": "debug",
+  "emailregisterlogfiles": "info@rossmann-engineering.de",
+  "emailerrornotification": "info@rossmann-engineering.de",
+  "emailfromaddress": "gateway@sre-solutions.com",
+  "smtphost": "smtp.ionos.de",
+  "smtpport": 587,
+  "smtpusername": "gateway@sre-solutions.com",
+  "smtppassword": "GatewayTestAccount4711!",
+  "smtpenabletls": true,
   "mqttbroker": [
     {
       "name": "Wise Energy Gateway 1",
@@ -59,10 +67,10 @@
         1
       ],
       "multiplefactor": 1,
-      "oldvalue": 0,
+      "oldvalue": 999999999.99,
       "value": 0,
       "sendValue": false,
-      "nextwakeup": 1614063630.0,
+      "nextwakeup": 1614257430.0,
       "latestreading": 0
     },
     {
@@ -81,10 +89,10 @@
         1
       ],
       "multiplefactor": 1,
-      "oldvalue": 0,
+      "oldvalue": 999999999.99,
       "value": 0,
       "sendValue": false,
-      "nextwakeup": 1614063630.0,
+      "nextwakeup": 1614257430.0,
       "latestreading": 0
     },
     {
@@ -103,10 +111,10 @@
         1
       ],
       "multiplefactor": 1,
-      "oldvalue": 0,
+      "oldvalue": 999999999.99,
       "value": 0,
       "sendValue": false,
-      "nextwakeup": 1614063630.0,
+      "nextwakeup": 1614257430.0,
       "latestreading": 0
     },
     {
@@ -125,10 +133,10 @@
         1
       ],
       "multiplefactor": 1,
-      "oldvalue": 0,
+      "oldvalue": 999999999.99,
       "value": 0,
       "sendValue": false,
-      "nextwakeup": 1614063630.0,
+      "nextwakeup": 1614257430.0,
       "latestreading": 0
     },
     {
@@ -147,10 +155,10 @@
         1
       ],
       "multiplefactor": 1,
-      "oldvalue": 0,
+      "oldvalue": 999999999.99,
       "value": 0,
       "sendValue": false,
-      "nextwakeup": 1614063630.0,
+      "nextwakeup": 1614257430.0,
       "latestreading": 0
     },
     {
@@ -169,10 +177,10 @@
         1
       ],
       "multiplefactor": 1,
-      "oldvalue": 0,
+      "oldvalue": 999999999.99,
       "value": 0,
       "sendValue": false,
-      "nextwakeup": 1614063630.0,
+      "nextwakeup": 1614257430.0,
       "latestreading": 0
     },
     {
@@ -191,10 +199,10 @@
         1
       ],
       "multiplefactor": 1,
-      "oldvalue": 0,
+      "oldvalue": 999999999.99,
       "value": 0,
       "sendValue": false,
-      "nextwakeup": 1614063630.0,
+      "nextwakeup": 1614257430.0,
       "latestreading": 0
     },
     {
@@ -213,10 +221,10 @@
         1
       ],
       "multiplefactor": 1,
-      "oldvalue": 0,
+      "oldvalue": 999999999.99,
       "value": 0,
       "sendValue": false,
-      "nextwakeup": 1614063630.0,
+      "nextwakeup": 1614257430.0,
       "latestreading": 0
     },
     {
@@ -235,10 +243,10 @@
         1
       ],
       "multiplefactor": 1,
-      "oldvalue": 0,
+      "oldvalue": 999999999.99,
       "value": 0,
       "sendValue": false,
-      "nextwakeup": 1614063630.0,
+      "nextwakeup": 1614257430.0,
       "latestreading": 0
     },
     {
@@ -257,10 +265,10 @@
         1
       ],
       "multiplefactor": 1,
-      "oldvalue": 0,
+      "oldvalue": 999999999.99,
       "value": 0,
       "sendValue": false,
-      "nextwakeup": 1614063630.0,
+      "nextwakeup": 1614257430.0,
       "latestreading": 0
     },
     {
@@ -279,10 +287,10 @@
         1
       ],
       "multiplefactor": 1,
-      "oldvalue": 0,
+      "oldvalue": 999999999.99,
       "value": 0,
       "sendValue": false,
-      "nextwakeup": 1614063630.0,
+      "nextwakeup": 1614257430.0,
       "latestreading": 0
     },
     {
@@ -301,10 +309,10 @@
         1
       ],
       "multiplefactor": 1000,
-      "oldvalue": 0.0,
+      "oldvalue": 999999999.99,
       "value": 0.0,
       "sendValue": false,
-      "nextwakeup": 1614063630.0,
+      "nextwakeup": 1614257430.0,
       "latestreading": 0.0
     },
     {
@@ -323,10 +331,10 @@
         1
       ],
       "multiplefactor": 10,
-      "oldvalue": 0.0,
+      "oldvalue": 999999999.99,
       "value": 0.0,
       "sendValue": false,
-      "nextwakeup": 1614063630.0,
+      "nextwakeup": 1614257430.0,
       "latestreading": 0.0
     },
     {
@@ -345,10 +353,10 @@
         1
       ],
       "multiplefactor": 10,
-      "oldvalue": 0.0,
+      "oldvalue": 999999999.99,
       "value": 0.0,
       "sendValue": false,
-      "nextwakeup": 1614063630.0,
+      "nextwakeup": 1614257430.0,
       "latestreading": 0.0
     },
     {
@@ -367,10 +375,10 @@
         1
       ],
       "multiplefactor": 1,
-      "oldvalue": 0,
+      "oldvalue": 999999999.99,
       "value": 0,
       "sendValue": false,
-      "nextwakeup": 1614063630.0,
+      "nextwakeup": 1614257430.0,
       "latestreading": 0
     },
     {
@@ -389,10 +397,10 @@
         1
       ],
       "multiplefactor": 1,
-      "oldvalue": 0,
+      "oldvalue": 999999999.99,
       "value": 0,
       "sendValue": false,
-      "nextwakeup": 1614063630.0,
+      "nextwakeup": 1614257430.0,
       "latestreading": 0
     },
     {
@@ -411,10 +419,10 @@
         1
       ],
       "multiplefactor": 1,
-      "oldvalue": 0,
+      "oldvalue": 999999999.99,
       "value": 0,
       "sendValue": false,
-      "nextwakeup": 1614063630.0,
+      "nextwakeup": 1614257430.0,
       "latestreading": 0
     },
     {
@@ -433,10 +441,10 @@
         1
       ],
       "multiplefactor": 1,
-      "oldvalue": 0,
+      "oldvalue": 999999999.99,
       "value": 0,
       "sendValue": false,
-      "nextwakeup": 1614063630.0,
+      "nextwakeup": 1614257430.0,
       "latestreading": 0
     },
     {
@@ -455,10 +463,10 @@
         1
       ],
       "multiplefactor": 1,
-      "oldvalue": 0,
+      "oldvalue": 999999999.99,
       "value": 0,
       "sendValue": false,
-      "nextwakeup": 1614063630.0,
+      "nextwakeup": 1614257430.0,
       "latestreading": 0
     },
     {
@@ -477,10 +485,10 @@
         1
       ],
       "multiplefactor": 1,
-      "oldvalue": 0,
+      "oldvalue": 999999999.99,
       "value": 0,
       "sendValue": false,
-      "nextwakeup": 1614063630.0,
+      "nextwakeup": 1614257430.0,
       "latestreading": 0
     },
     {
@@ -499,10 +507,10 @@
         1
       ],
       "multiplefactor": 1,
-      "oldvalue": 0,
+      "oldvalue": 999999999.99,
       "value": 0,
       "sendValue": false,
-      "nextwakeup": 1614063630.0,
+      "nextwakeup": 1614257430.0,
       "latestreading": 0
     },
     {
@@ -521,10 +529,10 @@
         1
       ],
       "multiplefactor": 1,
-      "oldvalue": 0,
+      "oldvalue": 999999999.99,
       "value": 0,
       "sendValue": false,
-      "nextwakeup": 1614063630.0,
+      "nextwakeup": 1614257430.0,
       "latestreading": 0
     },
     {
@@ -543,8 +551,10 @@
         1
       ],
       "multiplefactor": 1,
-      "datatype": "float"
-
+      "datatype": "float",
+      "oldvalue": 0.0,
+      "sendValue": false,
+      "nextwakeup": 1614257400.0
     }
   ]
 }

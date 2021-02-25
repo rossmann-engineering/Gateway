@@ -239,6 +239,8 @@ def execute_write_order(payload):
     :param payload: message received from MQTT-Broker
     '''
     d = json.loads(payload)
+    if not 'method' in d or not 'params' in d:
+        return
     method = d['method']
     params = d['params']
     config = cfg.Config.getConfig()

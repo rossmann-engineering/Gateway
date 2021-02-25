@@ -636,6 +636,14 @@ def configform():
             config['basicinterval'] = float(configuration['basicinterval'])
             config['readinterval'] = float(configuration['readinterval'])
             config['loglevel'] = (configuration['loglevel'])
+            config['emailregisterlogfiles'] = (configuration['emailregisterlogfiles'])
+            config['emailerrornotification'] = (configuration['emailerrornotification'])
+            config['emailfromaddress'] = (configuration['emailfromaddress'])
+            config['smtphost'] = (configuration['smtphost'])
+            config['smtpusername'] = (configuration['smtpusername'])
+            config['smtppassword'] = (configuration['smtppassword'])
+            config['smtpport'] = int(configuration['smtpport'])
+            config['smtpenabletls'] = True if configuration['smtpenabletls'].lower() == 'true' else False
             cfg.Config.getInstance().write_config()
         except ValueError:
             pass

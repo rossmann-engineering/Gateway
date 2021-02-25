@@ -255,13 +255,18 @@ function myFunction() {
                 <label for={{key}}>{{key}}</label>
             </div>
             <div class="col-75">
-                {% if (key != "loglevel") %}
+                {% if (key != "loglevel") and (key != "smtpenabletls") %}
                 <input type="text" id={{key}} name={{key}} value="{{value}}">
-                {% else %}
+                {% elif (key == "loglevel") %}
                 <select name="loglevel" id="loglevel" name="loglevel" style="width: 100%">
                         <option value="debug" {% if value == 'debug' %} selected {% endif %}>debug</option>
                         <option value="info" {% if value == 'info' %} selected {% endif %}>info</option>
                         <option value="error" {% if value == 'error' %} selected {% endif %}>error</option>
+                    </select>
+                {% elif (key == "smtpenabletls") %}
+                <select name="smtpenabletls" id="smtpenabletls" style="width: 100%">
+                        <option value="True" {% if value|lower == 'true' %} selected {% endif %}>True</option>
+                        <option value="False" {% if value|lower == 'false' %} selected {% endif %}>False</option>
                     </select>
                 {% endif %}
             </div>
