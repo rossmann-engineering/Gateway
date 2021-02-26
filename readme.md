@@ -76,13 +76,29 @@ systemctl status gateway
   "readinterval": 30.0, 
   "basicinterval": 150.0, 
   "loggingmultiplier": 2,
-  "loglevel": "error"
+  "loglevel": "error",
+  "emailregisterlogfiles": "info@rossmann-engineering.de",
+  "emailerrornotification": "info@rossmann-engineering.de",
+  "emailfromaddress": "gateway@sre-solutions.com",
+  "smtphost": "smtp.ionos.de",
+  "smtpport": 587,
+  "smtpusername": "gateway@sre-solutions.com",
+  "smtppassword": "GatewayTestAccount4711!",
+  "smtpenabletls": true
 ```
 Element description:
 - readinterval: The Interval data will be polled from the Fielbus devices
 - basicinterval: The Interval Tags will be uploaded to the MQTT-Broker
 - loggingmultiplier: The Data will be stored in a CSV-File with every Modbus request if the logging multiplier is set to "1". To keep the Amount of data small, the loggingmultiplier can be increased to save the data with every loggingmultiplier Poll.
 - loglevel: can be "critical", "error", "warning", "info", "debug", "notset" - The Gateway application uses the loglevels "error" and "info" and "debug". The logentries are stored in the journal and the file "unitdatabase/logdata.txt"
+- emailregisterlogfiles: E-Mail address to send the Registerlogfiles to. Tbhe Registerlogfile is created every day, and is send every midnight
+- emailerrornotification: E-Mail address were to send the Notification in case on an Error to. The E-Mail message contains the Stacktrace and only one message per hour can be send
+- emailfromaddress: E-Mail address of the Mailserver used to send the notifications
+- smtphost: SMTP-Host of the Mailserver
+- smtpport: SMTP-Port of the Mailserver
+- smtpusername: SMTP-Username of the Mailserver
+- smtppassword: SMTP-Password of the Mailserver
+- smtpenabletls: Enable TLS
 
 <div id="readorder"/>
 
