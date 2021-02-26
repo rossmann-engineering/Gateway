@@ -270,6 +270,8 @@ def execute_write_order(payload):
                         #    value = int(params)               # commented, because Message Format is converted at beginning
                         #else:                                 # Message Format: {"method":"toggle3","params":{"toggle3":1}
                         value = int(dict_value)
+                        if 'staticvalue' in readOrder:
+                            value = readOrder['staticvalue']
                         valueChanged = False
                         if 'value' in readOrder:
                             valueChanged = True#(value != readOrder['value'])

@@ -127,7 +127,8 @@ Example:
     "signed": false,
     "Active": false,
     "datatype": "float",
-    "swapregisters": true
+    "swapregisters": true,
+    "staticvalue": 3
 ```
 
 Element description:
@@ -151,7 +152,7 @@ Element description:
 - active: Enables to usage of the Readorder
 - absolutethreshold: Defines the difference between the last sent value and the current value, before the value will be uploaded
 - relativethreshold: threshold in percent (choose between absolutetreshold). If the deviation between the last sent value and the current value exceeds the threshold, the value will be updated.
-
+- staticvalue: Mainly for Write orders. The Gateway will always send the static value to the Fieldbus device, regardless of the value from the MQTT-Broker
 
 <div id="modbuscommand"/>
 

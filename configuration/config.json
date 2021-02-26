@@ -537,9 +537,54 @@
       "latestreading": 0
     },
     {
-      "address": 4,
+      "address": 1002,
       "name": "setPowerReduction",
-      "bits": 32,
+      "bits": 16,
+      "absolutethreshold": 0,
+      "transportid": 1,
+      "logmodbusdata": false,
+      "active": false,
+      "registerintervaltime": 1,
+      "signed": false,
+      "dataarea": "Holding Register",
+      "threshold": 0,
+      "serverid": [
+        1
+      ],
+      "multiplefactor": 327.67,
+      "oldvalue": 0.0,
+      "sendValue": false,
+      "nextwakeup": 1614285000.0,
+      "target": ""
+    }
+    ,
+    {
+      "address": 1001,
+      "name": "setPowerReduction",
+      "bits": 16,
+      "absolutethreshold": 0,
+      "transportid": 1,
+      "logmodbusdata": false,
+      "active": false,
+      "registerintervaltime": 1,
+      "signed": false,
+      "dataarea": "Holding Register",
+      "threshold": 0,
+      "staticvalue": 3,
+      "serverid": [
+        1
+      ],
+      "multiplefactor": 1,
+      "oldvalue": 0.0,
+      "sendValue": false,
+      "nextwakeup": 1614285000.0,
+      "target": ""
+    }
+    ,
+    {
+      "address": 1001,
+      "name": "setInverter",
+      "bits": 16,
       "absolutethreshold": 0,
       "transportid": 1,
       "logmodbusdata": false,
@@ -552,7 +597,6 @@
         1
       ],
       "multiplefactor": 1,
-      "datatype": "float",
       "oldvalue": 0.0,
       "sendValue": false,
       "nextwakeup": 1614285000.0,
