@@ -123,6 +123,7 @@ def publish_message(serverid, topic, payload):
         if (len(payload) > 5):
             db_conn = database.connect("eh.db")
             database.add_message_queue(db_conn, datetime.datetime.now(), serverid, topic, payload)
+            cfg.Config.getInstance().eventcounter = cfg.Config.getInstance().eventcounter + 1
     except:
         logging.error('Exception storing data in Database: ' + str(traceback.format_exc()))
 

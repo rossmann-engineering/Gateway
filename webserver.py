@@ -27,7 +27,7 @@ import calendar
 import asyncio
 import database
 import logging
-
+import threading
 app = Flask(__name__)
 config = OrderedDict()
 
@@ -72,6 +72,13 @@ def index():
     config = cfg.Config.getConfig()
 
     if (request.method == 'POST') & (request.path == '/index') :
+        if 'restart' in request.values.get('type', '').lower():
+            thread4 = threading.Thread(target=osinterface.restart_program, kwargs=({'waittime':3}))
+            thread4.start()
+            return redirect("/", code=302)
+
+        if request.values.get('type', '') == 'Reset Event counter':
+            cfg.Config.getInstance().eventcounter = 0;
         cfg.Config.getInstance().eventcounter = 0;
     logging.info('Webserver request to open page "index"')
 
@@ -682,13 +689,20 @@ def configformdevices():
         try:
             configuration = request.form
             config = cfg.Config.getConfig()
-            for device in config['devices']:
-                for key, value in device.items():
-                    if (key == "parity") or (key == "baudrate") or (key == "databits") or (key == "transportid") or (key == "unitidentifier") or (key == "stopbits"):
-                        device[key] = int(configuration['transportid'+str(device['transportid'])+'_'+key])
-                    else:
-                        device[key] = configuration['transportid' + str(device['transportid']) + '_' + key]
-            cfg.Config.getInstance().write_config()
+            if 'delete' in configuration['type'].lower():
+                selectedid = int(configuration['type'].split('id')[1])
+                for device in config['devices']:
+                    if device['transportid'] == selectedid:
+                        config['devices'].remove(device)
+                        cfg.Config.getInstance().write_config()
+            else:
+                for device in config['devices']:
+                    for key, value in device.items():
+                        if (key == "parity") or (key == "baudrate") or (key == "databits") or (key == "transportid") or (key == "unitidentifier") or (key == "stopbits"):
+                            device[key] = int(configuration['transportid'+str(device['transportid'])+'_'+key])
+                        else:
+                            device[key] = configuration['transportid' + str(device['transportid']) + '_' + key]
+                cfg.Config.getInstance().write_config()
         except ValueError:
             pass
    with open('configuration/config.json') as json_data:
@@ -817,12 +831,20 @@ def configformmodbuscommand():
         try:
             config = cfg.Config.getConfig()
             configuration = request.form
-            selectedindex =  int(configuration['modbuscommands'])-1
+            selectedindex = int(configuration['modbuscommands']) - 1
+            if 'delete' in configuration['type'].lower():
 
-            config['modbuscommand'][selectedindex]['functioncode'] = configuration['functioncode']
-            config['modbuscommand'][selectedindex]['quantity'] = int(configuration['quantity'])
-            config['modbuscommand'][selectedindex]['startingaddress'] = int(configuration['startingaddress'])
-            cfg.Config.getInstance().write_config()
+
+                config['modbuscommand'].remove(config['modbuscommand'][selectedindex])
+                cfg.Config.getInstance().write_config()
+            else:
+
+
+
+                config['modbuscommand'][selectedindex]['functioncode'] = configuration['functioncode']
+                config['modbuscommand'][selectedindex]['quantity'] = int(configuration['quantity'])
+                config['modbuscommand'][selectedindex]['startingaddress'] = int(configuration['startingaddress'])
+                cfg.Config.getInstance().write_config()
         except ValueError:
             pass
    with open('configuration/config.json') as json_data:
@@ -836,69 +858,77 @@ def configformreadorders():
         try:
             config = cfg.Config.getConfig()
             configuration = request.form
-            for s in range(0, len(config['readorders'])):
-            #for s in config.ReadOrders:
-                #ReadOrder = dict(s)
-                name = (config['readorders'][s]['name'])
-                if (name == configuration['name']):
+            if 'delete' in configuration['type'].lower():
 
-                    config['readorders'][s]['address'] = int(configuration['address'])
-                    if ('transportid' in configuration):
-                        if configuration['transportid'] != "":
-                            config['readorders'][s]['transportid'] = int(configuration['transportid'])
-                    if ('registerintervaltime' in configuration):
-                        if configuration['registerintervaltime'] != "":
-                            config['readorders'][s]['registerintervaltime'] = int(configuration['registerintervaltime'])
-                    if ('absolutethreshold' in configuration):
-                        if configuration['absolutethreshold'] != "":
-                            config['readorders'][s]['absolutethreshold'] = int(configuration['absolutethreshold'])
-                    if ('relativethreshold' in configuration):
-                        if configuration['relativethreshold'] != "":
-                            config['readorders'][s]['relativethreshold'] = int(configuration['relativethreshold'])
-                    if ('parameter' in configuration):
-                        if configuration['parameter'] != "":
-                            config['readorders'][s]['parameter'] = bool(configuration['parameter'])
-                    if ('signed' in configuration):
-                        if configuration['signed'] != "":
-                            if (str(configuration['signed']).lower() == 'true'):
-                                config['readorders'][s]['signed'] = True
+                for s in range(0, len(config['readorders'])):
+                    if configuration['name'] == config['readorders'][s]['name']:
+                        config['readorders'].remove(config['readorders'][s])
+                        cfg.Config.getInstance().write_config()
+            else:
+
+                for s in range(0, len(config['readorders'])):
+                #for s in config.ReadOrders:
+                    #ReadOrder = dict(s)
+                    name = (config['readorders'][s]['name'])
+                    if (name == configuration['name']):
+
+                        config['readorders'][s]['address'] = int(configuration['address'])
+                        if ('transportid' in configuration):
+                            if configuration['transportid'] != "":
+                                config['readorders'][s]['transportid'] = int(configuration['transportid'])
+                        if ('registerintervaltime' in configuration):
+                            if configuration['registerintervaltime'] != "":
+                                config['readorders'][s]['registerintervaltime'] = int(configuration['registerintervaltime'])
+                        if ('absolutethreshold' in configuration):
+                            if configuration['absolutethreshold'] != "":
+                                config['readorders'][s]['absolutethreshold'] = int(configuration['absolutethreshold'])
+                        if ('relativethreshold' in configuration):
+                            if configuration['relativethreshold'] != "":
+                                config['readorders'][s]['relativethreshold'] = int(configuration['relativethreshold'])
+                        if ('parameter' in configuration):
+                            if configuration['parameter'] != "":
+                                config['readorders'][s]['parameter'] = bool(configuration['parameter'])
+                        if ('signed' in configuration):
+                            if configuration['signed'] != "":
+                                if (str(configuration['signed']).lower() == 'true'):
+                                    config['readorders'][s]['signed'] = True
+                                else:
+                                    config['readorders'][s]['signed'] = False
+                        if ('interval' in configuration):
+                            if configuration['interval'] != "":
+                                config['readorders'][s]['interval'] = int(configuration['interval'])
+                        if ('multiplefactor' in configuration):
+                            if configuration['multiplefactor'] != "":
+                                config['readorders'][s]['multiplefactor'] = int(configuration['multiplefactor'])
+                        if ('transmissionmode' in configuration):
+                            if configuration['transmissionmode'] != "":
+                                config['readorders'][s]['transmissionmode'] = (configuration['transmissionmode'])
+                        if ('type' in configuration):
+                            if configuration['type'] != "":
+                                config['readorders'][s]['type'] = int(configuration['type'])
+                        if ('active' in configuration):
+                            if (str(configuration['active']).lower() == 'true'):
+                                config['readorders'][s]['active'] = True
                             else:
-                                config['readorders'][s]['signed'] = False
-                    if ('interval' in configuration):
-                        if configuration['interval'] != "":
-                            config['readorders'][s]['interval'] = int(configuration['interval'])
-                    if ('multiplefactor' in configuration):
-                        if configuration['multiplefactor'] != "":
-                            config['readorders'][s]['multiplefactor'] = int(configuration['multiplefactor'])
-                    if ('transmissionmode' in configuration):
-                        if configuration['transmissionmode'] != "":
-                            config['readorders'][s]['transmissionmode'] = (configuration['transmissionmode'])
-                    if ('type' in configuration):
-                        if configuration['type'] != "":
-                            config['readorders'][s]['type'] = int(configuration['type'])
-                    if ('active' in configuration):
-                        if (str(configuration['active']).lower() == 'true'):
-                            config['readorders'][s]['active'] = True
-                        else:
-                            config['readorders'][s]['active'] = False
-                    if ('serverid' in configuration):
-                        if configuration['serverid'] != "":
-                            serverids = configuration['serverid'].replace("[","").replace("]", "").split(',')
+                                config['readorders'][s]['active'] = False
+                        if ('serverid' in configuration):
+                            if configuration['serverid'] != "":
+                                serverids = configuration['serverid'].replace("[","").replace("]", "").split(',')
 
-                            config['readorders'][s]['serverid'] = list()
-                            for serverid in serverids:
-                                config['readorders'][s]['serverid'].append(int(serverid))
+                                config['readorders'][s]['serverid'] = list()
+                                for serverid in serverids:
+                                    config['readorders'][s]['serverid'].append(int(serverid))
 
 
-                    config['readorders'][s]['multiplefactor'] = int(configuration['multiplefactor'])
-                    if 'bits' in configuration:
-                        if (configuration['bits'].isdigit()):
-                            config['readorders'][s]['bits'] = int(configuration['bits'])
-                    if 'dataarea' in configuration:
-                        config['readorders'][s]['dataarea'] = configuration['dataarea']
-                    if 'target' in configuration:
-                        config['readorders'][s]['target'] = configuration['target']
-                    cfg.Config.getInstance().write_config()
+                        config['readorders'][s]['multiplefactor'] = int(configuration['multiplefactor'])
+                        if 'bits' in configuration:
+                            if (configuration['bits'].isdigit()):
+                                config['readorders'][s]['bits'] = int(configuration['bits'])
+                        if 'dataarea' in configuration:
+                            config['readorders'][s]['dataarea'] = configuration['dataarea']
+                        if 'target' in configuration:
+                            config['readorders'][s]['target'] = configuration['target']
+                        cfg.Config.getInstance().write_config()
 
 
         except ValueError:

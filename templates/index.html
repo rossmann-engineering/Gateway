@@ -231,9 +231,10 @@ GW CPU-Min (MHz): {{ parameter.gwcpuminmhz }}<br>
 Number of events: {{ parameter.eventcounter }}<br>
     {% if  admin %}
     <form action="/index" method="post">
-    <div class="row">
-      <input type="submit" value="Reset Event counter" align="left">
-    </div>
+        <div class="row">
+            <input type="submit" name="type" value="Reset Event counter" align="left">
+            <input type="submit" name="type" value="Restart Gateway"  align="left">
+        </div>
     </form>
     {% endif %}
 </div>
@@ -241,6 +242,9 @@ Number of events: {{ parameter.eventcounter }}<br>
 
 
 </body>
+
+
+
 
 
 

@@ -10,6 +10,7 @@ import calendar
 import config as cfg
 import platform
 import logging
+import sys
 
 def console (command):
     output = subprocess.check_output(command, shell = True)
@@ -486,3 +487,11 @@ def readwlan0status():
     except Exception as e:
         logging.error('Webserver (osinterface): Unable to read wlan0 values (ifconfig eth1): ' + str(traceback.format_exc()))
     return returnvalue
+
+def restart_program(waittime = 0):
+    """Restarts the current program.
+    Note: this function does not return. Any cleanup action (like
+    saving data) must be done before calling this function."""
+    time.sleep(waittime)
+    python = sys.executable
+    os.execl(python, python, * sys.argv)

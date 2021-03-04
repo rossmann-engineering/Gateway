@@ -67,7 +67,7 @@ if (len(sys.argv) > 1):
 thread = threading.Thread(target=webserver.start, args=())
 thread.start()
 
-if (len(config['mqttbroker']) > 0):
+if len(config.get('mqttbroker', list())) > 0:
     thread4 = threading.Thread(target=mqtt.Clients.getInstance, args=())
     thread4.start()
 
@@ -215,7 +215,7 @@ while (True):
 
         cfg.Config.getInstance().lock.release()
         if (send_value):
-            if (len(config['mqttbroker']) > 0):
+            if len(config.get('mqttbroker', list())) > 0:
                 thread5 = threading.Thread(target=mqtt.send_mqtt_data(), args=())
                 thread5.start()
 

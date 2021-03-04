@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
@@ -525,8 +525,10 @@ function myFunction() {
             </div>
         </div>
         <div class="row">
-            <button id="openAddReadOrderModalButton" type="button" onclick="readOrderTransportIdChanged()">Add Read Order Command</button>
-            <input type="submit" value="Submit Read Order">
+            <button id="openAddReadOrderModalButton" type="button" onclick="readOrderTransportIdChanged()" style="margin: 10px">Add Read Order Command</button>
+
+            <input type="submit" name="type" value="Submit Read Order" style="margin: 10px">
+            <input type="submit" name="type" value="Delete Read Order" style="margin: 10px; background-color: red">
         </div>
     </div>
     <br>
@@ -587,8 +589,10 @@ function myFunction() {
 
         {% endif %}
         <div class="row">
-            <input type="submit" value="Submit Modbus Command">
-            <button id="openAddModbusCommandModalButton" type="button">Add Modbus Command</button>
+            <input type="submit" name="type" value="Submit Modbus Command" style="margin: 10px">
+            <input type="submit" name="type" value="Delete Modbus Command" style="margin: 10px; background-color: red">
+
+            <button id="openAddModbusCommandModalButton" type="button" style="margin: 10px;">Add Modbus Command</button>
         </div>
     </div>
     <br>
@@ -604,6 +608,7 @@ function myFunction() {
 
         {% for result in value %}
             <b>Device configuration for Transport-ID: {{result.transportid}}</b><br><br>
+    <input type="submit" name="type" value="Delete Device Configuration id{{result.transportid}}" style="margin: 10px; background-color: red">
             <div class="row">
                 <div class="col-25">
                     <label>Fieldbus Type</label>
@@ -645,9 +650,10 @@ function myFunction() {
 
    {% endfor %}
         {% endif %}<div class="row">
-            <input type="submit" value="Submit Device Configuration">
+            <input type="submit" name="type" value="Submit Device Configuration" style="margin: 10px">
+
     <!-- Trigger/Open The Modal -->
-<button id="openAddDeviceModalButton" type="button">Add Device</button>
+<button id="openAddDeviceModalButton" type="button" style="margin: 10px">Add Device</button>
         </div>
 
 
