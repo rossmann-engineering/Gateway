@@ -2,7 +2,8 @@
 
 ## Table of Contents
 1. [Introduction](#introduction)
-2. [Linux Service](#linuxservice)  
+2. [Linux Service](#linuxservice)
+   2.1 [Install instructions](#installinstructions)
 3. [Requirements](#requirements)  
 4. [Test Instructions](#testistructions)
 5. [config.json structure](#configjsonstructure)  
@@ -48,6 +49,37 @@ systemctl start gateway
 To check the Status of the Service:
 
 systemctl status gateway
+
+
+<div id="installinstructions"/>
+
+### 2.1 installinstructions
+
+The following instructions should give a rough guideline how to install the Gateway application on a raspberry pi
+
+1 Update the Package list
+
+sudo apt-get update
+
+2 Install pip3
+
+sudo apt-get install python3-pip
+
+3 Install dependencies
+
+pip3 install Flask
+pip3 install pyserial
+pip3 install requests
+pip3 install paho-mqtt
+pip3 install tornado
+
+4 Clone git repository
+
+git clone https://github.com/PKwemo/gtrendMonitoring.git.
+The command line may ask for yut Github credentials
+
+5 Create Linux Service (see section 2.)
+
 
 <div id="requirements"/>
 

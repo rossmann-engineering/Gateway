@@ -28,6 +28,27 @@
       "ipaddress": "127.0.0.1",
       "port": "502",
       "unitidentifier": 1
+    },
+    {
+      "transportid": 2,
+      "type": "Modbus",
+      "ipaddress": "127.0.0.1",
+      "port": "502",
+      "unitidentifier": 1
+    },
+    {
+      "transportid": 3,
+      "type": "Modbus",
+      "ipaddress": "127.0.0.1",
+      "port": "502",
+      "unitidentifier": 1
+    },
+    {
+      "transportid": 4,
+      "type": "Modbus",
+      "ipaddress": "127.0.0.1",
+      "port": "502",
+      "unitidentifier": 1
     }
   ],
   "modbuscommand": [
@@ -48,12 +69,66 @@
       "transportid": 1,
       "startingaddress": 0,
       "quantity": 3
+    },
+    {
+      "functioncode": "Read Input Registers",
+      "transportid": 2,
+      "startingaddress": 0,
+      "quantity": 100
+    },
+    {
+      "functioncode": "Read Input Registers",
+      "transportid": 2,
+      "startingaddress": 100,
+      "quantity": 26
+    },
+    {
+      "functioncode": "Read Holding Registers",
+      "transportid": 2,
+      "startingaddress": 0,
+      "quantity": 3
+    },
+    {
+      "functioncode": "Read Input Registers",
+      "transportid": 3,
+      "startingaddress": 0,
+      "quantity": 100
+    },
+    {
+      "functioncode": "Read Input Registers",
+      "transportid": 3,
+      "startingaddress": 100,
+      "quantity": 26
+    },
+    {
+      "functioncode": "Read Holding Registers",
+      "transportid": 3,
+      "startingaddress": 0,
+      "quantity": 3
+    },
+    {
+      "functioncode": "Read Input Registers",
+      "transportid": 4,
+      "startingaddress": 0,
+      "quantity": 100
+    },
+    {
+      "functioncode": "Read Input Registers",
+      "transportid": 4,
+      "startingaddress": 100,
+      "quantity": 26
+    },
+    {
+      "functioncode": "Read Holding Registers",
+      "transportid": 4,
+      "startingaddress": 0,
+      "quantity": 3
     }
   ],
   "readorders": [
     {
       "address": 1,
-      "name": "Total AC Energy",
+      "name": "Total AC Energy Inverter 1",
       "bits": 32,
       "absolutethreshold": 0,
       "transportid": 1,
@@ -70,13 +145,14 @@
       "oldvalue": 999999999.99,
       "value": 0,
       "sendValue": false,
-      "nextwakeup": 1614852180.0,
+      "nextwakeup": 1615116930.0,
       "latestreading": 0,
-      "target": ""
+      "target": "",
+      "type": "Submit Read Order"
     },
     {
       "address": 3,
-      "name": "Hours up and running",
+      "name": "Hours up and running Inverter 1",
       "bits": 32,
       "absolutethreshold": 0,
       "transportid": 1,
@@ -93,12 +169,12 @@
       "oldvalue": 999999999.99,
       "value": 0,
       "sendValue": false,
-      "nextwakeup": 1614852180.0,
+      "nextwakeup": 1615116930.0,
       "latestreading": 0
     },
     {
       "address": 8,
-      "name": "Inverter Alarms",
+      "name": "Inverter Alarms Inverter 1",
       "bits": 16,
       "absolutethreshold": 0,
       "transportid": 1,
@@ -115,12 +191,12 @@
       "oldvalue": 999999999.99,
       "value": 0,
       "sendValue": false,
-      "nextwakeup": 1614852180.0,
+      "nextwakeup": 1615116930.0,
       "latestreading": 0
     },
     {
       "address": 9,
-      "name": "DC input voltage",
+      "name": "DC input voltage Inverter 1",
       "bits": 16,
       "absolutethreshold": 0,
       "transportid": 1,
@@ -137,12 +213,12 @@
       "oldvalue": 999999999.99,
       "value": 0,
       "sendValue": false,
-      "nextwakeup": 1614852180.0,
+      "nextwakeup": 1615116930.0,
       "latestreading": 0
     },
     {
       "address": 10,
-      "name": "Average input current estimation",
+      "name": "Average input current estimation Inverter 1",
       "bits": 16,
       "absolutethreshold": 0,
       "transportid": 1,
@@ -159,12 +235,12 @@
       "oldvalue": 999999999.99,
       "value": 0,
       "sendValue": false,
-      "nextwakeup": 1614852180.0,
+      "nextwakeup": 1615116930.0,
       "latestreading": 0
     },
     {
       "address": 11,
-      "name": "Grid RMS Voltage, phase 1",
+      "name": "Grid RMS Voltage, phase 1 Inverter 1",
       "bits": 16,
       "absolutethreshold": 0,
       "transportid": 1,
@@ -181,12 +257,12 @@
       "oldvalue": 999999999.99,
       "value": 0,
       "sendValue": false,
-      "nextwakeup": 1614852180.0,
+      "nextwakeup": 1615116930.0,
       "latestreading": 0
     },
     {
       "address": 12,
-      "name": "Grid RMS Voltage, phase 2",
+      "name": "Grid RMS Voltage, phase 2 Inverter 1",
       "bits": 16,
       "absolutethreshold": 0,
       "transportid": 1,
@@ -203,12 +279,12 @@
       "oldvalue": 999999999.99,
       "value": 0,
       "sendValue": false,
-      "nextwakeup": 1614852180.0,
+      "nextwakeup": 1615116930.0,
       "latestreading": 0
     },
     {
       "address": 13,
-      "name": "Grid RMS Voltage, phase 3",
+      "name": "Grid RMS Voltage, phase 3 Inverter 1",
       "bits": 16,
       "absolutethreshold": 0,
       "transportid": 1,
@@ -225,12 +301,12 @@
       "oldvalue": 999999999.99,
       "value": 0,
       "sendValue": false,
-      "nextwakeup": 1614852180.0,
+      "nextwakeup": 1615116930.0,
       "latestreading": 0
     },
     {
       "address": 14,
-      "name": "Grid RMS Current, phase 1",
+      "name": "Grid RMS Current, phase 1 Inverter 1",
       "bits": 16,
       "absolutethreshold": 0,
       "transportid": 1,
@@ -247,12 +323,12 @@
       "oldvalue": 999999999.99,
       "value": 0,
       "sendValue": false,
-      "nextwakeup": 1614852180.0,
+      "nextwakeup": 1615116930.0,
       "latestreading": 0
     },
     {
       "address": 15,
-      "name": "Grid RMS Current, phase 2",
+      "name": "Grid RMS Current, phase 2 Inverter 1",
       "bits": 16,
       "absolutethreshold": 0,
       "transportid": 1,
@@ -269,12 +345,12 @@
       "oldvalue": 999999999.99,
       "value": 0,
       "sendValue": false,
-      "nextwakeup": 1614852180.0,
+      "nextwakeup": 1615116930.0,
       "latestreading": 0
     },
     {
       "address": 16,
-      "name": "Grid RMS Current, phase 3",
+      "name": "Grid RMS Current, phase 3 Inverter 1",
       "bits": 16,
       "absolutethreshold": 0,
       "transportid": 1,
@@ -291,12 +367,12 @@
       "oldvalue": 999999999.99,
       "value": 0,
       "sendValue": false,
-      "nextwakeup": 1614852180.0,
+      "nextwakeup": 1615116930.0,
       "latestreading": 0
     },
     {
       "address": 17,
-      "name": "Cos Phi",
+      "name": "Cos Phi Inverter 1",
       "bits": 16,
       "absolutethreshold": 0,
       "transportid": 1,
@@ -313,12 +389,12 @@
       "oldvalue": 999999999.99,
       "value": 0.0,
       "sendValue": false,
-      "nextwakeup": 1614852180.0,
+      "nextwakeup": 1615116930.0,
       "latestreading": 0.0
     },
     {
       "address": 19,
-      "name": "Active Power",
+      "name": "Active Power Inverter 1",
       "bits": 16,
       "absolutethreshold": 0,
       "transportid": 1,
@@ -335,12 +411,12 @@
       "oldvalue": 999999999.99,
       "value": 0.0,
       "sendValue": false,
-      "nextwakeup": 1614852180.0,
+      "nextwakeup": 1615116930.0,
       "latestreading": 0.0
     },
     {
       "address": 59,
-      "name": "Energy Resetable Counter",
+      "name": "Energy Resetable Counter Inverter 1",
       "bits": 32,
       "absolutethreshold": 0,
       "transportid": 1,
@@ -357,12 +433,12 @@
       "oldvalue": 999999999.99,
       "value": 0.0,
       "sendValue": false,
-      "nextwakeup": 1614852180.0,
+      "nextwakeup": 1615116930.0,
       "latestreading": 0.0
     },
     {
       "address": 72,
-      "name": "Power electronics temperatur",
+      "name": "Power electronics temperatur Inverter 1",
       "bits": 16,
       "absolutethreshold": 0,
       "transportid": 1,
@@ -379,12 +455,12 @@
       "oldvalue": 999999999.99,
       "value": 0,
       "sendValue": false,
-      "nextwakeup": 1614852180.0,
+      "nextwakeup": 1615116930.0,
       "latestreading": 0
     },
     {
       "address": 73,
-      "name": "Control electronics temperature",
+      "name": "Control electronics temperature Inverter 1",
       "bits": 16,
       "absolutethreshold": 0,
       "transportid": 1,
@@ -401,12 +477,12 @@
       "oldvalue": 999999999.99,
       "value": 0,
       "sendValue": false,
-      "nextwakeup": 1614852180.0,
+      "nextwakeup": 1615116930.0,
       "latestreading": 0
     },
     {
       "address": 77,
-      "name": "Nominal Power",
+      "name": "Nominal Power Inverter 1",
       "bits": 16,
       "absolutethreshold": 0,
       "transportid": 1,
@@ -423,12 +499,12 @@
       "oldvalue": 999999999.99,
       "value": 0,
       "sendValue": false,
-      "nextwakeup": 1614852180.0,
+      "nextwakeup": 1615116930.0,
       "latestreading": 0
     },
     {
       "address": 117,
-      "name": "Power reduction register",
+      "name": "Power reduction register Inverter 1",
       "bits": 16,
       "absolutethreshold": 0,
       "transportid": 1,
@@ -445,12 +521,12 @@
       "oldvalue": 999999999.99,
       "value": 0,
       "sendValue": false,
-      "nextwakeup": 1614852180.0,
+      "nextwakeup": 1615116930.0,
       "latestreading": 0
     },
     {
       "address": 118,
-      "name": "RedPotencia",
+      "name": "RedPotencia Inverter 1",
       "bits": 16,
       "absolutethreshold": 0,
       "transportid": 1,
@@ -467,12 +543,12 @@
       "oldvalue": 999999999.99,
       "value": 0,
       "sendValue": false,
-      "nextwakeup": 1614852180.0,
+      "nextwakeup": 1615116930.0,
       "latestreading": 0
     },
     {
       "address": 1,
-      "name": "Command code",
+      "name": "Command code Inverter 1",
       "bits": 16,
       "absolutethreshold": 0,
       "transportid": 1,
@@ -489,12 +565,12 @@
       "oldvalue": 999999999.99,
       "value": 0,
       "sendValue": false,
-      "nextwakeup": 1614852180.0,
+      "nextwakeup": 1615116930.0,
       "latestreading": 0
     },
     {
       "address": 2,
-      "name": "Command Data 1",
+      "name": "Command Data 1 Inverter 1",
       "bits": 16,
       "absolutethreshold": 0,
       "transportid": 1,
@@ -511,12 +587,12 @@
       "oldvalue": 999999999.99,
       "value": 0,
       "sendValue": false,
-      "nextwakeup": 1614852180.0,
+      "nextwakeup": 1615116930.0,
       "latestreading": 0
     },
     {
       "address": 3,
-      "name": "Command Data 2",
+      "name": "Command Data 2 Inverter 1",
       "bits": 16,
       "absolutethreshold": 0,
       "transportid": 1,
@@ -533,12 +609,12 @@
       "oldvalue": 999999999.99,
       "value": 0,
       "sendValue": false,
-      "nextwakeup": 1614852180.0,
+      "nextwakeup": 1615116930.0,
       "latestreading": 0
     },
     {
       "address": 1002,
-      "name": "setPowerReduction",
+      "name": "setPowerReduction Inverter 1",
       "bits": 16,
       "absolutethreshold": 0,
       "transportid": 1,
@@ -554,12 +630,12 @@
       "multiplefactor": 327.67,
       "oldvalue": 0.0,
       "sendValue": false,
-      "nextwakeup": 1614852150.0,
+      "nextwakeup": 1615117050.0,
       "target": ""
     },
     {
       "address": 1001,
-      "name": "setPowerReduction",
+      "name": "setPowerReduction1",
       "bits": 16,
       "absolutethreshold": 0,
       "transportid": 1,
@@ -576,12 +652,12 @@
       "multiplefactor": 1,
       "oldvalue": 0.0,
       "sendValue": false,
-      "nextwakeup": 1614852150.0,
+      "nextwakeup": 1615117050.0,
       "target": ""
     },
     {
       "address": 1001,
-      "name": "setInverter",
+      "name": "setInverter1",
       "bits": 16,
       "absolutethreshold": 0,
       "transportid": 1,
@@ -597,7 +673,7 @@
       "multiplefactor": 1,
       "oldvalue": 0.0,
       "sendValue": false,
-      "nextwakeup": 1614852150.0,
+      "nextwakeup": 1615117050.0,
       "target": ""
     }
   ]

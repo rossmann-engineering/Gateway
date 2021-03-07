@@ -905,7 +905,7 @@ def configformreadorders():
                                 config['readorders'][s]['transmissionmode'] = (configuration['transmissionmode'])
                         if ('type' in configuration):
                             if configuration['type'] != "":
-                                config['readorders'][s]['type'] = int(configuration['type'])
+                                config['readorders'][s]['type'] = configuration['type']
                         if ('active' in configuration):
                             if (str(configuration['active']).lower() == 'true'):
                                 config['readorders'][s]['active'] = True
