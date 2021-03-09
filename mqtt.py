@@ -85,7 +85,7 @@ class Clients(object):
         client.subscribe('v1/devices/me/rpc/request/+')
         client.subscribe('v1/devices/me/attributes')
         pass
-    def on_disconnect(self, client, userdata, flags, rc):
+    def on_disconnect(self, client, userdata, rc):
         logging.info('Disconnected from MQTT-Broker')
 
         pass
@@ -113,7 +113,18 @@ def internet_on():
     except requests.ConnectionError:
         return False
 
+def validate_json(message):
+    '''
+    Validate if the message is a JSON format (Function JSON.loads throws an exception if the message is no valid json)
+    :param message: Message to validate
+    :return: True if valid JSON Message
+    '''
+    try:
+        jsonmessage = json.loads(message)
+    except ValueError as e:
+        return False
 
+    return True
 
 def publish_message(serverid, topic, payload):
     config = cfg.Config.getConfig()
@@ -148,11 +159,13 @@ def publish_message(serverid, topic, payload):
                     cfg.Config.getInstance().mqttconnectionlost = True
                     break
                 logging.info('Message from Queue restored ' + str(element))
-
                 for t in Clients.getInstance().clients:
                     client = dict(t)
                     if (client['serverid'] == serverid):
-
+                        if not validate_json(element['payload']):
+                            logging.info('Message is no valid JSON (deleted): ' + str(element['payload'] ))
+                            database.delete_message_queue(db_conn, element['rowid'])
+                            break
                         response = client['instance'].publish(element['topic'], element['payload'],  qos=1)
                         logging.info('Message Published to MQTT Broker ' + str(element['payload']) + " topic: " + str(element['topic']) + " Server-Response: " + str(response.rc) + "mid: " + str(response.mid))
                         time.sleep(1)
@@ -181,6 +194,47 @@ def publish_message(serverid, topic, payload):
 
     except:
         logging.error('Exception Restoring MQTT Messages  ' + str(traceback.format_exc()))
+
+
+def send_attributes():
+    config = cfg.Config.getConfig()
+    logging.info('Sending MQTT-Attributed...')
+    for s in config['mqttbroker']:
+        for u in config['devices']:
+            mqttbroker = dict(s)
+            logging.info('Sending MQTT-Attributes to serverid' + str(mqttbroker['serverid']))
+            payload = '{'
+
+            cfg.Config.getInstance().lock.acquire()
+            #Send Readorders
+            try:
+                read_order_count = 0
+                for t in config['attributes']:
+                    attributes = dict(t)
+                    active = (attributes.get('active', True) == True)
+                    if 'serverid' in attributes:
+                        serverids = attributes['serverid']
+                    else:
+                        serverids = [1];
+                    if mqttbroker['serverid'] in serverids:
+                        sendValue = True
+                    else:
+                        sendValue = False
+
+                    if active & sendValue:
+                        if read_order_count > 0:
+                            payload = payload + ','
+                        payload = payload + '"' + str(attributes['name']) + '":' + str(attributes['value'])
+                        read_order_count = read_order_count + 1
+            except Exception:
+                logging.error('Exception send_mqtt_attributes to MQTT-Broker: ' + str(traceback.format_exc()))
+            finally:
+                cfg.Config.getInstance().lock.release()
+
+            payload = payload + '}'
+            if (read_order_count > 0)  and 'attributetopic' in mqttbroker:
+                publish_message(mqttbroker['serverid'], mqttbroker['attributetopic'], payload)
+
 
 def send_mqtt_data(disconnected = False, connected = False):
     config = cfg.Config.getConfig()
