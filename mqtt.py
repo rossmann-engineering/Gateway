@@ -134,7 +134,7 @@ def publish_message(serverid, topic, payload):
         datatosend = database.get_message_queue(db_conn, serverid)
         if (len(datatosend) > 5):
             for t in Clients.getInstance().clients:
-                datalogger.logData('Message Queue exceeded max. size, trying to reconnect')
+                logging.info('Message Queue exceeded max. size, trying to reconnect')
                 #config.mqttconnectionlost = True
                 client = dict(t)
                 client['instance'].reconnect()
@@ -144,7 +144,7 @@ def publish_message(serverid, topic, payload):
                 if cancelSend:
                     break
                 if not internet_on():
-                    datalogger.logData('MQTT-Client - Wait for Internet connection available')
+                    logging.info('MQTT-Client - Wait for Internet connection available')
                     cfg.Config.getInstance().mqttconnectionlost = True
                     break
                 logging.info('Message from Queue restored ' + str(element))
