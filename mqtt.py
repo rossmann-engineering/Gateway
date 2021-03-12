@@ -161,6 +161,8 @@ def publish_message(serverid, topic, payload):
                 logging.info('Message from Queue restored ' + str(element))
                 for t in Clients.getInstance().clients:
                     client = dict(t)
+                    if not 'serverid' in client:        #That can happen if the client is not yet initialized
+                        break
                     if (client['serverid'] == serverid):
                         if not validate_json(element['payload']):
                             logging.info('Message is no valid JSON (deleted): ' + str(element['payload'] ))
@@ -242,7 +244,6 @@ def send_mqtt_data(disconnected = False, connected = False):
     for s in config['mqttbroker']:
         for u in config['devices']:
             mqttbroker = dict(s)
-            logging.info('Sending MQTT-Data to serverid' + str(mqttbroker['serverid']))
             payload = '{"ts":' + str(int(datetime_to_unix_timestamp(datetime.datetime.now())))
 
             payload = payload + ', "values":{'
@@ -285,6 +286,7 @@ def send_mqtt_data(disconnected = False, connected = False):
 
             payload = payload + '}}'
             if (read_order_count > 0):
+                logging.info('Sending MQTT-Data to serverid' + str(mqttbroker['serverid']))
                 publish_message(mqttbroker['serverid'], mqttbroker['publishtopic'], payload)
 
 def execute_write_order(payload):
