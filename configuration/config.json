@@ -635,7 +635,7 @@
     },
     {
       "address": 1002,
-      "name": "setPowerReduction Inverter 1",
+      "name": "setPowerReduction1",
       "bits": 16,
       "absolutethreshold": 0,
       "transportid": 1,
@@ -1184,7 +1184,7 @@
     },
     {
       "address": 1002,
-      "name": "setPowerReduction Inverter 2",
+      "name": "setPowerReduction2",
       "bits": 16,
       "absolutethreshold": 0,
       "transportid": 2,
@@ -1733,7 +1733,7 @@
     },
     {
       "address": 1002,
-      "name": "setPowerReduction Inverter 3",
+      "name": "setPowerReduction3",
       "bits": 16,
       "absolutethreshold": 0,
       "transportid": 3,
@@ -2282,7 +2282,7 @@
     },
     {
       "address": 1002,
-      "name": "setPowerReduction Inverter 4",
+      "name": "setPowerReduction4",
       "bits": 16,
       "absolutethreshold": 0,
       "transportid": 4,
