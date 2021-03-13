@@ -17,28 +17,28 @@
       "address": "167.172.58.209",
       "port": "1883",
       "publishtopic": "v1/devices/me/telemetry",
-      "accesstoken": "SegrB0qRwF9MpSEsk1RM",
+      "accesstoken": "zF9PyZhawezgg3DhizcB",
       "serverid": 1
     },{
       "name": "Wise Energy Gateway 1 Inverter 2",
       "address": "167.172.58.209",
       "port": "1883",
       "publishtopic": "v1/devices/me/telemetry",
-      "accesstoken": "mufrB6kaBMSNRTHPMIEG",
+      "accesstoken": "4f0RgQd3PXnLkXD4S4xd",
       "serverid": 2
     },{
       "name": "Wise Energy Gateway 1 Inverter 3",
       "address": "167.172.58.209",
       "port": "1883",
       "publishtopic": "v1/devices/me/telemetry",
-      "accesstoken": "UIZ4OeQkoKRvCTLVneIg",
+      "accesstoken": "6QaiAtqPq0ja9yU4jK96",
       "serverid": 3
     },{
       "name": "Wise Energy Gateway 1 Inverter 4",
       "address": "167.172.58.209",
       "port": "1883",
       "publishtopic": "v1/devices/me/telemetry",
-      "accesstoken": "0Uo7vwwyxYb6oxp8KsTh",
+      "accesstoken": "bnrZ0mSQP3XM3C4ZoXRZ",
       "serverid": 4
     }
   ],
@@ -46,28 +46,28 @@
     {
       "transportid": 1,
       "type": "Modbus",
-      "ipaddress": "127.0.0.1",
+      "ipaddress": "192.168.17.61",
       "port": "502",
       "unitidentifier": 1
     },
     {
       "transportid": 2,
       "type": "Modbus",
-      "ipaddress": "127.0.0.1",
+      "ipaddress": "192.168.17.62",
       "port": "502",
       "unitidentifier": 1
     },
     {
       "transportid": 3,
       "type": "Modbus",
-      "ipaddress": "127.0.0.1",
+      "ipaddress": "192.168.17.63",
       "port": "502",
       "unitidentifier": 1
     },
     {
       "transportid": 4,
       "type": "Modbus",
-      "ipaddress": "127.0.0.1",
+      "ipaddress": "192.168.17.64",
       "port": "502",
       "unitidentifier": 1
     }
@@ -146,25 +146,6 @@
       "quantity": 3
     }
   ],
-  "rpcrequests": [
-    {
-      "name": "getPowerReduction1",
-      "staticvalue": 100
-    },
-    {
-      "name": "getPowerReduction2",
-      "staticvalue": 100
-    },
-    {
-      "name": "getPowerReduction3",
-      "staticvalue": 100
-    },
-    {
-      "name": "getPowerReduction4",
-      "staticvalue": 100
-    }
-  ],
-
   "readorders": [
     {
       "address": 5,
