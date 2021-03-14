@@ -149,7 +149,9 @@
   "rpcrequests": [
     {
       "name": "getPowerReduction1",
-      "staticvalue": 100
+      "readorder": "RedPotencia",
+      "serverid": 1,
+      "multiplefactor": 327.67
     },
     {
       "name": "getPowerReduction2",

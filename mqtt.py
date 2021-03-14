@@ -94,8 +94,14 @@ class Clients(object):
 
         logging.info('Message Received from MQTT Broker ' + str(msg.payload))
         requestId = msg.topic.replace('v1/devices/me/rpc/request/', '')
+        is_rpc = False
+        try:
+            msg.payload, is_rpc = execute_rpc(msg.payload)
+        except Exception:
+            logging.error('Exception could not process RPC: ' + str(traceback.format_exc()))
         client.publish('v1/devices/me/rpc/response/' + requestId, msg.payload)
-        execute_write_order(msg.payload)
+        if not is_rpc:
+            execute_write_order(msg.payload)
 
     def on_publish(self, client, userdata, mid):
 
@@ -196,6 +202,41 @@ def publish_message(serverid, topic, payload):
 
     except:
         logging.error('Exception Restoring MQTT Messages  ' + str(traceback.format_exc()))
+
+
+def execute_rpc(payload):
+    '''
+    Payload which includes a RPC: {"method":"getValueTemperature"}
+    :param payload: Payload rceived from topic v1/devices/me/rpc/request/{{requestid}}
+    :return:Answer to send
+    '''
+    config = cfg.Config.getConfig()
+    response = payload
+    is_rpc = False
+    payload_dict = json.loads(payload)
+    if 'rpcrequests' in config:
+        for rpcrequest in config['rpcrequests']:
+            if payload_dict.get('method', '') == rpcrequest['name']:
+                is_rpc = True
+                #look for a static value in the RPC definition
+                if 'staticvalue' in rpcrequest:
+                    response = rpcrequest['staticvalue']
+                else:
+                    # Look for a ReadOrder to return
+                    for readorder in config['readorders']:
+                        if rpcrequest.get('serverid', 1) in readorder['serverid']:
+                            if (readorder['name'] == rpcrequest['readorder']):
+                                multiplefactor = rpcrequest.get('multiplefactor', 1)
+                                if multiplefactor == 0:
+                                    multiplefactor = 1
+                                response = readorder.get('value', 0) / multiplefactor
+                                break
+
+        if is_rpc:
+            logging.info('Returnvalue to RPC: {0}'.format(response))
+    return response, is_rpc
+
+
 
 
 def send_attributes():
