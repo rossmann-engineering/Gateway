@@ -164,6 +164,10 @@
     {
       "name": "getPowerReduction4",
       "staticvalue": 100
+    },
+    {
+      "name": "getInverter1",
+      "staticvalue": true
     }
   ],
 

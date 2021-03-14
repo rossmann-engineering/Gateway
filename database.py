@@ -33,6 +33,7 @@ def create_tables(conn):
                     CREATE TABLE IF NOT EXISTS dailycache(
                         rowid INTEGER PRIMARY KEY AUTOINCREMENT,
                         moment datetime NOT NULL,
+                        serverid INTEGER NOT NULL,
                         tag text NOT NULL,
                         value float NOT NULL
                     );""")
@@ -41,12 +42,12 @@ def create_tables(conn):
     except:
         logging.error('Exception creating table: ' + str(traceback.format_exc()))
 
-def add_daily_value (conn, tag, value):
+def add_daily_value (conn, serverid, tag, value):
     try:
         moment = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:00")
         cursor = conn.cursor()
-        cursor.execute("INSERT INTO dailycache(moment,tag,value) VALUES(?,?,?)",
-                       (moment, tag, value))
+        cursor.execute("INSERT INTO dailycache(moment,serverid,tag,value) VALUES(?,?,?,?)",
+                       (moment, serverid, tag, value))
         conn.commit()
         cursor.execute("DELETE FROM dailycache WHERE moment < DATETIME('now', '-1 day')")
         conn.commit()
@@ -83,16 +84,16 @@ def datetime_to_unix_timestamp(dt):
     """
     return int((dt - datetime.datetime(1970, 1, 1)).total_seconds() * 1000)
 
-def get_daily_values(conn, tag):
+def get_daily_values(conn, tag, serverid):
     try:
         cursor = conn.cursor()
-        cursor.execute("SELECT rowid, moment ,tag,value FROM dailycache WHERE tag='"+str(tag)+"' ORDER by rowid")
+        cursor.execute("SELECT rowid, moment ,serverid ,tag,value FROM dailycache WHERE tag='"+str(tag)+ "' AND serverid=" + str(serverid) + " ORDER by rowid")
         data = cursor.fetchall()
         returnvalue = dict()
         value = list()
         moment = list()
         for element in data:
-            value.append(element[3])
+            value.append(element[4])
             moment.append((datetime.datetime.strptime(element[1],"%Y-%m-%d %H:%M:00")))
         returnvalue['value'] = value
         returnvalue['moment'] = moment

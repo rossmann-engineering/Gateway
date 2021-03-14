@@ -124,7 +124,7 @@ def registerLogFileCSV():
                 for s in config['readorders']:
                     readorder = dict(s)
                     db_conn = database.connect("eh.db")
-                    database.add_daily_value(db_conn, readorder['name'], readorder.get('value', 0))
+                    database.add_daily_value(db_conn,readorder.get('serverid',list([1]))[0], readorder['name'], readorder.get('value', 0))
                     if ('logmodbusdata' in readorder):
                         if (readorder['logmodbusdata']):
                             fieldnames.append(readorder['name'])
@@ -132,7 +132,7 @@ def registerLogFileCSV():
                                                             #is a Register without readOrder
                                 writerows[readorder['name']] = readorder['value']
                                 db_conn = database.connect("eh.db")
-                                database.add_daily_value(db_conn, readorder['name'], readorder['value'])
+                                database.add_daily_value(db_conn,readorder.get('serverid',list([1]))[0], readorder['name'], readorder['value'])
                             else:
                                 writerows[readorder['name']] = 65535
                 writer = csv.DictWriter(csvfile, fieldnames=fieldnames, lineterminator='\n')

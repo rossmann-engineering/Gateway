@@ -337,8 +337,9 @@ def latestreadings():
             reading['timestamp'] = readOrder['nextwakeup'] + readOrder['registerintervaltime']
             reading['value'] = readOrder['latestreading']
             reading['tagname'] = readOrder['name']
+            serverid = readOrder['serverid'][0]
 
-            reading['history'] = database.get_daily_values(db_conn, reading['tagname'])
+            reading['history'] = database.get_daily_values(db_conn, reading['tagname'], serverid)
             if (reading['value'] != 65535):
                 parameter['latestreadings'].append(reading)
 
