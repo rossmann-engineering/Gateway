@@ -1,12 +1,18 @@
 class pos_edge(object):
     def __init__(self):
+        """ gurke """
         self.lastStateRising = False
         self.lastStateFalling = False
         self.returnValueRising = False
         self.returnValueFalling = False
 
     def GetPosEdge(self, value):
-        if ((value) & (not self.lastStateRising)):
+        """
+        gurke
+        :param value: gurke
+        :return: gurke
+        """
+        if value & (not self.lastStateRising):
             self.returnValueRising = True
         else:
             self.returnValueRising = False
@@ -14,7 +20,12 @@ class pos_edge(object):
         return self.returnValueRising
 
     def GetNegEdge(self, value):
-        if ((not value) & (self.lastStateFalling)):
+        """
+        gurke
+        :param value: gurke
+        :return: gurke
+        """
+        if (not value) & self.lastStateFalling:
             self.returnValueFalling = True
         else:
             self.returnValueFalling = False

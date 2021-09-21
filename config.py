@@ -1,8 +1,8 @@
-'''
+"""
 Created on 14.01.2018
 
 @author: Stefan Rossmann
-'''
+"""
 import json
 from ModbusClient import Parity, Stopbits
 from warnings import catch_warnings
@@ -12,33 +12,34 @@ import copy
 import datetime
 import ModbusClient, datalogger
 import traceback
-import  os
+import os
 import logging
 
 
 class Config(object):
-    '''
+    """
     classdocs
-    '''
+    """
     # Here will be the instance stored.
     __instance = None
+
     @staticmethod
     def getConfig():
         """ Static access method. """
         if Config.__instance == None:
             Config()
         return Config.__instance.config
-    
+
     @staticmethod
     def getInstance():
         """ Static access method. """
         if Config.__instance == None:
             Config()
-        return Config.__instance 
+        return Config.__instance
 
     def __init__(self):
         """ Virtually private constructor. """
-        if Config.__instance != None:
+        if Config.__instance is not None:
             raise Exception("This class is a singleton!")
         else:
             Config.__instance = self
@@ -54,9 +55,9 @@ class Config(object):
             self.config = json.loads(json_data)
             self.read_version()
 
-
     def __geteventcounter(self):
-        #if eventcounter = none -> Try to read file
+        """ gurke """
+        # if eventcounter = none -> Try to read file
         if self.__eventcounter is None:
             try:
                 f = open('count.txt', 'r')
@@ -67,7 +68,11 @@ class Config(object):
         return self.__eventcounter
 
     def __seteventcounter(self, val):
-        #Write the value to file
+        """
+        gurke
+        :param val:
+        """
+        # Write the value to file
         try:
             self.__eventcounter = val
             f = open('count.txt', 'w+')
@@ -79,7 +84,9 @@ class Config(object):
     eventcounter = property(__geteventcounter, __seteventcounter)
 
     def write_config(self):
-
+        """
+        gurke
+        """
         if 'readorder' in self.config:
             for ro in self.config['readorder']:
                 del ro['value']
@@ -90,6 +97,9 @@ class Config(object):
             f.write("\n")
 
     def WritePythonSWVersion(self):
+        """
+        gurke
+        """
         try:
             with open('version.json', 'w') as f:
                 data = OrderedDict()
@@ -101,6 +111,9 @@ class Config(object):
             pass
 
     def read_version(self):
+        """
+        check which version it is
+        """
         logging.info('Webserver Read Version (ReadVersion()')
         try:
             with open('version.json') as json_data:
@@ -111,4 +124,3 @@ class Config(object):
         except Exception:
             self.pythonswversion = 'error'
             self.webserverversion = 'error'
-

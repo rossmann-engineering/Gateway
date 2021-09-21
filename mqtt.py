@@ -14,16 +14,16 @@ import ModbusClient
 
 
 class Clients(object):
-    '''
+    """
     classdocs
-    '''
+    """
     # Here will be the instance stored.
     __instance = None
 
     @staticmethod
     def getInstance():
         """ Static access method. """
-        if Clients.__instance == None:
+        if Clients.__instance is None:
             Clients()
         return Clients.__instance
 
@@ -39,7 +39,6 @@ class Clients(object):
         cfg.Config.getInstance().mqttconnectionlost = True
         self.clients = list()
 
-
         # Contains the client instance (instance) and the server id (serverid)
         self.client = dict()
         loopcounter = 0
@@ -53,15 +52,17 @@ class Clients(object):
             self.clients[loopcounter]['instance'].on_message = self.on_message
             self.clients[loopcounter]['instance'].on_publish = self.on_publish
             self.clients[loopcounter]['instance'].username_pw_set(mqttbroker['accesstoken'], '')
-            while (not internet_on()):
+            while not internet_on():
                 cfg.Config.getInstance().mqttconnectionlost = True
                 logging.info('MQTT-Client - Wait for Internet connection available')
                 time.sleep(2)
             try:
                 if 'username' in mqttbroker and 'password' in mqttbroker:
-                    self.clients[loopcounter]['instance'].username_pw_set(mqttbroker['username'], mqttbroker['password'])
+                    self.clients[loopcounter]['instance'].username_pw_set(mqttbroker['username'],
+                                                                          mqttbroker['password'])
                 self.clients[loopcounter]['instance'].connect(mqttbroker['address'], int(mqttbroker['port']), 6000)
-                logging.info('Initialize MQTT Client to Broker ' + str(mqttbroker['address'])+', Port: ' +  str(mqttbroker['port']))
+                logging.info('Initialize MQTT Client to Broker ' + str(mqttbroker['address']) + ', Port: ' + str(
+                    mqttbroker['port']))
                 time.sleep(2)
 
                 self.clients[loopcounter]['instance'].loop_start()
@@ -77,20 +78,22 @@ class Clients(object):
             except:
                 logging.error('Exception connecting to MQTT-Broker: ' + str(traceback.format_exc()))
 
-
-
     def on_connect(self, client, userdata, flags, rc):
+        """ connect to mqtt """
         cfg.mqttconnectionlost = False
 
         client.subscribe('v1/devices/me/rpc/request/+')
         client.subscribe('v1/devices/me/attributes')
         pass
+
     def on_disconnect(self, client, userdata, rc):
+        """ disconnect from mqtt """
         logging.info('Disconnected from MQTT-Broker')
 
         pass
 
     def on_message(self, client, userdata, msg):
+        """ receive message from mqtt gurke """
 
         logging.info('Message Received from MQTT Broker ' + str(msg.payload))
         requestId = msg.topic.replace('v1/devices/me/rpc/request/', '')
@@ -104,12 +107,17 @@ class Clients(object):
             execute_write_order(msg.payload)
 
     def on_publish(self, client, userdata, mid):
+        """ publish to mqtt gurke """
 
-        #DataLogger.logData('Publish successfully acknowledged mid: ' + str(mid))
+        # DataLogger.logData('Publish successfully acknowledged mid: ' + str(mid))
         self.client['mid'] = mid
 
 
 def internet_on():
+    """
+    connect to internet gurke
+    :return: true or false
+    """
     url = 'http://www.google.com/'
     timeout = 2
 
@@ -119,12 +127,13 @@ def internet_on():
     except requests.ConnectionError:
         return False
 
+
 def validate_json(message):
-    '''
+    """
     Validate if the message is a JSON format (Function JSON.loads throws an exception if the message is no valid json)
     :param message: Message to validate
     :return: True if valid JSON Message
-    '''
+    """
     try:
         jsonmessage = json.loads(message)
     except ValueError as e:
@@ -132,31 +141,37 @@ def validate_json(message):
 
     return True
 
+
 def publish_message(serverid, topic, payload):
+    """
+    publish message to gurke
+    :param serverid: Server ID the Message refers to
+    :param topic: topic gurke
+    :param payload: message publish to topic
+    """
     config = cfg.Config.getConfig()
     try:
 
         logging.info('Store Message to Database, ServerID ' + str(serverid) + ' Message: ' + payload)
-        if (len(payload) > 5):
+        if len(payload) > 5:
             db_conn = database.connect("eh.db")
             database.add_message_queue(db_conn, datetime.datetime.now(), serverid, topic, payload)
             cfg.Config.getInstance().eventcounter = cfg.Config.getInstance().eventcounter + 1
     except:
         logging.error('Exception storing data in Database: ' + str(traceback.format_exc()))
 
-
     try:
         # check message queue for entries
         db_conn = database.connect("eh.db")
         datatosend = database.get_message_queue(db_conn, serverid)
-        if (len(datatosend) > 5):
+        if len(datatosend) > 5:
             for t in Clients.getInstance().clients:
                 logging.info('Message Queue exceeded max. size, trying to reconnect')
-                #config.mqttconnectionlost = True
+                # config.mqttconnectionlost = True
                 client = dict(t)
                 client['instance'].reconnect()
         if datatosend:
-            cancelSend= False      #Cancel send messages if one Message failed
+            cancelSend = False  # Cancel send messages if one Message failed
             for element in datatosend:
                 if cancelSend:
                     break
@@ -167,31 +182,34 @@ def publish_message(serverid, topic, payload):
                 logging.info('Message from Queue restored ' + str(element))
                 for t in Clients.getInstance().clients:
                     client = dict(t)
-                    if not 'serverid' in client:        #That can happen if the client is not yet initialized
+                    if not 'serverid' in client:  # That can happen if the client is not yet initialized
                         break
-                    if (client['serverid'] == serverid):
+                    if client['serverid'] == serverid:
                         if not validate_json(element['payload']):
-                            logging.info('Message is no valid JSON (deleted): ' + str(element['payload'] ))
+                            logging.info('Message is no valid JSON (deleted): ' + str(element['payload']))
                             database.delete_message_queue(db_conn, element['rowid'])
                             break
-                        response = client['instance'].publish(element['topic'], element['payload'],  qos=1)
-                        logging.info('Message Published to MQTT Broker ' + str(element['payload']) + " topic: " + str(element['topic']) + " Server-Response: " + str(response.rc) + "mid: " + str(response.mid))
+                        response = client['instance'].publish(element['topic'], element['payload'], qos=1)
+                        logging.info('Message Published to MQTT Broker ' + str(element['payload']) + " topic: " + str(
+                            element['topic']) + " Server-Response: " + str(response.rc) + "mid: " + str(response.mid))
                         time.sleep(1)
-                        if (response.rc == 0):
+                        if response.rc == 0:
                             for x in range(6):
-                                if  response.is_published():
+                                if response.is_published():
                                     logging.info('Message Deleted from queue ' + str(
                                         element['payload']) + " topic: " + str(
                                         element['topic']) + " Server-Response: " + str(response.rc) + "mid: " + str(
                                         response.mid))
 
-                                    datalogger.logMQTTRegisterData('MQTT send Payload to Serverid ' + str(serverid) + " Topic: " + str(element['topic']) + " Payload: " + str(element['payload']))
+                                    datalogger.logMQTTRegisterData(
+                                        'MQTT send Payload to Serverid ' + str(serverid) + " Topic: " + str(
+                                            element['topic']) + " Payload: " + str(element['payload']))
                                     cfg.Config.getInstance().mqttconnectionlost = False
                                     database.delete_message_queue(db_conn, element['rowid'])
                                     break
                                 else:
-                                    time.sleep(2)   #was 0.5 26.02.2020
-                            if (x >= 5):
+                                    time.sleep(2)  # was 0.5 26.02.2020
+                            if x >= 5:
                                 cancelSend = True
                                 break
                             pass
@@ -205,11 +223,11 @@ def publish_message(serverid, topic, payload):
 
 
 def execute_rpc(payload):
-    '''
+    """
     Payload which includes a RPC: {"method":"getValueTemperature"}
-    :param payload: Payload rceived from topic v1/devices/me/rpc/request/{{requestid}}
+    :param payload: Payload received from topic v1/devices/me/rpc/request/{{requestid}}
     :return:Answer to send
-    '''
+    """
     config = cfg.Config.getConfig()
     response = payload
     is_rpc = False
@@ -218,14 +236,14 @@ def execute_rpc(payload):
         for rpcrequest in config['rpcrequests']:
             if payload_dict.get('method', '') == rpcrequest['name']:
                 is_rpc = True
-                #look for a static value in the RPC definition
+                # look for a static value in the RPC definition
                 if 'staticvalue' in rpcrequest:
                     response = rpcrequest['staticvalue']
                 else:
                     # Look for a ReadOrder to return
                     for readorder in config['readorders']:
                         if rpcrequest.get('serverid', 1) in readorder['serverid']:
-                            if (readorder['name'] == rpcrequest['readorder']):
+                            if readorder['name'] == rpcrequest['readorder']:
                                 multiplefactor = rpcrequest.get('multiplefactor', 1)
                                 if multiplefactor == 0:
                                     multiplefactor = 1
@@ -237,9 +255,8 @@ def execute_rpc(payload):
     return response, is_rpc
 
 
-
-
 def send_attributes():
+    """ send attributes gurke """
     config = cfg.Config.getConfig()
     logging.info('Sending MQTT-Attributed...')
     for s in config['mqttbroker']:
@@ -249,7 +266,7 @@ def send_attributes():
             payload = '{'
 
             cfg.Config.getInstance().lock.acquire()
-            #Send Readorders
+            # Send Readorders
             try:
                 read_order_count = 0
                 for t in config['attributes']:
@@ -258,7 +275,7 @@ def send_attributes():
                     if 'serverid' in attributes:
                         serverids = attributes['serverid']
                     else:
-                        serverids = [1];
+                        serverids = [1]
                     if mqttbroker['serverid'] in serverids:
                         sendValue = True
                     else:
@@ -275,11 +292,16 @@ def send_attributes():
                 cfg.Config.getInstance().lock.release()
 
             payload = payload + '}'
-            if (read_order_count > 0)  and 'attributetopic' in mqttbroker:
+            if (read_order_count > 0) and 'attributetopic' in mqttbroker:
                 publish_message(mqttbroker['serverid'], mqttbroker['attributetopic'], payload)
 
 
-def send_mqtt_data(disconnected = False, connected = False):
+def send_mqtt_data(disconnected=False, connected=False):
+    """
+    send mqtt data
+    :param disconnected: if true then disconnected from mqtt client
+    :param connected: if true then connected to mqtt client
+    """
     config = cfg.Config.getConfig()
     logging.info('Sending MQTT-Data...')
     for s in config['mqttbroker']:
@@ -289,18 +311,17 @@ def send_mqtt_data(disconnected = False, connected = False):
 
             payload = payload + ', "values":{'
 
-
             # This is the Message we send if the Modbus Device is not connected
-            if (disconnected):
+            if disconnected:
                 payload = payload + '"Modbus Connected":0'
 
             # This is the Message we send if the Modbus Device is connected
-            if (connected):
+            if connected:
                 payload = payload + '"Modbus Connected":1'
 
-            if (not connected and not disconnected):
+            if not connected and not disconnected:
                 cfg.Config.getInstance().lock.acquire()
-                #Send Readorders
+                # Send Readorders
                 try:
                     read_order_count = 0
                     for t in config['readorders']:
@@ -310,7 +331,7 @@ def send_mqtt_data(disconnected = False, connected = False):
                             serverids = readOrder['serverid']
                         else:
                             serverids = [1];
-                        if (('sendValue' in readOrder) and (mqttbroker['serverid'] in serverids)):
+                        if ('sendValue' in readOrder) and (mqttbroker['serverid'] in serverids):
                             sendValue = (readOrder['sendValue'] == True)
                         else:
                             sendValue = False
@@ -326,26 +347,28 @@ def send_mqtt_data(disconnected = False, connected = False):
                     cfg.Config.getInstance().lock.release()
 
             payload = payload + '}}'
-            if (read_order_count > 0):
+            if read_order_count > 0:
                 logging.info('Sending MQTT-Data to serverid' + str(mqttbroker['serverid']))
                 publish_message(mqttbroker['serverid'], mqttbroker['publishtopic'], payload)
 
+
 def execute_write_order(payload):
-    '''
+    """
     Example Message:{"method":"setValue","params":true}
     or {"method":"toggle3","params":{"toggle3":1}
     :param payload: message received from MQTT-Broker
-    '''
+    """
     d = json.loads(payload)
-    if not 'method' in d or not 'params' in d:
+    if 'method' not in d or 'params' not in d:
         return
     method = d['method']
     params = d['params']
     config = cfg.Config.getConfig()
-    #Search for matching RadOrder
+    # Search for matching RadOrder
     cfg.Config.getInstance().lock.acquire()
     try:
-        if (not isinstance(params, dict)):      #Convert "params" to dictionary if Message Format: {"method":"setValue","params":true}
+        if (not isinstance(params,
+                           dict)):  # Convert "params" to dictionary if Message Format: {"method":"setValue","params":true}
             converted_dict = dict()
             converted_dict[method] = params
             params = converted_dict
@@ -364,32 +387,32 @@ def execute_write_order(payload):
                                 config['devices'][0]['port'] = 502
                             modbusClient = ModbusClient.ModbusClient(str(config['devices'][0]['ipaddress']),
                                                                      int(config['devices'][0]['port']))
-                        #if not isinstance(params, dict):      # Message Format: {"method":"setValue","params":true}
+                        # if not isinstance(params, dict):      # Message Format: {"method":"setValue","params":true}
                         #    value = int(params)               # commented, because Message Format is converted at beginning
-                        #else:                                 # Message Format: {"method":"toggle3","params":{"toggle3":1}
+                        # else:                                 # Message Format: {"method":"toggle3","params":{"toggle3":1}
                         value = int(dict_value)
                         if 'staticvalue' in readOrder:
                             value = readOrder['staticvalue']
                         valueChanged = False
                         if 'value' in readOrder:
-                            valueChanged = True#(value != readOrder['value'])
+                            valueChanged = True  # (value != readOrder['value'])
                         else:
                             valueChanged = True
                         if valueChanged:
                             # This is Modbus-RTU
-                            if ('serialPort' in config['devices'][0]):
+                            if 'serialPort' in config['devices'][0]:
                                 modbusClient.Parity = (config['devices'][0]['parity'])
                                 modbusClient.Baudrate = (config['devices'][0]['baudrate'])
                                 modbusClient.Stopbits = (config['devices'][0]['stopbits'])
-                            if ('ipaddress' in config['devices'][0]):
-                                if (not ('port' in config['devices'][0])):
+                            if 'ipaddress' in config['devices'][0]:
+                                if not ('port' in config['devices'][0]):
                                     config['devices']['port'] = 502
                                 modbusClient = ModbusClient.ModbusClient(
                                     str(config['devices'][0]['ipaddress']),
                                     int(config['devices'][0]['port']))
-                            if ('unitidentifier' in config['devices'][0]):
+                            if 'unitidentifier' in config['devices'][0]:
                                 modbusClient.UnitIdentifier = (config['devices'][0]['unitidentifier'])
-                            if (not modbusClient.is_connected()):
+                            if not modbusClient.is_connected():
                                 modbusClient.connect()
                         register = (readOrder['address'])
                         if not ('multiplefactor' in readOrder):
@@ -405,16 +428,21 @@ def execute_write_order(payload):
     finally:
         cfg.Config.getInstance().lock.release()
 
+
 def datetime_to_unix_timestamp(dt):
-    return (dt - datetime.datetime(1970,1,1)).total_seconds() * 1000
+    """
+    shows datetime in unix timestamp
+    :return: time in unix timestamp (in milliseconds sine 1st January 1970)
+    """
+    return (dt - datetime.datetime(1970, 1, 1)).total_seconds() * 1000
 
 
 if __name__ == "__main__":
-    #config = Config.Config.getInstance()
-    #config.ReadConfig()
+    # config = Config.Config.getInstance()
+    # config.ReadConfig()
     client = mqtt.Client('client')
     client.connect('mqtt-dashboard.com', 1883, 6000)
-    #send_mqtt_data()
-    #dt = datetime.datetime(2016,1,1,12,0,0)
-    #print (int(datetime_to_unix_timestamp(dt)))
-    #execute_write_order('{"method":"Non-Saving Load","params":{"Non-Saving Load":50}}')
+    # send_mqtt_data()
+    # dt = datetime.datetime(2016,1,1,12,0,0)
+    # print (int(datetime_to_unix_timestamp(dt)))
+    # execute_write_order('{"method":"Non-Saving Load","params":{"Non-Saving Load":50}}')

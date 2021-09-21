@@ -1,1683 +1,1475 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-    font-size: 110%;
-}
-
-.topnav {
-  overflow: hidden;
-  background-color: #333;
-}
-
-.topnav a {
-  float: left;
-  display: block;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
-}
-
-.topnav a:hover {
-  background-color: #ddd;
-  color: black;
-}
-
-.active {
-  background-color: #4CAF50;
-  color: white;
-}
-
-.topnav .icon {
-  display: none;
-}
-
-
-
-
-@media screen and (max-width: 600px) {
-  .topnav a:not(:first-child) {display: none;}
-  .topnav a.icon {
-    float: right;
-    display: block;
-  }
-}
-
-@media screen and (max-width: 600px) {
-  .topnav.responsive {position: relative;}
-  .topnav.responsive .icon {
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
-  .topnav.responsive a {
-    float: none;
-    display: block;
-    text-align: left;
-  }
-
-
-}
-
-
-
-input[type=text], select, textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    resize: vertical;
-    font-size: 110%;
-}
-
-label {
-    padding: 12px 12px 12px 0;
-    display: inline-block;
-}
-
-input[type=submit] {
-    background-color: #4CAF50;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    float: right;
-}
-
-button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    float: left;
-}
-
-input[type=submit]:hover {
-    background-color: #45a049;
-}
-
-.container {
-    border-radius: 5px;
-    background-color: #f2f2f2;
-    padding: 20px;
-}
-
-.col-25 {
-    float: left;
-    width: 15%;
-    margin-top: 2px;
-}
-
-.col-10 {
-    float: left;
-    width: 10%;
-    margin-top: 2px;
-}
-
-.col-75 {
-    float: left;
-    width: 75%;
-    margin-top: 2px;
-}
-
-.col-60 {
-    float: left;
-    width: 60%;
-    margin-top: 2px;
-}
-
-/* Clear floats after the columns */
-.row:after {
-    content: "";
-    display: table;
-    clear: both;
-}
-   @media (max-width: 600px) {
-    .col-25, .col-75, input[type=submit] {
-        width: 100%;
-        margin-top: 0; }}
-
-.success {
-  background-color: #4CAF50;
-  color: white;
-}
-
-.failed {
-  background-color: red;
-  color: white;
-}
-
-
-
-
-/* The Modal (background) */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-/* Modal Content/Box */
-.modal-content {
-  background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
-  padding: 20px;
-  border: 1px solid #888;
-  width: 60%; /* Could be more or less, depending on screen size */
-}
-
-/* The Close Button */
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.modal-header {
-  padding: 2px 16px;
-  background-color: #5cb85c;
-  color: white;
-}
-
-
-    </style>
-</head>
-<body>
-
-<div class="topnav" id="myTopnav">
-    <a href="/index">Home</a>
-    <a href="/fileuploads">Config Import/Export</a>
-    <a href="/connectivity">Connectivity</a>
-    {% if admin %}
-    <a href="/gatewayconfiguration" class="active">GW Advance Configuration</a>
-    <a href="/modbus">Modbus configuration</a>
-    {% endif %}
-
-    <a href="/showlog">Show log</a>
-    <a href="/latestreading">Latest Readings</a>
-    <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
-    <img src="../static/wise-logo-png.png" alt="Inblic logo" align="right" style="width: 285px; height: auto; background-color:white">
-</div>
-
-<script>
-function myFunction() {
-    var x = document.getElementById("myTopnav");
-    if (x.className === "topnav") {
-        x.className += " responsive";
-    } else {
-        x.className = "topnav";
-    }
-}
-
-
-
-
-</script>
-
-
-<h2>Configuration</h2>
-<form action="/configurationform" method="post">
-
-
-    <div class="container">
-
-
-        {% if parameter|length %}
-        {% for key, value in parameter.items() %}
-        {% if (key != "readorders") and (key != "calculations") and (key != "mqttbroker") and (key != "modbuscommand") and (key != "httpservers") and (key != "devices") and
-        (key != "linuxreadorders")and (key != "configreadorders")%}
-        <div class="row">
-            <div class="col-25">
-                <label for={{key}}>{{key}}</label>
-            </div>
-            <div class="col-75">
-                {% if (key != "loglevel") and (key != "smtpenabletls") %}
-                <input type="text" id={{key}} name={{key}} value="{{value}}">
-                {% elif (key == "loglevel") %}
-                <select name="loglevel" id="loglevel" name="loglevel" style="width: 100%">
-                        <option value="debug" {% if value == 'debug' %} selected {% endif %}>debug</option>
-                        <option value="info" {% if value == 'info' %} selected {% endif %}>info</option>
-                        <option value="error" {% if value == 'error' %} selected {% endif %}>error</option>
-                    </select>
-                {% elif (key == "smtpenabletls") %}
-                <select name="smtpenabletls" id="smtpenabletls" style="width: 100%">
-                        <option value="True" {% if value|lower == 'true' %} selected {% endif %}>True</option>
-                        <option value="False" {% if value|lower == 'false' %} selected {% endif %}>False</option>
-                    </select>
-                {% endif %}
-            </div>
-        </div>
-        {% endif %}
-
-
-        {% endfor %}
-        {% endif %}
-        <div class="row">
-            <input type="submit" value="Submit">
-        </div>
-    </div>
-
-    <br>
-</form>
-
-<!---------------------------------------------------- Read Orders Form -->
-
-<form action="/configurationformreadorders" method="post">
-
-
-    <div class="container">
-
-        {% if parameter|length %}
-
-        <div class="row">
-            <div class="col-25">
-                <label>Select Read-Order</label>
-            </div>
-            <div class="col-60">
-                <select id="readorders" name="readorders" style="width: 100%" onchange="readOrderSelctionChanged()">
-                    {% for readorders in parameter.readorders %}
-
-
-                    <option value={{key}}>{{readorders.name}}</option>
-                    {% endfor %}
-
-                </select>
-            </div>
-
-        </div>
-        <div class="row">
-            <div class="col-10"></div>
-            <div class="col-60">
-                <label id="sourceLabel" style="color: #ff0000"></label>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-10"></div>
-            <div class="col-25">
-                <label>Name</label>
-            </div>
-            <div class="col-60">
-                <input type="text" id="name" name="name" value="{{parameter.readorders[0].name}}">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-10"></div>
-            <div class="col-25">
-                <label>Active</label>
-            </div>
-            <div class="col-60">
-
-                <select name="active" id="active" style="width: 100%">
-                        <option value="true" {% if parameter.readorders[0].active %} selected {% endif %}>True</option>
-                        <option value="false" {% if not parameter.readorders[0].active %} selected {% endif %}>False</option>
-
-                </select>
-            </div>
-        </div>
-
-
-        <div class="row">
-            <div class="col-10"></div>
-            <div class="col-25">
-                <label>Transport-ID</label>
-            </div>
-            <div class="col-60">
-                <input type="text" id="transportid" name="transportid" value="{{parameter.readorders[0].transportid}}">
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-10"></div>
-            <div class="col-25">
-                <label>Absolute Threshold</label>
-            </div>
-            <div class="col-60">
-                <input type="text" id="absolutethreshold" name="absolutethreshold" value="{{parameter.readorders[0].absolutethreshold}}">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-10"></div>
-            <div class="col-25">
-                <label>Relative Threshold</label>
-            </div>
-            <div class="col-60">
-                <input type="text" id="relativethreshold" name="relativethreshold" value="{{parameter.readorders[0].relativethreshold}}">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-10"></div>
-            <div class="col-25">
-                <label>Data Area</label>
-            </div>
-            {% if parameter.readorders[0].fieldbustype != "EthernetIP" %}
-            <div class="col-60">
-
-                <select name="dataarea" id="dataarea" style="width: 100%">
-                    {% if parameter.readorders[0].fieldbustype == "Modbus" %}
-                        <option value="Input Register" {% if parameter.readorders[0].dataarea == "Input Register" %} selected {% endif %}>Input Register</option>
-                        <option value="Holding Register" {% if parameter.readorders[0].dataarea == "Holding Register" %} selected {% endif %}>Holding Register</option>
-                    {% else %}
-                        <option value="analogValue" {% if parameter.readorders[0].dataarea == "analogValue" %} selected {% endif %}>Analog Value</option>
-                        <option value="analogInput" {% if parameter.readorders[0].dataarea == "analogInput" %} selected {% endif %}>Analog Input</option>
-                        <option value="binaryValue" {% if parameter.readorders[0].dataarea == "binaryValue" %} selected {% endif %}>Binary Value</option>
-                        <option value="binaryInput" {% if parameter.readorders[0].dataarea == "binaryInput" %} selected {% endif %}>Binary Input</option>
-                        <option value="multiStateValue" {% if parameter.readorders[0].dataarea == "multiStateValue" %} selected {% endif %}>Multi-State Value</option>
-                        <option value="multiStateInput" {% if parameter.readorders[0].dataarea == "multiStateInput" %} selected {% endif %}>Multi-State Input</option>
-                    {% endif %}
-                </select>
-            </div>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            body {
+                margin: 0;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 110%;
+            }
+            .topnav {
+                overflow: hidden;
+                background-color: #333;
+            }
+            .topnav a {
+                float: left;
+                display: block;
+                color: #f2f2f2;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+                font-size: 17px;
+            }
+            .topnav a:hover {
+                background-color: #ddd;
+                color: black;
+            }
+            .active {
+                background-color: #4CAF50;
+                color: white;
+            }
+            .topnav .icon {
+                display: none;
+            }
+            @media screen and (max-width: 600px) {
+                .topnav a:not(:first-child) {display: none;}
+                .topnav a.icon {
+                    float: right;
+                    display: block;
+                }
+            }
+            @media screen and (max-width: 600px) {
+                .topnav.responsive {position: relative;}
+                .topnav.responsive .icon {
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                }
+                .topnav.responsive a {
+                    float: none;
+                    display: block;
+                    text-align: left;
+                }
+            }
+            input[type=text], select, textarea {
+                width: 100%;
+                padding: 12px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                resize: vertical;
+                font-size: 110%;
+            }
+            label {
+                padding: 12px 12px 12px 0;
+                display: inline-block;
+            }
+            input[type=submit] {
+                background-color: #4CAF50;
+                color: white;
+                padding: 12px 20px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                float: right;
+            }
+            button {
+                background-color: #4CAF50;
+                color: white;
+                padding: 12px 20px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                float: left;
+            }
+            input[type=submit]:hover {
+                background-color: #45a049;
+            }
+            .container {
+                border-radius: 5px;
+                background-color: #f2f2f2;
+                padding: 20px;
+            }
+            .col-25 {
+                float: left;
+                width: 15%;
+                margin-top: 2px;
+            }
+            .col-10 {
+                float: left;
+                width: 10%;
+                margin-top: 2px;
+            }
+            .col-75 {
+                float: left;
+                width: 75%;
+                margin-top: 2px;
+            }
+            .col-60 {
+                float: left;
+                width: 60%;
+                margin-top: 2px;
+            }
+            /* Clear floats after the columns */
+            .row:after {
+                content: "";
+                display: table;
+                clear: both;
+            }
+            @media (max-width: 600px) {
+                .col-25, .col-75, input[type=submit] {
+                    width: 100%;
+                    margin-top: 0;
+                }
+            }
+            .success {
+                background-color: #4CAF50;
+                color: white;
+            }
+            .failed {
+                background-color: red;
+                color: white;
+            }
+            /* The Modal (background) */
+            .modal {
+                display: none; /* Hidden by default */
+                position: fixed; /* Stay in place */
+                z-index: 1; /* Sit on top */
+                left: 0;
+                top: 0;
+                width: 100%; /* Full width */
+                height: 100%; /* Full height */
+                overflow: auto; /* Enable scroll if needed */
+                background-color: rgb(0,0,0); /* Fallback color */
+                background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            }
+            /* Modal Content/Box */
+            .modal-content {
+                background-color: #fefefe;
+                margin: 15% auto; /* 15% from the top and centered */
+                padding: 20px;
+                border: 1px solid #888;
+                width: 60%; /* Could be more or less, depending on screen size */
+            }
+            /* The Close Button */
+            .close {
+                color: #aaa;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+            }
+            .close:hover,
+            .close:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
+            .modal-header {
+                padding: 2px 16px;
+                background-color: #5cb85c;
+                color: white;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="topnav" id="myTopnav">
+            <a href="/index">Home</a>
+            <a href="/fileuploads">Config Import/Export</a>
+            <a href="/connectivity">Connectivity</a>
+            {% if admin %}
+                <a href="/gatewayconfiguration" class="active">GW Advance Configuration</a>
+                <a href="/modbus">Modbus configuration</a>
             {% endif %}
+            <a href="/showlog">Show log</a>
+            <a href="/latestreading">Latest Readings</a>
+            <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
+            <img src="../static/wise-logo-png.png" alt="Inblic logo" align="right" style="width: 285px; height: auto; background-color:white">
         </div>
-         <div class="row">
-            <div class="col-10"></div>
-            <div class="col-25">
-                <label>Registerintervaltime</label>
-            </div>
-            <div class="col-60">
-                <input type="text" id="registerintervaltime" name="registerintervaltime" value="{{parameter.readorders[0].registerintervaltime}}">
-            </div>
-        </div>
-                <div class="row">
-            <div class="col-10"></div>
-            <div class="col-25">
-                <label>Multiplefactor</label>
-            </div>
-            <div class="col-60">
-                <input type="text" id="multiplefactor" name="multiplefactor" value="{{parameter.readorders[0].multiplefactor}}">
-            </div>
-        </div>
-         {% if parameter.readorders[0].fieldbustype == "Modbus" %}
-        <div id="readordersmodbus">
-            <div class="row">
-                <div class="col-10"></div>
-                <div class="col-25">
-                    <label>Signed</label>
-                </div>
-                <div class="col-60">
-                    <input type="text" id="signed" name="signed" value="{{parameter.readorders[0].signed}}">
-                </div>
-            </div>
+        <script>
+        function myFunction() {
+            var x = document.getElementById("myTopnav");
+            if (x.className === "topnav") {
+                x.className += " responsive";
+            }
+            else {
+                x.className = "topnav";
+            }
+        }
+        </script>
+        <h2>Configuration</h2>
+        <form action="/configurationform" method="post">
+            <div class="container">
+                {% if parameter|length %}
+                    {% for key, value in parameter.items() %}
+                        {% if (key != "readorders") and (key != "calculations") and (key != "mqttbroker") and (key != "modbuscommand") and (key != "httpservers") and (key != "devices") and
+                            (key != "linuxreadorders")and (key != "configreadorders")%}
                             <div class="row">
-                <div class="col-10"></div>
-                <div class="col-25">
-                    <label>Bits</label>
-                </div>
-                <div class="col-60">
-                    <input type="text" id="bits" name="bits" value="{{parameter.readorders[0].bits}}">
-                </div>
-            </div>
-        </div>
-        {% endif %}
-
-        <div class="row" id="classidrow" {% if parameter.readorders[0].fieldbustype != "EthernetIP" %}style="display: none"{% endif %}>
-                <div class="col-10"></div>
-                <div class="col-25">
-                    <label>Class-ID</label>
-                </div>
-                <div class="col-60">
-                    <input type="text" id="classid" name="classid" value="{{parameter.readorders[0].classid}}">
-                </div>
-            </div>
-
-     <div class="row" id="instanceidrow" {% if parameter.readorders[0].fieldbustype != "EthernetIP" %}style="display: none"{% endif %}>
-                <div class="col-10"></div>
-                <div class="col-25">
-                    <label>Instance-ID</label>
-                </div>
-                <div class="col-60">
-                    <input type="text" id="instanceid" name="instanceid" value="{{parameter.readorders[0].instanceid}}">
-                </div>
-            </div>
-
-    <div class="row"  id="attributeidrow" {% if parameter.readorders[0].fieldbustype != "EthernetIP" %}style="display: none"{% endif %}>
-                <div class="col-10"></div>
-                <div class="col-25">
-                    <label>Attribute-ID</label>
-                </div>
-                <div class="col-60">
-                    <input type="text" id="attributeid" name="attributeid" value="{{parameter.readorders[0].attributeid}}">
-                </div>
-            </div>
-
-    <div class="row"  id="maskrow" {% if parameter.readorders[0].fieldbustype != "EthernetIP" %}style="display: none"{% endif %}>
-                <div class="col-10"></div>
-                <div class="col-25">
-                    <label>Mask</label>
-                </div>
-                <div class="col-60">
-                    <input type="text" id="mask" name="mask" value="{{parameter.readorders[0].mask}}">
-                </div>
-            </div>
-    <div class="row"  id="startingbyterow" {% if parameter.readorders[0].fieldbustype != "EthernetIP" %}style="display: none"{% endif %}>
-                <div class="col-10"></div>
-                <div class="col-25">
-                    <label>Starting Byte</label>
-                </div>
-                <div class="col-60">
-                    <input type="text" id="startingbyte" name="startingbyte" value="{{parameter.readorders[0].startingbyte}}">
-                </div>
-            </div>
-    <div class="row"  id="numberofbytesrow" {% if parameter.readorders[0].fieldbustype != "EthernetIP" %}style="display: none"{% endif %}>
-                <div class="col-10"></div>
-                <div class="col-25">
-                    <label>Number of bytes</label>
-                </div>
-                <div class="col-60">
-                    <input type="text" id="numberofbytes" name="numberofbytes" value="{{parameter.readorders[0].numberofbytes}}">
-                </div>
-            </div>
-
-
-                        <div class="row">
-            <div class="col-10"></div>
-            <div class="col-25">
-                <label>Address</label>
-            </div>
-            <div class="col-60">
-                <input type="text" id="address" name="address" value="{{parameter.readorders[0].address}}">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-10"></div>
-            <div class="col-25">
-                <label>Server ID</label>
-            </div>
-            <div class="col-60">
-
-
-                <input type="text" id="serverid" name="serverid" value="{{parameter.readorders[0].serverid}}">
-            </div>
-        </div>
-        {% endif %}
-        <div class="row">
-            <div class="col-10"></div>
-            <div class="col-25">
-                <label>Target (Readorder name)</label>
-            </div>
-            <div class="col-60">
-
-                <input type="text" id="target" name="target" value="{{parameter.readorders[0].target}}">
-            </div>
-        </div>
-        <div class="row">
-            <button id="openAddReadOrderModalButton" type="button" onclick="readOrderTransportIdChanged()" style="margin: 10px">Add Read Order Command</button>
-
-            <input type="submit" name="type" value="Submit Read Order" style="margin: 10px">
-            <input type="submit" name="type" value="Delete Read Order" style="margin: 10px; background-color: red">
-        </div>
-    </div>
-    <br>
-</form>
-
-<!---------------------------------------------------- Modbus command Form -->
-<form action="/configurationformmodbuscommand" method="post">
-
-
-    <div class="container">
-        {% if parameter|length %}
-
-        <div class="row">
-            <div class="col-25">
-                <label>Select Modbus-Command</label>
-            </div>
-            <div class="col-60">
-                <select id="modbuscommands" name="modbuscommands" style="width: 100%"
-                        onchange="modbuscommandSelctionChanged()">
-                    {% for modbuscommand in parameter.modbuscommand %}
-
-
-                    <option value={{loop.index}}>functioncode: {{modbuscommand.functioncode}}, startingaddress:
-                        {{modbuscommand.startingaddress}}, quantity: {{modbuscommand.quantity}}{% if modbuscommand.transportid %}, Transport-ID: {{modbuscommand.transportid}}{% endif %}
-                    </option>
-
+                                <div class="col-25">
+                                    <label for={{key}}>{{key}}</label>
+                                </div>
+                                <div class="col-75">
+                                    {% if (key != "loglevel") and (key != "smtpenabletls") %}
+                                    <input type="text" id={{key}} name={{key}} value="{{value}}">
+                                    {% elif (key == "loglevel") %}
+                                        <select name="loglevel" id="loglevel" name="loglevel" style="width: 100%">
+                                            <option value="debug" {% if value == 'debug' %} selected {% endif %}>debug</option>
+                                            <option value="info" {% if value == 'info' %} selected {% endif %}>info</option>
+                                            <option value="error" {% if value == 'error' %} selected {% endif %}>error</option>
+                                        </select>
+                                    {% elif (key == "smtpenabletls") %}
+                                        <select name="smtpenabletls" id="smtpenabletls" style="width: 100%">
+                                            <option value="True" {% if value|lower == 'true' %} selected {% endif %}>True</option>
+                                            <option value="False" {% if value|lower == 'false' %} selected {% endif %}>False</option>
+                                        </select>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endif %}
                     {% endfor %}
-
-                </select>
-            </div>
-
-        </div>
-        <div class="row">
-            <div class="col-10"></div>
-            <div class="col-25">
-                <label>Modbus Command</label>
-            </div>
-            <div class="col-60">
-        <select name="functioncode" id="functioncode" style="width: 100%">
-                    <option value="Read Input Registers" {% if parameter.modbuscommand[0].functioncode == "Read Input Registers" %} selected {% endif %}>Read Input Registers</option>
-                    <option value="Read Holding Registers" {% if parameter.modbuscommand[0].functioncode == "Read Holding Registers" %} selected {% endif %}>Read Holding Registers</option>
-        </select>
-            </div>
-        </div>
-        {% for key, value in parameter.modbuscommand[0].items() %}
-        {% if (key != "functioncode") %}
-        <div class="row">
-            <div class="col-10"></div>
-            <div class="col-25">
-                <label>{{key}}</label>
-            </div>
-            <div class="col-60">
-                <input type="text" id={{key}} name={{key}} value="{{value}}">
-            </div>
-        </div>
-        {% endif %}
-        {% endfor %}
-
-        {% endif %}
-        <div class="row">
-            <input type="submit" name="type" value="Submit Modbus Command" style="margin: 10px">
-            <input type="submit" name="type" value="Delete Modbus Command" style="margin: 10px; background-color: red">
-
-            <button id="openAddModbusCommandModalButton" type="button" style="margin: 10px;">Add Modbus Command</button>
-        </div>
-    </div>
-    <br>
-</form>
-
-<!---------------------------------------------------- Devices Form -->
-<div class="container">
-<form action="/configurationformdevices" method="post">
-
-      {% if parameter|length %}
-   {% for key, value in parameter.items() %}
-       {% if (key == "devices")%}
-
-        {% for result in value %}
-            <b>Device configuration for Transport-ID: {{result.transportid}}</b><br><br>
-    <input type="submit" name="type" value="Delete Device Configuration id{{result.transportid}}" style="margin: 10px; background-color: red">
-            <div class="row">
-                <div class="col-25">
-                    <label>Fieldbus Type</label>
+                {% endif %}
+                <div class="row">
+                    <input type="submit" value="Submit">
                 </div>
-                <div class="col-60">
-                    <select name="type{{result.transportid}}_{{key}}" id="type{{result.transportid}}_{{key}}" style="width: 100%">
-                        <option value="Modbus" {% if result.type == "Modbus" %} selected {% endif %}>Modbus</option>
-                        <option value="Bacnet" {% if result.type == "Bacnet" %} selected {% endif %}>Bacnet</option>
-                        <option value="EthernetIP" {% if result.type == "EthernetIP" %} selected {% endif %}>Ethernet/IP</option>
-                    </select>
             </div>
-        </div>
-            {% for key, value in result.items() %}
+            <br>
+        </form>
 
+        <!---------------------------------------------------- Read Orders Form -->
 
-                   <div class="row">
-                  <div class="col-25">
-                    <label for="{{key}}">{{key}}</label>
-
-                  </div>
-                  <div class="col-75">
-
-                      <input type="text" id="transportid{{result.transportid}}_{{key}}" name="transportid{{result.transportid}}_{{key}}" value="{{value}}">
-
-
-                  </div>
+        <form action="/configurationformreadorders" method="post">
+            <div class="container">
+                {% if parameter|length %}
+                    <div class="row">
+                        <div class="col-25">
+                            <label>Select Read-Order</label>
+                        </div>
+                        <div class="col-60">
+                            <select id="readorders" name="readorders" style="width: 100%" onchange="readOrderSelctionChanged()">
+                                {% for readorders in parameter.readorders %}
+                                    <option value={{key}}>{{readorders.name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-10"></div>
+                        <div class="col-60">
+                            <label id="sourceLabel" style="color: #ff0000"></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-10"></div>
+                        <div class="col-25">
+                            <label>Name</label>
+                        </div>
+                        <div class="col-60">
+                            <input type="text" id="name" name="name" value="{{parameter.readorders[0].name}}">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-10"></div>
+                        <div class="col-25">
+                            <label>Active</label>
+                        </div>
+                        <div class="col-60">
+                            <select name="active" id="active" style="width: 100%">
+                                <option value="true" {% if parameter.readorders[0].active %} selected {% endif %}>True</option>
+                                <option value="false" {% if not parameter.readorders[0].active %} selected {% endif %}>False</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-10"></div>
+                        <div class="col-25">
+                            <label>Transport-ID</label>
+                        </div>
+                        <div class="col-60">
+                            <input type="text" id="transportid" name="transportid" value="{{parameter.readorders[0].transportid}}">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-10"></div>
+                        <div class="col-25">
+                            <label>Absolute Threshold</label>
+                        </div>
+                        <div class="col-60">
+                            <input type="text" id="absolutethreshold" name="absolutethreshold" value="{{parameter.readorders[0].absolutethreshold}}">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-10"></div>
+                        <div class="col-25">
+                            <label>Relative Threshold</label>
+                        </div>
+                        <div class="col-60">
+                            <input type="text" id="relativethreshold" name="relativethreshold" value="{{parameter.readorders[0].relativethreshold}}">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-10"></div>
+                        <div class="col-25">
+                            <label>Data Area</label>
+                        </div>
+                        {% if parameter.readorders[0].fieldbustype != "EthernetIP" %}
+                            <div class="col-60">
+                                <select name="dataarea" id="dataarea" style="width: 100%">
+                                    {% if parameter.readorders[0].fieldbustype == "Modbus" %}
+                                        <option value="Input Register" {% if parameter.readorders[0].dataarea == "Input Register" %} selected {% endif %}>Input Register</option>
+                                        <option value="Holding Register" {% if parameter.readorders[0].dataarea == "Holding Register" %} selected {% endif %}>Holding Register</option>
+                                    {% else %}
+                                        <option value="analogValue" {% if parameter.readorders[0].dataarea == "analogValue" %} selected {% endif %}>Analog Value</option>
+                                        <option value="analogInput" {% if parameter.readorders[0].dataarea == "analogInput" %} selected {% endif %}>Analog Input</option>
+                                        <option value="binaryValue" {% if parameter.readorders[0].dataarea == "binaryValue" %} selected {% endif %}>Binary Value</option>
+                                        <option value="binaryInput" {% if parameter.readorders[0].dataarea == "binaryInput" %} selected {% endif %}>Binary Input</option>
+                                        <option value="multiStateValue" {% if parameter.readorders[0].dataarea == "multiStateValue" %} selected {% endif %}>Multi-State Value</option>
+                                        <option value="multiStateInput" {% if parameter.readorders[0].dataarea == "multiStateInput" %} selected {% endif %}>Multi-State Input</option>
+                                    {% endif %}
+                                </select>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="row">
+                        <div class="col-10"></div>
+                        <div class="col-25">
+                            <label>Registerintervaltime</label>
+                        </div>
+                        <div class="col-60">
+                            <input type="text" id="registerintervaltime" name="registerintervaltime" value="{{parameter.readorders[0].registerintervaltime}}">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-10"></div>
+                        <div class="col-25">
+                            <label>Multiplefactor</label>
+                        </div>
+                        <div class="col-60">
+                            <input type="text" id="multiplefactor" name="multiplefactor" value="{{parameter.readorders[0].multiplefactor}}">
+                        </div>
+                    </div>
+                    {% if parameter.readorders[0].fieldbustype == "Modbus" %}
+                        <div id="readordersmodbus">
+                            <div class="row">
+                                <div class="col-10"></div>
+                                <div class="col-25">
+                                    <label>Signed</label>
+                                </div>
+                                <div class="col-60">
+                                    <input type="text" id="signed" name="signed" value="{{parameter.readorders[0].signed}}">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-10"></div>
+                                <div class="col-25">
+                                    <label>Bits</label>
+                                </div>
+                                <div class="col-60">
+                                    <input type="text" id="bits" name="bits" value="{{parameter.readorders[0].bits}}">
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="row" id="classidrow" {% if parameter.readorders[0].fieldbustype != "EthernetIP" %}style="display: none"{% endif %}>
+                        <div class="col-10"></div>
+                        <div class="col-25">
+                            <label>Class-ID</label>
+                        </div>
+                        <div class="col-60">
+                            <input type="text" id="classid" name="classid" value="{{parameter.readorders[0].classid}}">
+                        </div>
+                    </div>
+                    <div class="row" id="instanceidrow" {% if parameter.readorders[0].fieldbustype != "EthernetIP" %}style="display: none"{% endif %}>
+                        <div class="col-10"></div>
+                        <div class="col-25">
+                            <label>Instance-ID</label>
+                        </div>
+                        <div class="col-60">
+                            <input type="text" id="instanceid" name="instanceid" value="{{parameter.readorders[0].instanceid}}">
+                        </div>
+                    </div>
+                    <div class="row"  id="attributeidrow" {% if parameter.readorders[0].fieldbustype != "EthernetIP" %}style="display: none"{% endif %}>
+                        <div class="col-10"></div>
+                        <div class="col-25">
+                            <label>Attribute-ID</label>
+                        </div>
+                        <div class="col-60">
+                            <input type="text" id="attributeid" name="attributeid" value="{{parameter.readorders[0].attributeid}}">
+                        </div>
+                    </div>
+                    <div class="row"  id="maskrow" {% if parameter.readorders[0].fieldbustype != "EthernetIP" %}style="display: none"{% endif %}>
+                        <div class="col-10"></div>
+                        <div class="col-25">
+                            <label>Mask</label>
+                        </div>
+                        <div class="col-60">
+                            <input type="text" id="mask" name="mask" value="{{parameter.readorders[0].mask}}">
+                        </div>
+                    </div>
+                    <div class="row"  id="startingbyterow" {% if parameter.readorders[0].fieldbustype != "EthernetIP" %}style="display: none"{% endif %}>
+                        <div class="col-10"></div>
+                        <div class="col-25">
+                            <label>Starting Byte</label>
+                        </div>
+                        <div class="col-60">
+                            <input type="text" id="startingbyte" name="startingbyte" value="{{parameter.readorders[0].startingbyte}}">
+                        </div>
+                    </div>
+                    <div class="row"  id="numberofbytesrow" {% if parameter.readorders[0].fieldbustype != "EthernetIP" %}style="display: none"{% endif %}>
+                        <div class="col-10"></div>
+                        <div class="col-25">
+                            <label>Number of bytes</label>
+                        </div>
+                        <div class="col-60">
+                            <input type="text" id="numberofbytes" name="numberofbytes" value="{{parameter.readorders[0].numberofbytes}}">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-10"></div>
+                        <div class="col-25">
+                            <label>Address</label>
+                        </div>
+                        <div class="col-60">
+                            <input type="text" id="address" name="address" value="{{parameter.readorders[0].address}}">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-10"></div>
+                        <div class="col-25">
+                            <label>Server ID</label>
+                        </div>
+                        <div class="col-60">
+                            <input type="text" id="serverid" name="serverid" value="{{parameter.readorders[0].serverid}}">
+                        </div>
+                    </div>
+                {% endif %}
+                <div class="row">
+                    <div class="col-10"></div>
+                    <div class="col-25">
+                        <label>Target (Readorder name)</label>
+                    </div>
+                    <div class="col-60">
+                        <input type="text" id="target" name="target" value="{{parameter.readorders[0].target}}">
+                    </div>
                 </div>
-
-
-
-            {% endfor %}
-            <br><br>
-
-        {% endfor %}
-
-
-       {% endif %}
-
-
-   {% endfor %}
-        {% endif %}<div class="row">
-            <input type="submit" name="type" value="Submit Device Configuration" style="margin: 10px">
-
-    <!-- Trigger/Open The Modal -->
-<button id="openAddDeviceModalButton" type="button" style="margin: 10px">Add Device</button>
-        </div>
-
-
-
-    <br>
-</form>
-</div>
-<br>
-
-<!---------------------------------------------------- MQTT Server Form -->
-    <div class="container">
-<form action="/configurationformmqttservers" method="post">
-
-
-    <div class="container">
-      {% if parameter|length %}
-   {% for key, value in parameter.items() %}
-       {% if (key == "mqttbroker")%}
-
-        {% for result in value %}
-            <b>MQTT Broker configuration for Server-ID: {{result.serverid}}</b><br><br>
-            {% for key, value in result.items() %}
-
-
-                   <div class="row">
-                  <div class="col-25">
-                    <label for="{{key}}">{{key}}</label>
-
-                  </div>
-                  <div class="col-75">
-
-                      <input type="text" id="serverid{{result.serverid}}_{{key}}" name="serverid{{result.serverid}}_{{key}}" value="{{value}}">
-
-
-                  </div>
+                <div class="row">
+                    <button id="openAddReadOrderModalButton" type="button" onclick="readOrderTransportIdChanged()" style="margin: 10px">Add Read Order Command</button>
+                    <input type="submit" name="type" value="Submit Read Order" style="margin: 10px">
+                    <input type="submit" name="type" value="Delete Read Order" style="margin: 10px; background-color: red">
                 </div>
+            </div>
+            <br>
+        </form>
 
+        <!---------------------------------------------------- Modbus command Form -->
 
+        <form action="/configurationformmodbuscommand" method="post">
+            <div class="container">
+                {% if parameter|length %}
+                    <div class="row">
+                        <div class="col-25">
+                            <label>Select Modbus-Command</label>
+                        </div>
+                        <div class="col-60">
+                            <select id="modbuscommands" name="modbuscommands" style="width: 100%"
+                                onchange="modbuscommandSelctionChanged()">
+                                {% for modbuscommand in parameter.modbuscommand %}
+                                    <option value={{loop.index}}>functioncode: {{modbuscommand.functioncode}}, startingaddress:
+                                        {{modbuscommand.startingaddress}}, quantity: {{modbuscommand.quantity}}{% if modbuscommand.transportid %}, Transport-ID: {{modbuscommand.transportid}}{% endif %}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-10"></div>
+                        <div class="col-25">
+                            <label>Modbus Command</label>
+                        </div>
+                        <div class="col-60">
+                            <select name="functioncode" id="functioncode" style="width: 100%">
+                                <option value="Read Input Registers" {% if parameter.modbuscommand[0].functioncode == "Read Input Registers" %} selected {% endif %}>Read Input Registers</option>
+                                <option value="Read Holding Registers" {% if parameter.modbuscommand[0].functioncode == "Read Holding Registers" %} selected {% endif %}>Read Holding Registers</option>
+                            </select>
+                        </div>
+                    </div>
+                    {% for key, value in parameter.modbuscommand[0].items() %}
+                        {% if (key != "functioncode") %}
+                            <div class="row">
+                                <div class="col-10"></div>
+                                <div class="col-25">
+                                    <label>{{key}}</label>
+                                </div>
+                                <div class="col-60">
+                                    <input type="text" id={{key}} name={{key}} value="{{value}}">
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                <div class="row">
+                    <input type="submit" name="type" value="Submit Modbus Command" style="margin: 10px">
+                    <input type="submit" name="type" value="Delete Modbus Command" style="margin: 10px; background-color: red">
+                    <button id="openAddModbusCommandModalButton" type="button" style="margin: 10px;">Add Modbus Command</button>
+                </div>
+            </div>
+            <br>
+        </form>
 
-            {% endfor %}
-            <br><br>
+        <!---------------------------------------------------- Devices Form -->
 
-        {% endfor %}
-
-
-       {% endif %}
-
-
-   {% endfor %}
-        {% endif %}<div class="row">
-            <input type="submit" value="Submit Server Configuration">
-        </div>
-    </div>
-    <br>
-</form>
-
-
-
-
-
-<!---------------------------------------------------- Add Device Modal -->
-<div id="addDeviceModal" class="modal">
-
-  <!-- Modal content -->
-  <div class="modal-content">
-          <div class="modal-header">
-      <span class="close">&times;</span>
-      <h2>Add Device</h2>
-    </div>
-      <br>
-    <form action="/adddevice" method="post">
-        <div class="row">
-            <div class="col-25">
-                <label for="newDeviceFieldbus">Select Fieldbus</label>
-            </div>
-            <div class="col-60">
-                <select name="newDeviceFieldbus" id="newDeviceFieldbus" style="width: 100%"
-                        onchange="fieldbusSelectionChanged()">
-                    <option value="ModbusRTU">Modbus-RTU</option>
-                    <option value="ModbusTCP">Modbus-TCP</option>
-                    <option value="Bacnet">Bacnet-IP</option>
-                    <option value="EthernetIP">Ethernet/IP</option>
-                </select>
-            </div>
-
-        </div>
-        <div class="row">
-          <div class="col-25">
-            <label>Transport-ID</label>
-          </div>
-          <div class="col-75">
-              <input type="text" name="newDeviceTransportId" id="newDeviceTransportId" value="1">
-          </div>
-        </div>
-
-        <div class="row" id="newDeviceCipMessagingType" style="display: none">
-            <div class="col-25">
-                <label>CIP-Messaging Type</label>
-            </div>
-            <div class="col-60">
-                <select name="newDeviceCipMessagingType" id="newDeviceCipMessagingTypeValue" style="width: 100%" onchange="fieldbusSelectionChanged()">
-                    <option value="Explicit">Explicit Messaging</option>
-                    <option value="Implicit">Implicit Messaging</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="row" id="newDeviceCipRequestedPacketRateTO" style="display: none">
-            <div class="col-25">
-                <label>Requested Packet Rate T->O [ms]</label>
-            </div>
-            <div class="col-60">
-                <input type="text" name="newDeviceCipRequestedPacketRateTO" value="500">
-            </div>
-        </div>
-        <div class="row" id="newDeviceCipRequestedPacketRateOT" style="display: none">
-            <div class="col-25">
-                <label>Requested Packet Rate O->T [ms]</label>
-            </div>
-            <div class="col-60">
-                <input type="text" name="newDeviceCipRequestedPacketRateOT" value="500">
-            </div>
-        </div>
-
-        <div class="row" id="newDeviceCipInstanceIDTO" style="display: none">
-            <div class="col-25">
-                <label>Instance-ID T->O</label>
-            </div>
-            <div class="col-60">
-                <input type="text" name="newDeviceCipInstanceIDTO" value="0x65">
-            </div>
-        </div>
-        <div class="row" id="newDeviceCipInstanceIDOT" style="display: none">
-            <div class="col-25">
-                <label>Instance-ID O->T</label>
-            </div>
-            <div class="col-60">
-                <input type="text" name="newDeviceCipInstanceIDOT" value="0x64">
-            </div>
-        </div>
-
-        <div class="row" id="newDeviceCipLengthTO" style="display: none">
-            <div class="col-25">
-                <label>Message length T->O</label>
-            </div>
-            <div class="col-60">
-                <input type="text" name="newDeviceCipLengthTO" value="505">
-            </div>
-        </div>
-        <div class="row" id="newDeviceCipLengthOT" style="display: none">
-            <div class="col-25">
-                <label>Message length O->T</label>
-            </div>
-            <div class="col-60">
-                <input type="text" name="newDeviceCipLengthOT" value="505">
-            </div>
-        </div>
-
-        <div class="row" id="newDeviceCipRealTimeFormatTO" style="display: none">
-            <div class="col-25">
-                <label>Realtime Format T->O</label>
-            </div>
-            <div class="col-60">
-                <select name="newDeviceCipRealTimeFormatTO" style="width: 100%">
-                    <option value="MODELESS" selected>Modeless</option>
-                    <option value="ZEROLENGTH">Zero length</option>
-                    <option value="HEARTBEAT">Heartbeat</option>
-                    <option value="HEADER32BIT">Header 32-bit</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="row" id="newDeviceCipRealTimeFormatOT" style="display: none">
-            <div class="col-25">
-                <label>Realtime Format O->T</label>
-            </div>
-            <div class="col-60">
-                <select name="newDeviceCipRealTimeFormatOT" style="width: 100%">
-                    <option value="MODELESS">Modeless</option>
-                    <option value="ZEROLENGTH">Zero length</option>
-                    <option value="HEARTBEAT">Heartbeat</option>
-                    <option value="HEADER32BIT" selected>Header 32-bit</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="row" id="newDeviceCipConnectionTypeTO" style="display: none">
-            <div class="col-25">
-                <label>Connection Type T->O</label>
-            </div>
-            <div class="col-60">
-                <select name="newDeviceCipConnectionTypeTO" style="width: 100%">
-                    <option value="NULL">Null</option>
-                    <option value="MULTICAST" selected>Multicast</option>
-                    <option value="POINT_TO_POINT">Point to Point</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="row" id="newDeviceCipConnectionTypeOT" style="display: none">
-            <div class="col-25">
-                <label>Connection Type O->T</label>
-            </div>
-            <div class="col-60">
-                <select name="newDeviceCipConnectionTypeOT" style="width: 100%">
-                    <option value="NULL">Null</option>
-                    <option value="MULTICAST">Multicast</option>
-                    <option value="POINT_TO_POINT" selected>Point to Point</option>
-                </select>
-            </div>
-        </div>
-
-
-        <div id="newDeviceUnitIdentifier">
-        <div class="row">
-          <div class="col-25">
-            <label>Unit Identifier</label>
-          </div>
-          <div class="col-75">
-              <input type="text" name="newDeviceUnitidentifier" value="0">
-          </div>
-        </div>
-        </div>
-        <div class="row">
-          <div class="col-25">
-            <label>Identifier</label>
-          </div>
-          <div class="col-75">
-              <input type="text" name="newDeviceIdentifier" id="newDeviceIdentifier" value="Meter 1">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-25">
-            <label>UID</label>
-          </div>
-          <div class="col-75">
-              <input type="text" name="newDeviceUID" id="newDeviceUID" value="11:22:33:44:55">
-          </div>
-        </div>
-        <div id="newDeviceModbusRTU">
-            <div class="row">
-              <div class="col-25">
-                <label for="newDeviceBaudrate">Baudrate</label>
-              </div>
-              <div class="col-75">
-                  <input type="text" name="newDeviceBaudrate" id="newDeviceBaudrate" value="9600">
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-25">
-                <label>Databits</label>
-              </div>
-              <div class="col-75">
-                  <input type="text" name="newDeviceDatabits" id="newDeviceDatabits" value="8">
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-25">
-                <label>Stopbits</label>
-              </div>
-              <div class="col-75">
-                  <input type="text" name="newDeviceStopbits" id="newDeviceStopbits" value="0">
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-25">
-                <label>Parity</label>
-              </div>
-              <div class="col-75">
-                  <input type="text" name="newDeviceparity" id="newDeviceparity" value="1">
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-25">
-                <label>Serial Port</label>
-              </div>
-              <div class="col-75">
-                  <input type="text" name="newDeviceSerialPort" id="newDeviceSerialPort" value="/dev/ttyACM0">
-              </div>
-            </div>
-
-        </div>
-
-        <div id="newDeviceModbusTCP" style="display: none">
-            <div class="row">
-              <div class="col-25">
-                <label>IP-Address</label>
-              </div>
-              <div class="col-75">
-                  <input type="text" name="newDeviceIpAddress" id="newDeviceIpAddress" value="127.0.0.1">
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-25">
-                <label>Port</label>
-              </div>
-              <div class="col-75">
-                  <input type="text" name="newDevicePort" id="newDevicePort" value="502">
-              </div>
-            </div>
+        <div class="container">
+            <form action="/configurationformdevices" method="post">
+                {% if parameter|length %}
+                    {% for key, value in parameter.items() %}
+                        {% if (key == "devices")%}
+                            {% for result in value %}
+                            <b>Device configuration for Transport-ID: {{result.transportid}}</b><br><br>
+                            <input type="submit" name="type" value="Delete Device Configuration id{{result.transportid}}" style="margin: 10px; background-color: red">
+                            <div class="row">
+                                <div class="col-25">
+                                    <label>Fieldbus Type</label>
+                                </div>
+                                <div class="col-60">
+                                    <select name="type{{result.transportid}}_{{key}}" id="type{{result.transportid}}_{{key}}" style="width: 100%">
+                                        <option value="Modbus" {% if result.type == "Modbus" %} selected {% endif %}>Modbus</option>
+                                        <option value="Bacnet" {% if result.type == "Bacnet" %} selected {% endif %}>Bacnet</option>
+                                        <option value="EthernetIP" {% if result.type == "EthernetIP" %} selected {% endif %}>Ethernet/IP</option>
+                                    </select>
+                                </div>
+                            </div>
+                            {% for key, value in result.items() %}
+                                <div class="row">
+                                    <div class="col-25">
+                                        <label for="{{key}}">{{key}}</label>
+                                    </div>
+                                    <div class="col-75">
+                                        <input type="text" id="transportid{{result.transportid}}_{{key}}" name="transportid{{result.transportid}}_{{key}}" value="{{value}}">
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            <br><br>
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                <div class="row">
+                    <input type="submit" name="type" value="Submit Device Configuration" style="margin: 10px">
+                    <!-- Trigger/Open The Modal -->
+                    <button id="openAddDeviceModalButton" type="button" style="margin: 10px">Add Device</button>
+                </div>
+                <br>
+            </form>
         </div>
         <br>
-        <input type="submit" value="Add Device">
-    </form>
-    <br><br>
-  </div>
 
-</div>
+        <!---------------------------------------------------- MQTT Server Form -->
 
+        <div class="container">
+            <form action="/configurationformmqttservers" method="post">
+                <div class="container">
+                    {% if parameter|length %}
+                        {% for key, value in parameter.items() %}
+                            {% if (key == "mqttbroker")%}
+                                {% for result in value %}
+                                    <b>MQTT Broker configuration for Server-ID: {{result.serverid}}</b><br><br>
+                                    {% for key, value in result.items() %}
+                                        <div class="row">
+                                            <div class="col-25">
+                                                <label for="{{key}}">{{key}}</label>
+                                            </div>
+                                            <div class="col-75">
+                                                <input type="text" id="serverid{{result.serverid}}_{{key}}" name="serverid{{result.serverid}}_{{key}}" value="{{value}}">
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                    <br><br>
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    <div class="row">
+                        <input type="submit" value="Submit Server Configuration">
+                    </div>
+                </div>
+                <br>
+            </form>
 
-<!---------------------------------------------------- Add Read Order Modal -->
+            <!---------------------------------------------------- Add Device Modal -->
 
-<div id="addReadOrderModal" class="modal">
+            <div id="addDeviceModal" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span class="close">&times;</span>
+                        <h2>Add Device</h2>
+                    </div>
+                    <br>
+                    <form action="/adddevice" method="post">
+                        <div class="row">
+                            <div class="col-25">
+                                <label for="newDeviceFieldbus">Select Fieldbus</label>
+                            </div>
+                            <div class="col-60">
+                                <select name="newDeviceFieldbus" id="newDeviceFieldbus" style="width: 100%"
+                                    onchange="fieldbusSelectionChanged()">
+                                    <option value="ModbusRTU">Modbus-RTU</option>
+                                    <option value="ModbusTCP">Modbus-TCP</option>
+                                    <option value="Bacnet">Bacnet-IP</option>
+                                    <option value="EthernetIP">Ethernet/IP</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-25">
+                                <label>Transport-ID</label>
+                            </div>
+                            <div class="col-75">
+                                <input type="text" name="newDeviceTransportId" id="newDeviceTransportId" value="1">
+                            </div>
+                        </div>
+                        <div class="row" id="newDeviceCipMessagingType" style="display: none">
+                            <div class="col-25">
+                                <label>CIP-Messaging Type</label>
+                            </div>
+                            <div class="col-60">
+                                <select name="newDeviceCipMessagingType" id="newDeviceCipMessagingTypeValue" style="width: 100%" onchange="fieldbusSelectionChanged()">
+                                    <option value="Explicit">Explicit Messaging</option>
+                                    <option value="Implicit">Implicit Messaging</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row" id="newDeviceCipRequestedPacketRateTO" style="display: none">
+                            <div class="col-25">
+                                <label>Requested Packet Rate T->O [ms]</label>
+                            </div>
+                            <div class="col-60">
+                                <input type="text" name="newDeviceCipRequestedPacketRateTO" value="500">
+                            </div>
+                        </div>
+                        <div class="row" id="newDeviceCipRequestedPacketRateOT" style="display: none">
+                            <div class="col-25">
+                                <label>Requested Packet Rate O->T [ms]</label>
+                            </div>
+                            <div class="col-60">
+                                <input type="text" name="newDeviceCipRequestedPacketRateOT" value="500">
+                            </div>
+                        </div>
+                        <div class="row" id="newDeviceCipInstanceIDTO" style="display: none">
+                            <div class="col-25">
+                                <label>Instance-ID T->O</label>
+                            </div>
+                            <div class="col-60">
+                                <input type="text" name="newDeviceCipInstanceIDTO" value="0x65">
+                            </div>
+                        </div>
+                        <div class="row" id="newDeviceCipInstanceIDOT" style="display: none">
+                            <div class="col-25">
+                                <label>Instance-ID O->T</label>
+                            </div>
+                            <div class="col-60">
+                                <input type="text" name="newDeviceCipInstanceIDOT" value="0x64">
+                            </div>
+                        </div>
+                        <div class="row" id="newDeviceCipLengthTO" style="display: none">
+                            <div class="col-25">
+                                <label>Message length T->O</label>
+                            </div>
+                            <div class="col-60">
+                                <input type="text" name="newDeviceCipLengthTO" value="505">
+                            </div>
+                        </div>
+                        <div class="row" id="newDeviceCipLengthOT" style="display: none">
+                            <div class="col-25">
+                                <label>Message length O->T</label>
+                            </div>
+                            <div class="col-60">
+                                <input type="text" name="newDeviceCipLengthOT" value="505">
+                            </div>
+                        </div>
+                        <div class="row" id="newDeviceCipRealTimeFormatTO" style="display: none">
+                            <div class="col-25">
+                                <label>Realtime Format T->O</label>
+                            </div>
+                            <div class="col-60">
+                                <select name="newDeviceCipRealTimeFormatTO" style="width: 100%">
+                                    <option value="MODELESS" selected>Modeless</option>
+                                    <option value="ZEROLENGTH">Zero length</option>
+                                    <option value="HEARTBEAT">Heartbeat</option>
+                                    <option value="HEADER32BIT">Header 32-bit</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row" id="newDeviceCipRealTimeFormatOT" style="display: none">
+                            <div class="col-25">
+                                <label>Realtime Format O->T</label>
+                            </div>
+                            <div class="col-60">
+                                <select name="newDeviceCipRealTimeFormatOT" style="width: 100%">
+                                    <option value="MODELESS">Modeless</option>
+                                    <option value="ZEROLENGTH">Zero length</option>
+                                    <option value="HEARTBEAT">Heartbeat</option>
+                                    <option value="HEADER32BIT" selected>Header 32-bit</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row" id="newDeviceCipConnectionTypeTO" style="display: none">
+                            <div class="col-25">
+                                <label>Connection Type T->O</label>
+                            </div>
+                            <div class="col-60">
+                                <select name="newDeviceCipConnectionTypeTO" style="width: 100%">
+                                    <option value="NULL">Null</option>
+                                    <option value="MULTICAST" selected>Multicast</option>
+                                    <option value="POINT_TO_POINT">Point to Point</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row" id="newDeviceCipConnectionTypeOT" style="display: none">
+                            <div class="col-25">
+                                <label>Connection Type O->T</label>
+                            </div>
+                            <div class="col-60">
+                                <select name="newDeviceCipConnectionTypeOT" style="width: 100%">
+                                    <option value="NULL">Null</option>
+                                    <option value="MULTICAST">Multicast</option>
+                                    <option value="POINT_TO_POINT" selected>Point to Point</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="newDeviceUnitIdentifier">
+                            <div class="row">
+                                <div class="col-25">
+                                    <label>Unit Identifier</label>
+                                </div>
+                                <div class="col-75">
+                                    <input type="text" name="newDeviceUnitidentifier" value="0">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-25">
+                                <label>Identifier</label>
+                            </div>
+                            <div class="col-75">
+                                <input type="text" name="newDeviceIdentifier" id="newDeviceIdentifier" value="Meter 1">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-25">
+                                <label>UID</label>
+                            </div>
+                            <div class="col-75">
+                                <input type="text" name="newDeviceUID" id="newDeviceUID" value="11:22:33:44:55">
+                            </div>
+                        </div>
+                        <div id="newDeviceModbusRTU">
+                            <div class="row">
+                                <div class="col-25">
+                                    <label for="newDeviceBaudrate">Baudrate</label>
+                                </div>
+                                <div class="col-75">
+                                    <input type="text" name="newDeviceBaudrate" id="newDeviceBaudrate" value="9600">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-25">
+                                    <label>Databits</label>
+                                </div>
+                                <div class="col-75">
+                                    <input type="text" name="newDeviceDatabits" id="newDeviceDatabits" value="8">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-25">
+                                    <label>Stopbits</label>
+                                </div>
+                                <div class="col-75">
+                                    <input type="text" name="newDeviceStopbits" id="newDeviceStopbits" value="0">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-25">
+                                    <label>Parity</label>
+                                </div>
+                                <div class="col-75">
+                                    <input type="text" name="newDeviceparity" id="newDeviceparity" value="1">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-25">
+                                    <label>Serial Port</label>
+                                </div>
+                                <div class="col-75">
+                                    <input type="text" name="newDeviceSerialPort" id="newDeviceSerialPort" value="/dev/ttyACM0">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="newDeviceModbusTCP" style="display: none">
+                            <div class="row">
+                                <div class="col-25">
+                                    <label>IP-Address</label>
+                                </div>
+                                <div class="col-75">
+                                    <input type="text" name="newDeviceIpAddress" id="newDeviceIpAddress" value="127.0.0.1">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-25">
+                                    <label>Port</label>
+                                </div>
+                                <div class="col-75">
+                                    <input type="text" name="newDevicePort" id="newDevicePort" value="502">
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <input type="submit" value="Add Device">
+                    </form>
+                    <br><br>
+                </div>
+            </div>
 
-  <!-- Modal content -->
-  <div class="modal-content">
-          <div class="modal-header">
-      <span class="close" id="closeReadOrderModal">&times;</span>
-      <h2>Add Read Order</h2>
-    </div>
-      <br>
-    <form action="/addreadorder" method="post">
+            <!---------------------------------------------------- Add Read Order Modal -->
 
-        <div class="row">
-          <div class="col-25">
-            <label>Name</label>
-          </div>
-          <div class="col-75">
-              <input type="text" name="newReadOrderName" value="Read-Order Name">
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-25">
-            <label>Enable Upload</label>
-          </div>
-          <div class="col-60">
-              <select name="newReadOrderEnableUpload" id="newReadOrderEnableUpload" style="width: 100%">
-                  <option value="True">True</option>
-                  <option value="False">False</option>
-              </select>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-25">
-            <label>Transport-ID</label>
-          </div>
-          <div class="col-60">
-              <select name="newReadOrderTransportID" id="newReadOrderTransportID" style="width: 100%" onchange="readOrderTransportIdChanged()">
-                  {% for device in parameter.devices %}
-                    <option value="{{ device.transportid }}">{{ device.transportid }} {% if device.type %}({{ device.type }}) {% endif %}</option>
-                  {% endfor %}
-
-                </select>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-25">
-            <label>Server-ID</label>
-          </div>
-          <div class="col-75">
-              <input type="text" name="newReadOrderServerID" value="[1]">
-          </div>
-        </div>
-        <div class="row" id="newReadOrderDataArea">
-          <div class="col-25">
-            <label>Data Area</label>
-          </div>
-          <div class="col-60">
-               <select name="newReadOrderDataArea" style="width: 100%">
-                    <option value="Input Register">Input Register</option>
-                    <option value="Holding Register">Holding Register</option>
-                </select>
-          </div>
-        </div>
-                <div id="newReadOrderCIPClassID" style="display: none">
-        <div class="row">
-          <div class="col-25">
-            <label>Class-ID</label>
-          </div>
-          <div class="col-75">
-              <input type="text" name="newReadOrderCIPClassID" value="0x04">
-          </div>
-        </div>
-        </div>
-        <div id="newReadOrderCIPInstanceID" style="display: none">
-        <div class="row">
-          <div class="col-25">
-            <label>Instance-ID</label>
-          </div>
-          <div class="col-75">
-              <input type="text" name="newReadOrderCIPInstanceID" value="0x65">
-          </div>
-        </div>
-        </div>
-        <div id="newReadOrderCIPAttributeID" style="display: none">
-        <div class="row">
-          <div class="col-25">
-            <label>Attribute-ID</label>
-          </div>
-          <div class="col-75">
-              <input type="text" name="newReadOrderCIPAttributeID" value="0x03">
-          </div>
-        </div>
-        </div>
-
-        <div id="newReadOrderCIPStartingByte" style="display: none">
-            <div class="row">
-              <div class="col-25">
-                <label>Starting Byte</label>
-              </div>
-              <div class="col-75">
-                  <input type="text" name="newReadOrderCIPStartingByte" value="4">
-              </div>
+            <div id="addReadOrderModal" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span class="close" id="closeReadOrderModal">&times;</span>
+                        <h2>Add Read Order</h2>
+                    </div>
+                    <br>
+                    <form action="/addreadorder" method="post">
+                        <div class="row">
+                            <div class="col-25">
+                                <label>Name</label>
+                            </div>
+                            <div class="col-75">
+                                <input type="text" name="newReadOrderName" value="Read-Order Name">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-25">
+                                <label>Enable Upload</label>
+                            </div>
+                            <div class="col-60">
+                                <select name="newReadOrderEnableUpload" id="newReadOrderEnableUpload" style="width: 100%">
+                                    <option value="True">True</option>
+                                    <option value="False">False</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-25">
+                                <label>Transport-ID</label>
+                            </div>
+                            <div class="col-60">
+                                <select name="newReadOrderTransportID" id="newReadOrderTransportID" style="width: 100%" onchange="readOrderTransportIdChanged()">
+                                    {% for device in parameter.devices %}
+                                        <option value="{{ device.transportid }}">{{ device.transportid }} {% if device.type %}({{ device.type }}) {% endif %}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-25">
+                                <label>Server-ID</label>
+                            </div>
+                            <div class="col-75">
+                                <input type="text" name="newReadOrderServerID" value="[1]">
+                            </div>
+                        </div>
+                        <div class="row" id="newReadOrderDataArea">
+                            <div class="col-25">
+                                <label>Data Area</label>
+                            </div>
+                            <div class="col-60">
+                                <select name="newReadOrderDataArea" style="width: 100%">
+                                    <option value="Input Register">Input Register</option>
+                                    <option value="Holding Register">Holding Register</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="newReadOrderCIPClassID" style="display: none">
+                            <div class="row">
+                                <div class="col-25">
+                                    <label>Class-ID</label>
+                                </div>
+                                <div class="col-75">
+                                    <input type="text" name="newReadOrderCIPClassID" value="0x04">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="newReadOrderCIPInstanceID" style="display: none">
+                            <div class="row">
+                                <div class="col-25">
+                                    <label>Instance-ID</label>
+                                </div>
+                                <div class="col-75">
+                                    <input type="text" name="newReadOrderCIPInstanceID" value="0x65">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="newReadOrderCIPAttributeID" style="display: none">
+                            <div class="row">
+                                <div class="col-25">
+                                    <label>Attribute-ID</label>
+                                </div>
+                                <div class="col-75">
+                                    <input type="text" name="newReadOrderCIPAttributeID" value="0x03">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="newReadOrderCIPStartingByte" style="display: none">
+                            <div class="row">
+                                <div class="col-25">
+                                    <label>Starting Byte</label>
+                                </div>
+                                <div class="col-75">
+                                    <input type="text" name="newReadOrderCIPStartingByte" value="4">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="newReadOrderCIPNumberOfBytes" style="display: none">
+                            <div class="row">
+                                <div class="col-25">
+                                    <label>Number of byte</label>
+                                </div>
+                                <div class="col-75">
+                                    <input type="text" name="newReadOrderCIPNumberOfBytes" value="4">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="newReadOrderCIPMask" style="display: none">
+                            <div class="row">
+                                <div class="col-25">
+                                    <label>Mask</label>
+                                </div>
+                                <div class="col-75">
+                                    <input type="text" name="newReadOrderCIPMask" value="0xFF">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-25">
+                                <label>address</label>
+                            </div>
+                            <div class="col-75">
+                                <input type="text" name="newReadOrderAddress" value=1>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-25">
+                                <label>Register Interval time</label>
+                            </div>
+                            <div class="col-75">
+                                <input type="text" name="newReadOrderRegisterintervaltime" value=1>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-25">
+                                <label>Absolute Threshold</label>
+                            </div>
+                            <div class="col-75">
+                                <input type="text" name="newReadOrderAbsoluteThreshold" value=0>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-25">
+                                <label>Relative Threshold</label>
+                            </div>
+                            <div class="col-75">
+                                <input type="text" name="newReadOrderRelativeThreshold" value=0>
+                            </div>
+                        </div>
+                        <div id="newReadOrderModbusTCP">
+                            <div class="row">
+                                <div class="col-25">
+                                    <label>Bits</label>
+                                </div>
+                                <div class="col-75">
+                                    <input type="text" name="newReadOrderBits" value=16>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-25">
+                                    <label>Signed</label>
+                                </div>
+                                <div class="col-75">
+                                    <input type="text" name="newReadOrderSigned" value="True">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-25">
+                                <label>Multiplefactor</label>
+                            </div>
+                            <div class="col-75">
+                                <input type="text" name="newReadOrderMultiplefactor" value=1>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-25">
+                                <label>Target (Readorder-name)</label>
+                            </div>
+                            <div class="col-75">
+                                <input type="text" name="newReadOrderTarget">
+                            </div>
+                        </div>
+                        <br>
+                        <input type="submit" value="Add Read Order">
+                    </form>
+                    <br><br>
+                </div>
             </div>
         </div>
-        <div id="newReadOrderCIPNumberOfBytes" style="display: none">
-            <div class="row">
-              <div class="col-25">
-                <label>Number of byte</label>
-              </div>
-              <div class="col-75">
-                  <input type="text" name="newReadOrderCIPNumberOfBytes" value="4">
-              </div>
+        <br><br>
+        <script>
+            // Get the modal
+            var addReadOrderModal = document.getElementById("addReadOrderModal");
+
+            // Get the button that opens the modal
+            var openAddReadOrderModalButton = document.getElementById("openAddReadOrderModalButton");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementById("closeReadOrderModal");
+
+            // When the user clicks on the button, open the modal
+            openAddReadOrderModalButton.onclick = function() {
+                addReadOrderModal.style.display = "block";
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function() {
+                addReadOrderModal.style.display = "none";
+            }
+        </script>
+
+        <!---------------------------------------------------- Add Modbus Command Modal -->
+
+        <div id="addModbusCommandModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="close" id="closeModbusCommandModal">&times;</span>
+                    <h2>Add Modbus Command</h2>
+                </div>
+                <br>
+                <form action="/addmodbuscommand" method="post">
+                    <div class="row">
+                        <div class="col-25">
+                            <label>Transport-ID</label>
+                        </div>
+                        <div class="col-75">
+                            <input type="text" name="newModbusCommandTransportID" value=1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-25">
+                            <label>Functioncode</label>
+                        </div>
+                        <div class="col-60">
+                            <select name="newModbusCommandFunctioncode" id="newModbusCommandFunctioncode" style="width: 100%">
+                                <option value="Read Input Registers">Read Input Registers</option>
+                                <option value="Read Holding Registers">Read Holding Registers</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-25">
+                            <label>Quantity</label>
+                        </div>
+                        <div class="col-75">
+                            <input type="text" name="newModbusCommandQuantity" value=1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-25">
+                            <label>Starting Address</label>
+                        </div>
+                        <div class="col-75">
+                            <input type="text" name="newModbusCommandStartingAddress" value=1>
+                        </div>
+                    </div>
+                    <br>
+                    <input type="submit" value="Add Modbus Command">
+                </form>
+                <br><br>
             </div>
         </div>
-
-        <div id="newReadOrderCIPMask" style="display: none">
-        <div class="row">
-          <div class="col-25">
-            <label>Mask</label>
-          </div>
-          <div class="col-75">
-              <input type="text" name="newReadOrderCIPMask" value="0xFF">
-          </div>
         </div>
-        </div>
-        <div class="row">
-          <div class="col-25">
-            <label>address</label>
-          </div>
-          <div class="col-75">
-              <input type="text" name="newReadOrderAddress" value=1>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-25">
-            <label>Register Interval time</label>
-          </div>
-          <div class="col-75">
-              <input type="text" name="newReadOrderRegisterintervaltime" value=1>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-25">
-            <label>Absolute Threshold</label>
-          </div>
-          <div class="col-75">
-              <input type="text" name="newReadOrderAbsoluteThreshold" value=0>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-25">
-            <label>Relative Threshold</label>
-          </div>
-          <div class="col-75">
-              <input type="text" name="newReadOrderRelativeThreshold" value=0>
-          </div>
-        </div>
-        <div id="newReadOrderModbusTCP">
-        <div class="row">
-          <div class="col-25">
-            <label>Bits</label>
-          </div>
-          <div class="col-75">
-              <input type="text" name="newReadOrderBits" value=16>
-          </div>
-
-        </div>
-
-        <div class="row">
-          <div class="col-25">
-            <label>Signed</label>
-          </div>
-          <div class="col-75">
-              <input type="text" name="newReadOrderSigned" value="True">
-          </div>
-        </div>
-            </div>
-        <div class="row">
-          <div class="col-25">
-            <label>Multiplefactor</label>
-          </div>
-          <div class="col-75">
-              <input type="text" name="newReadOrderMultiplefactor" value=1>
-          </div>
-        </div>
-         <div class="row">
-          <div class="col-25">
-            <label>Target (Readorder-name)</label>
-          </div>
-          <div class="col-75">
-              <input type="text" name="newReadOrderTarget">
-          </div>
-        </div>
-
-        <br>
-        <input type="submit" value="Add Read Order">
-    </form>
-    <br><br>
-  </div>
-
-</div>
-  </div><br><br>
-<script>
-// Get the modal
-var addReadOrderModal = document.getElementById("addReadOrderModal");
-
-// Get the button that opens the modal
-var openAddReadOrderModalButton = document.getElementById("openAddReadOrderModalButton");
-
-// Get the <span> element that closes the modal
-var span = document.getElementById("closeReadOrderModal");
-
-// When the user clicks on the button, open the modal
-openAddReadOrderModalButton.onclick = function() {
-  addReadOrderModal.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  addReadOrderModal.style.display = "none";
-}
-
-</script>
-
-
-
-<!---------------------------------------------------- Add Modbus Command Modal -->
-<div id="addModbusCommandModal" class="modal">
-
-  <!-- Modal content -->
-  <div class="modal-content">
-          <div class="modal-header">
-      <span class="close" id="closeModbusCommandModal">&times;</span>
-      <h2>Add Modbus Command</h2>
-    </div>
-      <br>
-    <form action="/addmodbuscommand" method="post">
-
-        <div class="row">
-          <div class="col-25">
-            <label>Transport-ID</label>
-          </div>
-          <div class="col-75">
-              <input type="text" name="newModbusCommandTransportID" value=1>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-25">
-            <label>Functioncode</label>
-          </div>
-          <div class="col-60">
-              <select name="newModbusCommandFunctioncode" id="newModbusCommandFunctioncode" style="width: 100%">
-                    <option value="Read Input Registers">Read Input Registers</option>
-                    <option value="Read Holding Registers">Read Holding Registers</option>
-                </select>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-25">
-            <label>Quantity</label>
-          </div>
-          <div class="col-75">
-              <input type="text" name="newModbusCommandQuantity" value=1>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-25">
-            <label>Starting Address</label>
-          </div>
-          <div class="col-75">
-              <input type="text" name="newModbusCommandStartingAddress" value=1>
-          </div>
-        </div>
-        <br>
-        <input type="submit" value="Add Modbus Command">
-    </form>
-    <br><br>
-  </div>
-
-</div>
-  </div><br><br>
-
-
-<script>
-// Get the modal
-var addDeviceModal = document.getElementById("addDeviceModal");
-
-// Get the button that opens the modal
-var openAddDeviceModalButton = document.getElementById("openAddDeviceModalButton");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks on the button, open the modal
-openAddDeviceModalButton.onclick = function() {
-  addDeviceModal.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  addDeviceModal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == addDeviceModal) {
-    addDeviceModal.style.display = "none";
-  }
-   if (event.target == addModbusCommandModal) {
-    addModbusCommandModal.style.display = "none";
-  }
-
-    if (event.target == addReadOrderModal) {
-    addReadOrderModal.style.display = "none";
-  }
-
-}
-</script>
-<script>
-function readOrderTransportIdChanged() {
-    var parameter = JSON.parse('{{ parameter | tojson | safe}}');
-    var transportid = document.getElementById("newReadOrderTransportID").value
-    var fieldbustype = 'Modbus';
-    console.log(parameter);
-    for(var i = 0; i < parameter.devices.length; i++)
-    {
-
-        if (parameter.devices[i].transportid == transportid)
-        {
-            fieldbustype = parameter.devices[i].type;
-            break;
-        }
-    }
-    if (fieldbustype == "Modbus")
-    {
-        document.getElementById("newReadOrderDataArea").style.display = "block";
-        document.getElementById("newReadOrderCIPClassID").style.display = "none";
-        document.getElementById("newReadOrderCIPInstanceID").style.display = "none";
-        document.getElementById("newReadOrderCIPAttributeID").style.display = "none";
-        document.getElementById("newReadOrderCIPMask").style.display = "none";
-        document.getElementById("newReadOrderCIPStartingByte").style.display = "none";
-        document.getElementById("newReadOrderCIPNumberOfBytes").style.display = "none";
-
-
-        document.getElementById("newReadOrderModbusTCP").style.display = "block";
-        document.getElementById("newReadOrderDataArea").options.length = 0;
-        var option = document.createElement("option");
-        option.text = "Input Register";
-        document.getElementById("newReadOrderDataArea").add(option);
-        var option = document.createElement("option");
-        option.text = "Holding Register";
-        document.getElementById("newReadOrderDataArea").add(option);
-
-    }
-    else if (fieldbustype == "Bacnet")
-    {
-        document.getElementById("newReadOrderDataArea").style.display = "block";
-        document.getElementById("newReadOrderCIPClassID").style.display = "none";
-        document.getElementById("newReadOrderCIPInstanceID").style.display = "none";
-        document.getElementById("newReadOrderCIPAttributeID").style.display = "none";
-        document.getElementById("newReadOrderCIPMask").style.display = "none";
-        document.getElementById("newReadOrderCIPStartingByte").style.display = "none";
-        document.getElementById("newReadOrderCIPNumberOfBytes").style.display = "none";
-
-        document.getElementById("newReadOrderModbusTCP").style.display = "none";
-        document.getElementById("newReadOrderDataArea").options.length = 0;
-        var option = document.createElement("option");
-        option.value = "analogValue";
-        option.text = "Analog Value";
-        document.getElementById("newReadOrderDataArea").add(option);
-        var option = document.createElement("option");
-        option.value = "analogInput";
-        option.text = "Analog Input";
-        document.getElementById("newReadOrderDataArea").add(option);
-
-        var option = document.createElement("option");
-        option.value = "binaryValue";
-        option.text = "Binary Value";
-        document.getElementById("newReadOrderDataArea").add(option);
-        var option = document.createElement("option");
-        option.value = "binaryInput";
-        option.text = "Binary Input";
-        document.getElementById("newReadOrderDataArea").add(option);
-
-        var option = document.createElement("option");
-        option.value = "multiStateValue";
-        option.text = "Multi State Value";
-        document.getElementById("newReadOrderDataArea").add(option);
-        var option = document.createElement("option");
-        option.value = "multiStateInput";
-        option.text = "Multi State Input";
-        document.getElementById("newReadOrderDataArea").add(option);
-    }
-    else
-    {
-        document.getElementById("newReadOrderDataArea").style.display = "none";
-        document.getElementById("newReadOrderCIPStartingByte").style.display = "block";
-        document.getElementById("newReadOrderCIPNumberOfBytes").style.display = "block";
-        document.getElementById("newReadOrderCIPClassID").style.display = "block";
-        document.getElementById("newReadOrderCIPInstanceID").style.display = "block";
-        document.getElementById("newReadOrderCIPAttributeID").style.display = "block";
-        document.getElementById("newReadOrderCIPMask").style.display = "block";
-    }
-}
-
-
-
-function fieldbusSelectionChanged() {
-    var fieldbus = document.getElementById("newDeviceFieldbus").value
-    if (fieldbus == "ModbusRTU")
-    {
-        document.getElementById("newDeviceModbusRTU").style.display = "block";
-        document.getElementById("newDeviceModbusTCP").style.display = "none";
-        document.getElementById("newDeviceCipMessagingType").style.display = "none";
-        document.getElementById("newDeviceCipRequestedPacketRateTO").style.display = "none";
-        document.getElementById("newDeviceCipRequestedPacketRateOT").style.display = "none";
-        document.getElementById("newDeviceCipInstanceIDTO").style.display = "none";
-        document.getElementById("newDeviceCipInstanceIDOT").style.display = "none";
-        document.getElementById("newDeviceCipLengthTO").style.display = "none";
-        document.getElementById("newDeviceCipLengthOT").style.display = "none";
-        document.getElementById("newDeviceCipRealTimeFormatTO").style.display = "none";
-        document.getElementById("newDeviceCipRealTimeFormatOT").style.display = "none";
-        document.getElementById("newDeviceCipConnectionTypeTO").style.display = "none";
-        document.getElementById("newDeviceCipConnectionTypeOT").style.display = "none";
-
-        document.getElementById("newDeviceUnitIdentifier").style.display = "block";
-
-
-}
-    if (fieldbus == "ModbusTCP")
-    {
-        document.getElementById("newDeviceModbusTCP").style.display = "block";
-        document.getElementById("newDeviceModbusRTU").style.display = "none";
-        document.getElementById("newDeviceCipMessagingType").style.display = "none";
-        document.getElementById("newDeviceCipRequestedPacketRateTO").style.display = "none";
-        document.getElementById("newDeviceCipRequestedPacketRateOT").style.display = "none";
-        document.getElementById("newDeviceCipInstanceIDTO").style.display = "none";
-        document.getElementById("newDeviceCipInstanceIDOT").style.display = "none";
-        document.getElementById("newDeviceCipLengthTO").style.display = "none";
-        document.getElementById("newDeviceCipLengthOT").style.display = "none";
-        document.getElementById("newDeviceCipRealTimeFormatTO").style.display = "none";
-        document.getElementById("newDeviceCipRealTimeFormatOT").style.display = "none";
-        document.getElementById("newDeviceCipConnectionTypeTO").style.display = "none";
-        document.getElementById("newDeviceCipConnectionTypeOT").style.display = "none";
-
-        document.getElementById("newDeviceUnitIdentifier").style.display = "block";
-        document.getElementById("newDevicePort").value = "502";
-    }
-    if (fieldbus == "Bacnet")
-    {
-        document.getElementById("newDeviceModbusTCP").style.display = "block";
-        document.getElementById("newDeviceModbusRTU").style.display = "none";
-        document.getElementById("newDeviceCipMessagingType").style.display = "none";
-        document.getElementById("newDeviceCipRequestedPacketRateTO").style.display = "none";
-        document.getElementById("newDeviceCipRequestedPacketRateOT").style.display = "none";
-        document.getElementById("newDeviceCipInstanceIDTO").style.display = "none";
-        document.getElementById("newDeviceCipInstanceIDOT").style.display = "none";
-        document.getElementById("newDeviceCipLengthTO").style.display = "none";
-        document.getElementById("newDeviceCipLengthOT").style.display = "none";
-        document.getElementById("newDeviceCipRealTimeFormatTO").style.display = "none";
-        document.getElementById("newDeviceCipRealTimeFormatOT").style.display = "none";
-        document.getElementById("newDeviceCipConnectionTypeTO").style.display = "none";
-        document.getElementById("newDeviceCipConnectionTypeOT").style.display = "none";
-        document.getElementById("newDeviceUnitIdentifier").style.display = "none";
-        document.getElementById("newDevicePort").value = "47808";
-    }
-    if (fieldbus == "EthernetIP")
-    {
-        var messagingtype = document.getElementById("newDeviceCipMessagingTypeValue").value
-        console.log(messagingtype);
-        document.getElementById("newDeviceModbusTCP").style.display = "block";
-        document.getElementById("newDeviceModbusRTU").style.display = "none";
-        document.getElementById("newDeviceCipMessagingType").style.display = "block";
-        if (messagingtype == "Implicit") {
-            document.getElementById("newDeviceCipRequestedPacketRateTO").style.display = "block";
-            document.getElementById("newDeviceCipRequestedPacketRateOT").style.display = "block";
-            document.getElementById("newDeviceCipInstanceIDTO").style.display = "block";
-            document.getElementById("newDeviceCipInstanceIDOT").style.display = "block";
-            document.getElementById("newDeviceCipLengthTO").style.display = "block";
-            document.getElementById("newDeviceCipLengthOT").style.display = "block";
-            document.getElementById("newDeviceCipRealTimeFormatTO").style.display = "block";
-            document.getElementById("newDeviceCipRealTimeFormatOT").style.display = "block";
-            document.getElementById("newDeviceCipConnectionTypeTO").style.display = "block";
-            document.getElementById("newDeviceCipConnectionTypeOT").style.display = "block";
-        }
-        else
-        {
-            document.getElementById("newDeviceCipRequestedPacketRateTO").style.display = "none";
-            document.getElementById("newDeviceCipRequestedPacketRateOT").style.display = "none";
-            document.getElementById("newDeviceCipInstanceIDTO").style.display = "none";
-            document.getElementById("newDeviceCipInstanceIDOT").style.display = "none";
-            document.getElementById("newDeviceCipLengthTO").style.display = "none";
-            document.getElementById("newDeviceCipLengthOT").style.display = "none";
-            document.getElementById("newDeviceCipRealTimeFormatTO").style.display = "none";
-            document.getElementById("newDeviceCipRealTimeFormatOT").style.display = "none";
-            document.getElementById("newDeviceCipConnectionTypeTO").style.display = "none";
-            document.getElementById("newDeviceCipConnectionTypeOT").style.display = "none";
-        }
-        document.getElementById("newDeviceUnitIdentifier").style.display = "none";
-        document.getElementById("newDevicePort").value = "44818";
-    }
-
-    }
-
-</script>
-
-
-<script>
-// Get the modal
-var addModbusCommandModal = document.getElementById("addModbusCommandModal");
-
-// Get the button that opens the modal
-var openaddModbusCommandModalButton = document.getElementById("openAddModbusCommandModalButton");
-
-// Get the <span> element that closes the modal
-var span = document.getElementById("closeModbusCommandModal");
-
-// When the user clicks on the button, open the modal
-openaddModbusCommandModalButton.onclick = function() {
-  addModbusCommandModal.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  addModbusCommandModal.style.display = "none";
-}
-
-</script>
-
-
-<script>
-function readOrderSelctionChanged() {
-    document.getElementById("transportid").value = "";
-    document.getElementById("absolutethreshold").value = "";
-    document.getElementById("relativethreshold").value = "";
-    document.getElementById("registerintervaltime").value = "";
-    if (document.getElementById("signed") !== null)
-        document.getElementById("signed").value = "";
-    if (document.getElementById("multiplefactor") !== null)
-        document.getElementById("multiplefactor").value = "";
-    if (document.getElementById("bits") !== null)
-        document.getElementById("bits").value = "";
-    if (document.getElementById("serverid") !== null)
-        document.getElementById("serverid").value = "";
-    if (document.getElementById("target") !== null)
-        document.getElementById("target").value = "";
-    if (document.getElementById("active") !== null)
-        document.getElementById("active").value = "";
-    if (document.getElementById("sourceLabel") !== null)
-        document.getElementById("sourceLabel").innerHTML = "";
-    if (document.getElementById("classid") !== null)
-        document.getElementById("classid").innerHTML = "";
-    if (document.getElementById("instanceid") !== null)
-        document.getElementById("instanceid").innerHTML = "";
-    if (document.getElementById("attributeid") !== null)
-        document.getElementById("attributeid").innerHTML = "";
-    if (document.getElementById("mask") !== null)
-        document.getElementById("mask").innerHTML = "";
-    var user = JSON.parse('{{ parameter | tojson | safe}}');
-    var selectedindex = document.getElementById("readorders").selectedIndex;
-    for (var ro in user.readorders) {
-        console.log(ro);
-        if (user.readorders[selectedindex].name == user.readorders[ro]['target'])
-            document.getElementById("sourceLabel").innerHTML = 'Duplicated from Source: ' + user.readorders[ro]['name'];
-    }
-
-
-
-
-
-
-
-    console.log(selectedindex);
-    if (user.readorders[selectedindex].fieldbustype == "Modbus")
-    {
-        if (document.getElementById("classidrow") !== null)
-            document.getElementById("classidrow").style.display = "none";
-        if (document.getElementById("instanceidrow") !== null)
-            document.getElementById("instanceidrow").style.display = "none";
-        if (document.getElementById("attributeidrow") !== null)
-            document.getElementById("attributeidrow").style.display = "none";
-        if (document.getElementById("maskrow") !== null)
-            document.getElementById("maskrow").style.display = "none";
-        if (document.getElementById("numberofbytesrow") !== null)
-            document.getElementById("numberofbytesrow").style.display = "none";
-        if (document.getElementById("startingbyterow") !== null)
-            document.getElementById("startingbyterow").style.display = "none";
-
-        if (document.getElementById("readordersmodbus") !== null)
-            document.getElementById("readordersmodbus").style.display = "block";
-        document.getElementById("dataarea").options.length = 0;
-        var option = document.createElement("option");
-        option.text = "Input Register";
-        document.getElementById("dataarea").add(option);
-        var option = document.createElement("option");
-        option.text = "Holding Register";
-        document.getElementById("dataarea").add(option);
-    }
-    else if (user.readorders[selectedindex].fieldbustype == "EthernetIP")
-    {
-        if (document.getElementById("classidrow") !== null)
-            document.getElementById("classidrow").style.display = "block";
-        if (document.getElementById("instanceidrow") !== null)
-            document.getElementById("instanceidrow").style.display = "block";
-        if (document.getElementById("attributeidrow") !== null)
-            document.getElementById("attributeidrow").style.display = "block";
-        if (document.getElementById("maskrow") !== null)
-            document.getElementById("maskrow").style.display = "block";
-        if (document.getElementById("numberofbytesrow") !== null)
-            document.getElementById("numberofbytesrow").style.display = "block";
-        if (document.getElementById("startingbyterow") !== null)
-            document.getElementById("startingbyterow").style.display = "block";
-    }
-    else
-    {
-        if (document.getElementById("classidrow") !== null)
-            document.getElementById("classidrow").style.display = "none";
-        if (document.getElementById("instanceidrow") !== null)
-            document.getElementById("instanceidrow").style.display = "none";
-        if (document.getElementById("attributeidrow") !== null)
-            document.getElementById("attributeidrow").style.display = "none";
-        if (document.getElementById("maskrow") !== null)
-            document.getElementById("maskrow").style.display = "none";
-        if (document.getElementById("numberofbytesrow") !== null)
-            document.getElementById("numberofbytesrow").style.display = "none";
-        if (document.getElementById("startingbyterow") !== null)
-            document.getElementById("startingbyterow").style.display = "none";
-        if (document.getElementById("readordersmodbus") !== null)
-            document.getElementById("readordersmodbus").style.display = "none";
-        if (document.getElementById("dataarea") !== null)
-            document.getElementById("dataarea").options.length = 0;
-        var option = document.createElement("option");
-        option.value = "analogValue";
-        option.text = "Analog Value";
-        document.getElementById("dataarea").add(option);
-        var option = document.createElement("option");
-        option.value = "analogInput";
-        option.text = "Analog Input";
-        document.getElementById("dataarea").add(option);
-
-        var option = document.createElement("option");
-        option.value = "binaryValue";
-        option.text = "Binary Value";
-        document.getElementById("dataarea").add(option);
-        var option = document.createElement("option");
-        option.value = "binaryInput";
-        option.text = "Binary Input";
-        document.getElementById("dataarea").add(option);
-
-        var option = document.createElement("option");
-        option.value = "multiStateValue";
-        option.text = "Multi State Value";
-        document.getElementById("dataarea").add(option);
-        var option = document.createElement("option");
-        option.value = "multiStateInput";
-        option.text = "Multi State Input";
-        document.getElementById("dataarea").add(option);
-
-    }
-
-
-
-    for (var key in user.readorders[selectedindex]) {
-    try
-    {
-
-
-        document.getElementById(key).value = user.readorders[document.getElementById("readorders").selectedIndex][key].toString();
-        }
-        catch (e)
-        {
-
-        }
-
-}
-}
-
-
-
-
-
-</script>
-
-<script>
-function modbuscommandSelctionChanged() {
-    var user = JSON.parse('{{ parameter | tojson | safe}}');
-    for (var key in user.modbuscommand[0]) {
-
-        document.getElementById(key).value = user.modbuscommand[document.getElementById("modbuscommands").selectedIndex][key];
-        //console.log(key)
-        //console.log(user.readorders[0][key])
-}
-
-
-}
-</script>
-
-<script>
-
-function devicesSelectionChanged() {
-    var user = JSON.parse('{{ parameter | tojson | safe}}');
-    for (var key in user.devices[0]) {
-
-        document.getElementById(key).value = user.devices[document.getElementById("deviceconfiguration").selectedIndex][key];
-        //console.log(key)
-        //console.log(user.readorders[0][key])
-}
-
-
-}
-</script>
-</body>
+        <br><br>
+        <script>
+            // Get the modal
+            var addDeviceModal = document.getElementById("addDeviceModal");
+
+            // Get the button that opens the modal
+            var openAddDeviceModalButton = document.getElementById("openAddDeviceModalButton");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+
+            // When the user clicks on the button, open the modal
+            openAddDeviceModalButton.onclick = function() {
+                addDeviceModal.style.display = "block";
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function() {
+                addDeviceModal.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+                if (event.target == addDeviceModal) {
+                    addDeviceModal.style.display = "none";
+                }
+                if (event.target == addModbusCommandModal) {
+                    addModbusCommandModal.style.display = "none";
+                }
+                if (event.target == addReadOrderModal) {
+                    addReadOrderModal.style.display = "none";
+                }
+            }
+        </script>
+        <script>
+            function readOrderTransportIdChanged() {
+                var parameter = JSON.parse('{{ parameter | tojson | safe}}');
+                var transportid = document.getElementById("newReadOrderTransportID").value
+                var fieldbustype = 'Modbus';
+                console.log(parameter);
+                for(var i = 0; i < parameter.devices.length; i++)
+                {
+                    if (parameter.devices[i].transportid == transportid)
+                    {
+                        fieldbustype = parameter.devices[i].type;
+                        break;
+                    }
+                }
+                if (fieldbustype == "Modbus")
+                {
+                    document.getElementById("newReadOrderDataArea").style.display = "block";
+                    document.getElementById("newReadOrderCIPClassID").style.display = "none";
+                    document.getElementById("newReadOrderCIPInstanceID").style.display = "none";
+                    document.getElementById("newReadOrderCIPAttributeID").style.display = "none";
+                    document.getElementById("newReadOrderCIPMask").style.display = "none";
+                    document.getElementById("newReadOrderCIPStartingByte").style.display = "none";
+                    document.getElementById("newReadOrderCIPNumberOfBytes").style.display = "none";
+                    document.getElementById("newReadOrderModbusTCP").style.display = "block";
+                    document.getElementById("newReadOrderDataArea").options.length = 0;
+                    var option = document.createElement("option");
+                    option.text = "Input Register";
+                    document.getElementById("newReadOrderDataArea").add(option);
+                    var option = document.createElement("option");
+                    option.text = "Holding Register";
+                    document.getElementById("newReadOrderDataArea").add(option);
+                }
+                else if (fieldbustype == "Bacnet")
+                {
+                    document.getElementById("newReadOrderDataArea").style.display = "block";
+                    document.getElementById("newReadOrderCIPClassID").style.display = "none";
+                    document.getElementById("newReadOrderCIPInstanceID").style.display = "none";
+                    document.getElementById("newReadOrderCIPAttributeID").style.display = "none";
+                    document.getElementById("newReadOrderCIPMask").style.display = "none";
+                    document.getElementById("newReadOrderCIPStartingByte").style.display = "none";
+                    document.getElementById("newReadOrderCIPNumberOfBytes").style.display = "none";
+                    document.getElementById("newReadOrderModbusTCP").style.display = "none";
+                    document.getElementById("newReadOrderDataArea").options.length = 0;
+                    var option = document.createElement("option");
+                    option.value = "analogValue";
+                    option.text = "Analog Value";
+                    document.getElementById("newReadOrderDataArea").add(option);
+                    var option = document.createElement("option");
+                    option.value = "analogInput";
+                    option.text = "Analog Input";
+                    document.getElementById("newReadOrderDataArea").add(option);
+                    var option = document.createElement("option");
+                    option.value = "binaryValue";
+                    option.text = "Binary Value";
+                    document.getElementById("newReadOrderDataArea").add(option);
+                    var option = document.createElement("option");
+                    option.value = "binaryInput";
+                    option.text = "Binary Input";
+                    document.getElementById("newReadOrderDataArea").add(option);
+                    var option = document.createElement("option");
+                    option.value = "multiStateValue";
+                    option.text = "Multi State Value";
+                    document.getElementById("newReadOrderDataArea").add(option);
+                    var option = document.createElement("option");
+                    option.value = "multiStateInput";
+                    option.text = "Multi State Input";
+                    document.getElementById("newReadOrderDataArea").add(option);
+                }
+                else
+                {
+                    document.getElementById("newReadOrderDataArea").style.display = "none";
+                    document.getElementById("newReadOrderCIPStartingByte").style.display = "block";
+                    document.getElementById("newReadOrderCIPNumberOfBytes").style.display = "block";
+                    document.getElementById("newReadOrderCIPClassID").style.display = "block";
+                    document.getElementById("newReadOrderCIPInstanceID").style.display = "block";
+                    document.getElementById("newReadOrderCIPAttributeID").style.display = "block";
+                    document.getElementById("newReadOrderCIPMask").style.display = "block";
+                }
+            }
+            function fieldbusSelectionChanged() {
+                var fieldbus = document.getElementById("newDeviceFieldbus").value
+                if (fieldbus == "ModbusRTU")
+                {
+                    document.getElementById("newDeviceModbusRTU").style.display = "block";
+                    document.getElementById("newDeviceModbusTCP").style.display = "none";
+                    document.getElementById("newDeviceCipMessagingType").style.display = "none";
+                    document.getElementById("newDeviceCipRequestedPacketRateTO").style.display = "none";
+                    document.getElementById("newDeviceCipRequestedPacketRateOT").style.display = "none";
+                    document.getElementById("newDeviceCipInstanceIDTO").style.display = "none";
+                    document.getElementById("newDeviceCipInstanceIDOT").style.display = "none";
+                    document.getElementById("newDeviceCipLengthTO").style.display = "none";
+                    document.getElementById("newDeviceCipLengthOT").style.display = "none";
+                    document.getElementById("newDeviceCipRealTimeFormatTO").style.display = "none";
+                    document.getElementById("newDeviceCipRealTimeFormatOT").style.display = "none";
+                    document.getElementById("newDeviceCipConnectionTypeTO").style.display = "none";
+                    document.getElementById("newDeviceCipConnectionTypeOT").style.display = "none";
+                    document.getElementById("newDeviceUnitIdentifier").style.display = "block";
+                }
+                if (fieldbus == "ModbusTCP")
+                {
+                    document.getElementById("newDeviceModbusTCP").style.display = "block";
+                    document.getElementById("newDeviceModbusRTU").style.display = "none";
+                    document.getElementById("newDeviceCipMessagingType").style.display = "none";
+                    document.getElementById("newDeviceCipRequestedPacketRateTO").style.display = "none";
+                    document.getElementById("newDeviceCipRequestedPacketRateOT").style.display = "none";
+                    document.getElementById("newDeviceCipInstanceIDTO").style.display = "none";
+                    document.getElementById("newDeviceCipInstanceIDOT").style.display = "none";
+                    document.getElementById("newDeviceCipLengthTO").style.display = "none";
+                    document.getElementById("newDeviceCipLengthOT").style.display = "none";
+                    document.getElementById("newDeviceCipRealTimeFormatTO").style.display = "none";
+                    document.getElementById("newDeviceCipRealTimeFormatOT").style.display = "none";
+                    document.getElementById("newDeviceCipConnectionTypeTO").style.display = "none";
+                    document.getElementById("newDeviceCipConnectionTypeOT").style.display = "none";
+                    document.getElementById("newDeviceUnitIdentifier").style.display = "block";
+                    document.getElementById("newDevicePort").value = "502";
+                }
+                if (fieldbus == "Bacnet")
+                {
+                    document.getElementById("newDeviceModbusTCP").style.display = "block";
+                    document.getElementById("newDeviceModbusRTU").style.display = "none";
+                    document.getElementById("newDeviceCipMessagingType").style.display = "none";
+                    document.getElementById("newDeviceCipRequestedPacketRateTO").style.display = "none";
+                    document.getElementById("newDeviceCipRequestedPacketRateOT").style.display = "none";
+                    document.getElementById("newDeviceCipInstanceIDTO").style.display = "none";
+                    document.getElementById("newDeviceCipInstanceIDOT").style.display = "none";
+                    document.getElementById("newDeviceCipLengthTO").style.display = "none";
+                    document.getElementById("newDeviceCipLengthOT").style.display = "none";
+                    document.getElementById("newDeviceCipRealTimeFormatTO").style.display = "none";
+                    document.getElementById("newDeviceCipRealTimeFormatOT").style.display = "none";
+                    document.getElementById("newDeviceCipConnectionTypeTO").style.display = "none";
+                    document.getElementById("newDeviceCipConnectionTypeOT").style.display = "none";
+                    document.getElementById("newDeviceUnitIdentifier").style.display = "none";
+                    document.getElementById("newDevicePort").value = "47808";
+                }
+                if (fieldbus == "EthernetIP")
+                {
+                    var messagingtype = document.getElementById("newDeviceCipMessagingTypeValue").value
+                    console.log(messagingtype);
+                    document.getElementById("newDeviceModbusTCP").style.display = "block";
+                    document.getElementById("newDeviceModbusRTU").style.display = "none";
+                    document.getElementById("newDeviceCipMessagingType").style.display = "block";
+                    if (messagingtype == "Implicit") {
+                        document.getElementById("newDeviceCipRequestedPacketRateTO").style.display = "block";
+                        document.getElementById("newDeviceCipRequestedPacketRateOT").style.display = "block";
+                        document.getElementById("newDeviceCipInstanceIDTO").style.display = "block";
+                        document.getElementById("newDeviceCipInstanceIDOT").style.display = "block";
+                        document.getElementById("newDeviceCipLengthTO").style.display = "block";
+                        document.getElementById("newDeviceCipLengthOT").style.display = "block";
+                        document.getElementById("newDeviceCipRealTimeFormatTO").style.display = "block";
+                        document.getElementById("newDeviceCipRealTimeFormatOT").style.display = "block";
+                        document.getElementById("newDeviceCipConnectionTypeTO").style.display = "block";
+                        document.getElementById("newDeviceCipConnectionTypeOT").style.display = "block";
+                    }
+                    else
+                    {
+                        document.getElementById("newDeviceCipRequestedPacketRateTO").style.display = "none";
+                        document.getElementById("newDeviceCipRequestedPacketRateOT").style.display = "none";
+                        document.getElementById("newDeviceCipInstanceIDTO").style.display = "none";
+                        document.getElementById("newDeviceCipInstanceIDOT").style.display = "none";
+                        document.getElementById("newDeviceCipLengthTO").style.display = "none";
+                        document.getElementById("newDeviceCipLengthOT").style.display = "none";
+                        document.getElementById("newDeviceCipRealTimeFormatTO").style.display = "none";
+                        document.getElementById("newDeviceCipRealTimeFormatOT").style.display = "none";
+                        document.getElementById("newDeviceCipConnectionTypeTO").style.display = "none";
+                        document.getElementById("newDeviceCipConnectionTypeOT").style.display = "none";
+                    }
+                    document.getElementById("newDeviceUnitIdentifier").style.display = "none";
+                    document.getElementById("newDevicePort").value = "44818";
+                }
+            }
+        </script>
+        <script>
+            // Get the modal
+            var addModbusCommandModal = document.getElementById("addModbusCommandModal");
+
+            // Get the button that opens the modal
+            var openaddModbusCommandModalButton = document.getElementById("openAddModbusCommandModalButton");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementById("closeModbusCommandModal");
+
+            // When the user clicks on the button, open the modal
+            openaddModbusCommandModalButton.onclick = function() {
+                addModbusCommandModal.style.display = "block";
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function() {
+                addModbusCommandModal.style.display = "none";
+            }
+        </script>
+        <script>
+            function readOrderSelctionChanged() {
+                document.getElementById("transportid").value = "";
+                document.getElementById("absolutethreshold").value = "";
+                document.getElementById("relativethreshold").value = "";
+                document.getElementById("registerintervaltime").value = "";
+                if (document.getElementById("signed") !== null)
+                    document.getElementById("signed").value = "";
+                if (document.getElementById("multiplefactor") !== null)
+                    document.getElementById("multiplefactor").value = "";
+                if (document.getElementById("bits") !== null)
+                    document.getElementById("bits").value = "";
+                if (document.getElementById("serverid") !== null)
+                    document.getElementById("serverid").value = "";
+                if (document.getElementById("target") !== null)
+                    document.getElementById("target").value = "";
+                if (document.getElementById("active") !== null)
+                    document.getElementById("active").value = "";
+                if (document.getElementById("sourceLabel") !== null)
+                    document.getElementById("sourceLabel").innerHTML = "";
+                if (document.getElementById("classid") !== null)
+                    document.getElementById("classid").innerHTML = "";
+                if (document.getElementById("instanceid") !== null)
+                    document.getElementById("instanceid").innerHTML = "";
+                if (document.getElementById("attributeid") !== null)
+                    document.getElementById("attributeid").innerHTML = "";
+                if (document.getElementById("mask") !== null)
+                    document.getElementById("mask").innerHTML = "";
+                var user = JSON.parse('{{ parameter | tojson | safe}}');
+                var selectedindex = document.getElementById("readorders").selectedIndex;
+                for (var ro in user.readorders) {
+                    console.log(ro);
+                    if (user.readorders[selectedindex].name == user.readorders[ro]['target'])
+                        document.getElementById("sourceLabel").innerHTML = 'Duplicated from Source: ' + user.readorders[ro]['name'];
+                }
+                console.log(selectedindex);
+                if (user.readorders[selectedindex].fieldbustype == "Modbus")
+                {
+                    if (document.getElementById("classidrow") !== null)
+                        document.getElementById("classidrow").style.display = "none";
+                    if (document.getElementById("instanceidrow") !== null)
+                        document.getElementById("instanceidrow").style.display = "none";
+                    if (document.getElementById("attributeidrow") !== null)
+                        document.getElementById("attributeidrow").style.display = "none";
+                    if (document.getElementById("maskrow") !== null)
+                        document.getElementById("maskrow").style.display = "none";
+                    if (document.getElementById("numberofbytesrow") !== null)
+                        document.getElementById("numberofbytesrow").style.display = "none";
+                    if (document.getElementById("startingbyterow") !== null)
+                        document.getElementById("startingbyterow").style.display = "none";
+                    if (document.getElementById("readordersmodbus") !== null)
+                        document.getElementById("readordersmodbus").style.display = "block";
+                    document.getElementById("dataarea").options.length = 0;
+                    var option = document.createElement("option");
+                    option.text = "Input Register";
+                    document.getElementById("dataarea").add(option);
+                    var option = document.createElement("option");
+                    option.text = "Holding Register";
+                    document.getElementById("dataarea").add(option);
+                }
+                else if (user.readorders[selectedindex].fieldbustype == "EthernetIP")
+                {
+                    if (document.getElementById("classidrow") !== null)
+                        document.getElementById("classidrow").style.display = "block";
+                    if (document.getElementById("instanceidrow") !== null)
+                        document.getElementById("instanceidrow").style.display = "block";
+                    if (document.getElementById("attributeidrow") !== null)
+                        document.getElementById("attributeidrow").style.display = "block";
+                    if (document.getElementById("maskrow") !== null)
+                        document.getElementById("maskrow").style.display = "block";
+                    if (document.getElementById("numberofbytesrow") !== null)
+                        document.getElementById("numberofbytesrow").style.display = "block";
+                    if (document.getElementById("startingbyterow") !== null)
+                        document.getElementById("startingbyterow").style.display = "block";
+                }
+                else
+                {
+                    if (document.getElementById("classidrow") !== null)
+                        document.getElementById("classidrow").style.display = "none";
+                    if (document.getElementById("instanceidrow") !== null)
+                        document.getElementById("instanceidrow").style.display = "none";
+                    if (document.getElementById("attributeidrow") !== null)
+                        document.getElementById("attributeidrow").style.display = "none";
+                    if (document.getElementById("maskrow") !== null)
+                        document.getElementById("maskrow").style.display = "none";
+                    if (document.getElementById("numberofbytesrow") !== null)
+                        document.getElementById("numberofbytesrow").style.display = "none";
+                    if (document.getElementById("startingbyterow") !== null)
+                        document.getElementById("startingbyterow").style.display = "none";
+                    if (document.getElementById("readordersmodbus") !== null)
+                        document.getElementById("readordersmodbus").style.display = "none";
+                    if (document.getElementById("dataarea") !== null)
+                        document.getElementById("dataarea").options.length = 0;
+                    var option = document.createElement("option");
+                    option.value = "analogValue";
+                    option.text = "Analog Value";
+                    document.getElementById("dataarea").add(option);
+                    var option = document.createElement("option");
+                    option.value = "analogInput";
+                    option.text = "Analog Input";
+                    document.getElementById("dataarea").add(option);
+                    var option = document.createElement("option");
+                    option.value = "binaryValue";
+                    option.text = "Binary Value";
+                    document.getElementById("dataarea").add(option);
+                    var option = document.createElement("option");
+                    option.value = "binaryInput";
+                    option.text = "Binary Input";
+                    document.getElementById("dataarea").add(option);
+                    var option = document.createElement("option");
+                    option.value = "multiStateValue";
+                    option.text = "Multi State Value";
+                    document.getElementById("dataarea").add(option);
+                    var option = document.createElement("option");
+                    option.value = "multiStateInput";
+                    option.text = "Multi State Input";
+                    document.getElementById("dataarea").add(option);
+                }
+                for (var key in user.readorders[selectedindex]) {
+                    try
+                        {
+                            document.getElementById(key).value = user.readorders[document.getElementById("readorders").selectedIndex][key].toString();
+                        }
+                        catch (e)
+                        {
+                        }
+                }
+            }
+        </script>
+        <script>
+            function modbuscommandSelctionChanged() {
+                var user = JSON.parse('{{ parameter | tojson | safe}}');
+                for (var key in user.modbuscommand[0]) {
+                    document.getElementById(key).value = user.modbuscommand[document.getElementById("modbuscommands").selectedIndex][key];
+                    //console.log(key)
+                    //console.log(user.readorders[0][key])
+                }
+            }
+        </script>
+        <script>
+            function devicesSelectionChanged() {
+                var user = JSON.parse('{{ parameter | tojson | safe}}');
+                for (var key in user.devices[0]) {
+                    document.getElementById(key).value = user.devices[document.getElementById("deviceconfiguration").selectedIndex][key];
+                    //console.log(key)
+                    //console.log(user.readorders[0][key])
+                }
+            }
+        </script>
+    </body>
 </html>

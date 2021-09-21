@@ -6,12 +6,18 @@ from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
 
-def send_mail(address, filename = None, body = None):
 
-
+def send_mail(address, filename=None, body=None):
+    """
+    sent mail to selected email
+    :param address: email address
+    :param filename: name of file
+    :param body: gurke
+    :return: gurke
+    """
     config = cfg.Config.getConfig()
 
-    if not 'emailfromaddress' in config or not 'smtphost' in config or not 'smtpport':
+    if 'emailfromaddress' not in config or 'smtphost' not in config or not 'smtpport':
         return
 
     fromaddr = config['emailfromaddress']
@@ -31,7 +37,6 @@ def send_mail(address, filename = None, body = None):
     # storing the subject
     msg['Subject'] = "Message from Gateway"
 
-
     # string to store the body of the mail
     if filename is not None:
         body = 'Attached the Register logfile of your Gateway"'
@@ -42,7 +47,7 @@ def send_mail(address, filename = None, body = None):
     msg.attach(MIMEText(body, 'plain'))
 
     # open the file to be sent
-    #filename = "File_name_with_extension"
+    # filename = "File_name_with_extension"
     if filename is not None:
         attachment = open(filename, "rb")
 
@@ -63,7 +68,6 @@ def send_mail(address, filename = None, body = None):
     # creates SMTP session
     s = smtplib.SMTP(host=config['smtphost'], port=int(config['smtpport']))
 
-
     # start TLS for security
     if bool(config.get('smtpenabletls', True)):
         s.starttls()
@@ -80,6 +84,7 @@ def send_mail(address, filename = None, body = None):
 
     # terminating the session
     s.quit()
+
 
 if __name__ == "__main__":
     send_mail('info@rossmann-engineering.de', body='test')

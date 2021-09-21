@@ -43,6 +43,14 @@ def create_tables(conn):
         logging.error('Exception creating table: ' + str(traceback.format_exc()))
 
 def add_daily_value (conn, serverid, tag, value):
+    """
+    add daily value
+    :param conn: connection object
+    :param serverid: Server ID the Message refers to
+    :param tag: datetime of reading
+    :param value: daily value
+    :return: update row ID
+    """
     try:
         moment = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:00")
         cursor = conn.cursor()
@@ -85,6 +93,13 @@ def datetime_to_unix_timestamp(dt):
     return int((dt - datetime.datetime(1970, 1, 1)).total_seconds() * 1000)
 
 def get_daily_values(conn, tag, serverid):
+    """
+    get daily value
+    :param conn: connection object
+    :param tag: datetime of reading
+    :param serverid: Server ID the Message refers to
+    :return: value gurke
+    """
     try:
         cursor = conn.cursor()
         cursor.execute("SELECT rowid, moment ,serverid ,tag,value FROM dailycache WHERE tag='"+str(tag)+ "' AND serverid=" + str(serverid) + " ORDER by rowid")

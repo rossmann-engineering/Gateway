@@ -12,17 +12,20 @@ import platform
 import logging
 import sys
 
-def console (command):
-    output = subprocess.check_output(command, shell = True)
+
+def console(command):
+    output = subprocess.check_output(command, shell=True)
     return output
 
-def simpleconsole (command):
+
+def simpleconsole(command):
     os.system(command)
+
 
 def readphonenumber():
     returnvalue = 'Error reading phone number'
     try:
-        if (os.name != 'nt'):
+        if os.name != 'nt':
             value = sendatcommand("AT+CNUM")
         else:
             file = open("atcnum.txt", "r")
@@ -37,8 +40,9 @@ def readphonenumber():
     finally:
         return returnvalue
 
+
 def readdeviceinformations():
-    '''
+    """
     Architecture:        aarch64
     Byte Order:          Little Endian
     CPU(s):              4
@@ -59,7 +63,7 @@ def readdeviceinformations():
     L2 cache:            unknown size
     NUMA node0 CPU(s):   0-3
     Flags:               fp asimd evtstrm aes pmull sha1 sha2 crc32 cpuid
-    '''
+    """
     returnvalue = dict()
     try:
         returnvalue['architecture'] = "Value read error"
@@ -68,16 +72,16 @@ def readdeviceinformations():
         returnvalue['cpumaxmhz'] = "Value read error"
         returnvalue['cpuminmhz'] = "Value read error"
         is_linux = False
-        if (platform.system() == 'Linux'):
+        if platform.system() == 'Linux':
             is_linux = True
-        if (is_linux):
+        if is_linux:
             lscpu = console("lscpu")
         else:
             file = open("windowssimulation/lscpu.txt", "rb")
             lscpu = file.read()
         lscpu = str(lscpu, 'utf-8')
         lscpu = lscpu.splitlines()
-        for i in range (0, len(lscpu)):
+        for i in range(0, len(lscpu)):
             if "Architecture" in lscpu[i]:
                 returnvalue['architecture'] = lscpu[i].split(": ")[1].strip()
             if "Vendor ID" in lscpu[i]:
@@ -89,23 +93,24 @@ def readdeviceinformations():
             if "CPU min MHz" in lscpu[i]:
                 returnvalue['cpuminmhz'] = lscpu[i].split(": ")[1].strip()
     except Exception:
-        logging.error('Webserver (osinterface): Unable to read Deviceinformations (lscpu): ' + str(traceback.format_exc()))
+        logging.error(
+            'Webserver (osinterface): Unable to read Deviceinformations (lscpu): ' + str(traceback.format_exc()))
     finally:
         return returnvalue
 
 
-def readmodemstatus ():
-    #DataLogger.logData('Webserver Read Modem Status (readmodemstatis())')
+def readmodemstatus():
+    # DataLogger.logData('Webserver Read Modem Status (readmodemstatis())')
     returnvalue = dict()
-    #Initialize Variables
+    # Initialize Variables
     returnvalue['connected'] = 'Error Reading value'
     returnvalue['suspended'] = 'Error Reading value'
     returnvalue['interface'] = 'Error Reading value'
     returnvalue['iptimeout'] = 'Error Reading value'
     returnvalue['apn'] = 'Error Reading value'
-    returnvalue['roaming'] ='Error Reading value'
+    returnvalue['roaming'] = 'Error Reading value'
     returnvalue['user'] = 'Error Reading value'
-    returnvalue['password'] ='Error Reading value'
+    returnvalue['password'] = 'Error Reading value'
     returnvalue['iptype'] = 'Error Reading value'
     returnvalue['number'] = 'Error Reading value'
     returnvalue['ipv4method'] = 'Error Reading value'
@@ -114,9 +119,6 @@ def readmodemstatus ():
     returnvalue['ipv4gateway'] = 'Error Reading value'
     returnvalue['ipv4dns'] = 'Error Reading value'
     returnvalue['duration'] = 0
-
-
-
 
     try:
         returnvalue['connected'] = "Value read error"
@@ -135,11 +137,10 @@ def readmodemstatus ():
         returnvalue['ipv4gateway'] = "Value read error"
         returnvalue['ipv4dns'] = "Value read error"
         returnvalue['duration'] = 0
-        if (os.name != 'nt'):
+        if os.name != 'nt':
             for i in range(0, 20):
                 try:
-                    mmcli_b = console("mmcli -b "+str(i))
-
+                    mmcli_b = console("mmcli -b " + str(i))
 
                     break
                 except Exception:
@@ -149,7 +150,7 @@ def readmodemstatus ():
             mmcli_b = file.read()
         mmcli_b = mmcli_b.splitlines()
 
-        for i in range (0, len(mmcli_b)):
+        for i in range(0, len(mmcli_b)):
             if "connected" in mmcli_b[i]:
                 returnvalue['connected'] = mmcli_b[i].split("'")[1]
             if "suspended" in mmcli_b[i]:
@@ -185,8 +186,7 @@ def readmodemstatus ():
     except Exception as e:
         logging.error('Webserver (osinterface): Unable to read values (mmcli -b 0): ' + str(traceback.format_exc()))
 
-
-    #Initialize Variables
+    # Initialize Variables
     returnvalue['manufacturer'] = 'Error Reading value'
     returnvalue['model'] = 'Error Reading value'
     returnvalue['revision'] = 'Error Reading value'
@@ -202,12 +202,12 @@ def readmodemstatus ():
 
     try:
         is_linux = False
-        if (platform.system() == 'Linux'):
+        if platform.system() == 'Linux':
             is_linux = True
-        if (is_linux):
+        if is_linux:
             for i in range(0, 20):
                 try:
-                    mmcli_m = console("mmcli -m "+str(i))
+                    mmcli_m = console("mmcli -m " + str(i))
 
                     break
                 except Exception:
@@ -217,7 +217,7 @@ def readmodemstatus ():
             mmcli_m = file.read()
         mmcli_m = str(mmcli_m, 'utf-8')
         mmcli_m = mmcli_m.splitlines()
-        for i in range (0, len(mmcli_m)):
+        for i in range(0, len(mmcli_m)):
             if "manufacturer" in mmcli_m[i]:
                 returnvalue['manufacturer'] = mmcli_m[i].split(":")[1]
             if "model" in mmcli_m[i]:
@@ -237,17 +237,16 @@ def readmodemstatus ():
     except Exception as e:
         logging.error('Webserver (osinterface): Unable to read values (mmcli -m 0): ' + str(traceback.format_exc()))
 
-
-    #Send AT-Command to check Signal quality
+    # Send AT-Command to check Signal quality
     returnvalue['signalquality'] = '0'
     try:
-        if (os.name != 'nt'):
+        if os.name != 'nt':
             response = sendatcommand("AT+CSQ")
             response = response.splitlines()
 
             for i in range(0, len(response)):
                 if "+CSQ" in response[i]:
-                    returnvalue['signalquality'] = response[i].split(": ")[1].replace(',','.')
+                    returnvalue['signalquality'] = response[i].split(": ")[1].replace(',', '.')
                     pass
 
     except Exception as e:
@@ -256,17 +255,19 @@ def readmodemstatus ():
 
     return returnvalue
 
+
 def gwReboot():
     """
     Reboots the Gateway using the console command "reboot"
     """
     try:
-        if (os.name != 'nt'):
+        if os.name != 'nt':
             console("reboot")
 
     except Exception as e:
         logging.error(
             'Error while rebooting (reboot): ' + str(traceback.format_exc()))
+
 
 def sendatcommand(command):
     """
@@ -274,9 +275,9 @@ def sendatcommand(command):
     :param command: The AT commad that has to be send
     :return: Answer from Modem
     """
-    port  = "/dev/ttyUSB2"
-    #find serial port
-    #for i in range(0, 5):
+    port = "/dev/ttyUSB2"
+    # find serial port
+    # for i in range(0, 5):
     #    try:
     #        answer = osinterface.console("info /dev/ttyACM"+str(i)+" & udevadm info -a /dev/ttySCM"+str(i)+" | grep ATTRS{product}")
     #        answer = answer.splitlines()
@@ -289,32 +290,31 @@ def sendatcommand(command):
     data = ''
     cfg.Config.getInstance().atcommandlock.acquire()
     try:
-        ser = serial.Serial(port, timeout=0.2,write_timeout=1,  baudrate=9600, xonxoff=False, rtscts=False, bytesize=serial.EIGHTBITS, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE)
-        if (not ser.is_open):
-                ser.open()
+        ser = serial.Serial(port, timeout=0.2, write_timeout=1, baudrate=9600, xonxoff=False, rtscts=False,
+                            bytesize=serial.EIGHTBITS, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE)
+        if not ser.is_open:
+            ser.open()
 
         timeInAbsoluteSeconds = calendar.timegm(time.gmtime())
 
-
-        while (((timeInAbsoluteSeconds + 5) > calendar.timegm(time.gmtime())) and len(data)<2):
+        while ((timeInAbsoluteSeconds + 5) > calendar.timegm(time.gmtime())) and len(data) < 2:
             try:
                 ser.flushInput()
                 ser.flushOutput()
-                cmd = (str(command)+"\r").encode('utf-8')
-
+                cmd = (str(command) + "\r").encode('utf-8')
 
                 ser.write(cmd)
                 ser.flush()
-                    # data = self.ser.read(50)
+                # data = self.ser.read(50)
 
                 data = str(ser.read(1000), 'utf-8')
-                logging.info('Response to AT-Command from Modem: '+data);
+                logging.info('Response to AT-Command from Modem: ' + data)
 
             except Exception:
                 logging.error('Unable to send AT command' + str(
                     traceback.format_exc()))
-        #print data
-        #DataLogger.logData('Send AT Command, Received Answer: ' + str(data))
+        # print data
+        # DataLogger.logData('Send AT Command, Received Answer: ' + str(data))
     except Exception:
         logging.error('Unable to send AT command' + str(
             traceback.format_exc()))
@@ -323,18 +323,19 @@ def sendatcommand(command):
     return data.replace('\n', '<br>')
 
 
-
-
-
-def readvpnstatus ():
+def readvpnstatus():
+    """
+    read status of vpn
+    :return: Status of vpn
+    """
     # The output of platform.system() is as follows:
     # Linux: Linux
     # Mac: Darwin
     # Windows: Windows
     is_linux = False
-    if (platform.system() == 'Linux'):
+    if platform.system() == 'Linux':
         is_linux = True
-    returnvalue = dict();
+    returnvalue = dict()
     returnvalue['ipaddress'] = 'error'
     returnvalue['mask'] = 'error'
     returnvalue['nodeid'] = 'error'
@@ -353,7 +354,7 @@ def readvpnstatus ():
                 if ifconfig[i].startswith("zt"):
                     networkname = ifconfig[i].split(':')[0]
                     break
-            ifconfig = console("ifconfig "+str(networkname))
+            ifconfig = console("ifconfig " + str(networkname))
 
 
         else:
@@ -368,7 +369,8 @@ def readvpnstatus ():
             if "netmask" in firstline[i]:
                 returnvalue['mask'] = firstline[i].split("netmask")[1].strip()
     except Exception as e:
-        logging.error('Webserver (osinterface): Unable to read vpn values (ifconfig_zt0): ' + str(traceback.format_exc()))
+        logging.error(
+            'Webserver (osinterface): Unable to read vpn values (ifconfig_zt0): ' + str(traceback.format_exc()))
 
     try:
         zerotier = ""
@@ -385,7 +387,8 @@ def readvpnstatus ():
             if "address" in zerotier[i]:
                 returnvalue['nodeid'] = zerotier[i].split(":")[1].strip().replace(',', '').replace('"', '')
     except Exception as e:
-        logging.error('Webserver (osinterface): Unable to read vpn values (zerotier-cli -j info): '  + str(traceback.format_exc()))
+        logging.error(
+            'Webserver (osinterface): Unable to read vpn values (zerotier-cli -j info): ' + str(traceback.format_exc()))
 
     try:
         networks = ""
@@ -404,23 +407,26 @@ def readvpnstatus ():
                 if 'OK' in network:
                     returnvalue['connected'] = 'true'
     except Exception as e:
-        logging.error('Webserver (osinterface): Unable to read vpn values (zerotier-cli listnetworks): '  + str(traceback.format_exc()))
-
-
+        logging.error('Webserver (osinterface): Unable to read vpn values (zerotier-cli listnetworks): ' + str(
+            traceback.format_exc()))
 
     return returnvalue
 
 
 def readzerotiernetwork():
-    #zerotier-cli listnetworks
-    #200 listnetworks <nwid> <name> <mac> <status> <type> <dev> <ZT assigned ips>
-    #200 listnetworks c7c8172af1f100cc EH-Gateways ce:ec:e8:62:62:db OK PRIVATE zt5u46mkr5 fc36:3917:e6ec:1993:48cc:0000:0000:0001/40,10.147.17.142/24
-    returnvalue = dict();
+    """
+    read zerotier of network
+    :return: gurke of zerotier of network
+    """
+    # zerotier-cli listnetworks
+    # 200 listnetworks <nwid> <name> <mac> <status> <type> <dev> <ZT assigned ips>
+    # 200 listnetworks c7c8172af1f100cc EH-Gateways ce:ec:e8:62:62:db OK PRIVATE zt5u46mkr5 fc36:3917:e6ec:1993:48cc:0000:0000:0001/40,10.147.17.142/24
+    returnvalue = dict()
     returnvalue['networkid'] = 'error'
     returnvalue['networkname'] = 'error'
     returnvalue['networkip'] = 'error'
     try:
-        if (os.name != 'nt'):
+        if os.name != 'nt':
             # First determine the interface
             zerotiercli = console("zerotier-cli listnetworks")
 
@@ -438,15 +444,20 @@ def readzerotiernetwork():
         logging.error('Unable to read Zerotier Networkname (zerotier-cli listnetworks): ' + str(traceback.format_exc()))
     return returnvalue
 
+
 def readeth0status():
-    returnvalue = dict();
+    """
+    read status gurke
+    :return: status of gurke
+    """
+    returnvalue = dict()
     returnvalue['ipaddress'] = 'no IP-Address'
     returnvalue['mask'] = 'No Mask'
     try:
         is_linux = False
-        if (platform.system() == 'Linux'):
+        if platform.system() == 'Linux':
             is_linux = True
-        if (is_linux):
+        if is_linux:
             ifconfig = console("ifconfig eth0")
         else:
             file = open("windowssimulation/ifconfig eth0.txt", "rb")
@@ -460,18 +471,24 @@ def readeth0status():
             if "netmask" in firstline[i]:
                 returnvalue['mask'] = firstline[i].split("netmask")[1].strip()
     except Exception as e:
-        logging.error('Webserver (osinterface): Unable to read eth0 values (ifconfig eth0): ' + str(traceback.format_exc()))
+        logging.error(
+            'Webserver (osinterface): Unable to read eth0 values (ifconfig eth0): ' + str(traceback.format_exc()))
     return returnvalue
 
+
 def readwlan0status():
-    returnvalue = dict();
+    """
+    read status of wifi
+    :return: status of wifi
+    """
+    returnvalue = dict()
     returnvalue['ipaddress'] = 'no IP-Address'
     returnvalue['mask'] = 'No Mask'
     try:
         is_linux = False
-        if (platform.system() == 'Linux'):
+        if platform.system() == 'Linux':
             is_linux = True
-        if (is_linux):
+        if is_linux:
             ifconfig = console("ifconfig wlan0")
         else:
             file = open("windowssimulation/ifconfig wlan0.txt", "rb")
@@ -485,13 +502,15 @@ def readwlan0status():
             if "netmask" in firstline[i]:
                 returnvalue['mask'] = firstline[i].split("netmask")[1].strip()
     except Exception as e:
-        logging.error('Webserver (osinterface): Unable to read wlan0 values (ifconfig eth1): ' + str(traceback.format_exc()))
+        logging.error(
+            'Webserver (osinterface): Unable to read wlan0 values (ifconfig eth1): ' + str(traceback.format_exc()))
     return returnvalue
 
-def restart_program(waittime = 0):
+
+def restart_program(waittime=0):
     """Restarts the current program.
     Note: this function does not return. Any cleanup action (like
     saving data) must be done before calling this function."""
     time.sleep(waittime)
     python = sys.executable
-    os.execl(python, python, * sys.argv)
+    os.execl(python, python, *sys.argv)

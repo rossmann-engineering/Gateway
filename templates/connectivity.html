@@ -1,744 +1,656 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-body {
-  margin: 0;
-  background-color: white;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 110%;
-}
-
-.topnav {
-  overflow: hidden;
-  background-color: #333;
-}
-
-.topnav a {
-  float: left;
-  display: block;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 17px;
-}
-
-.topnav a:hover {
-  background-color: #ddd;
-  color: black;
-}
-
-.active {
-  background-color: #4CAF50;
-  color: white;
-}
-
-.topnav .icon {
-  display: none;
-}
-
-@media screen and (max-width: 600px) {
-  .topnav a:not(:first-child) {display: none;}
-  .topnav a.icon {
-    float: right;
-    display: block;
-  }
-}
-
-@media screen and (max-width: 600px) {
-  .topnav.responsive {position: relative;}
-  .topnav.responsive .icon {
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
-  .topnav.responsive a {
-    float: none;
-    display: block;
-    text-align: left;
-  }
-
-
-
-
-}
-
-
-
-
-input[type=text], select, textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    resize: vertical;
-  font-size: 110%;
-}
-
-label {
-    padding: 12px 12px 12px 0;
-    display: inline-block;
-}
-
-input[type=submit] {
-    background-color: #4CAF50;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    float: right;
-}
-
-input[type=button] {
-    background-color: #4CAF50;
-    color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    float: right;
-}
-
-table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-}
-
-td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-}
-
-tr:nth-child(even) {
-    background-color: #dddddd;
-}
-
-input[type=submit]:hover {
-    background-color: #45a049;
-}
-
-input[type=button]:hover {
-    background-color: #45a049;
-}
-
-.container {
-    border-radius: 5px;
-    background-color: #f2f2f2;
-    padding: 20px;
-}
-
-.col-25 {
-    float: left;
-    width: 15%;
-    margin-top: 6px;
-}
-
-.col-75 {
-    float: left;
-    width: 85%;
-    margin-top: 6px;
-}
-
-.col-65 {
-    float: left;
-    width: 65%;
-    margin-top: 6px;
-}
-
-/* Clear floats after the columns */
-.row:after {
-    content: "";
-    display: table;
-    clear: both;
-}
-   @media (max-width: 600px) {
-    .col-25, .col-75, input[type=submit] {
-        width: 100%;
-        margin-top: 0; }}
-
-.success {
-  background-color: #4CAF50;
-  color: white;
-}
-
-.failed {
-  background-color: red;
-  color: white;
-}
-
-.white {
-  margin: 0;
-  background-color: white;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-
-/* The Modal (background) */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
-
-/* Modal Content/Box */
-.modal-content {
-  background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
-  padding: 20px;
-  border: 1px solid #888;
-  width: 60%; /* Could be more or less, depending on screen size */
-}
-
-/* The Close Button */
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.modal-header {
-  padding: 2px 16px;
-  background-color: #5cb85c;
-  color: white;
-}
-</style>
-</head>
-<body>
-
-<div class="topnav" id="myTopnav">
-  <a href="/index">Home</a>
-  <a href="/fileuploads">Config Import/Export</a>
-    <a href="/connectivity" class="active">Connectivity</a>
-    {% if  admin %}
-  <a href="/gatewayconfiguration">GW Advance Configuration</a>
-    <a href="/modbus">Modbus configuration</a>
-  {% endif %}
-
-  <a href="/showlog">Show log</a>
-     <a href="/latestreading">Latest Readings</a>
-  <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
-    <img src="../static/wise-logo-png.png" alt="Inblic logo" align="right" style="width: 285px; height: auto; background-color:white">
-</div>
-
-
-<script>
-function myFunction() {
-    var x = document.getElementById("myTopnav");
-    if (x.className === "topnav") {
-        x.className += " responsive";
-    } else {
-        x.className = "topnav";
-    }
-}
-</script>
-
-
-{% if parameter.enable3g == "enabled" %}
-<div class="container">
-
-  <table>
-  <tr>
-    <h2>Modem status</h2>
-    <td>Connection status</td>
-    <td>
-      {% if  parameter.mobileconnectionstatus == "connected" %}
-<div class="success">{{ parameter.mobileconnectionstatus }}</div>
-{% else %}
-<div class="failed">{{ parameter.mobileconnectionstatus }}</div>
-{% endif %}</td>
-  </tr>
-        <tr>
-      <td>
-        Signal strength
-      </td>
-      <td  style="display: flex; align-items: center;">
-        {% if ((parameter.mobilesignalstrength | int)  < 2)%}
-        <img src="../static/00.jpg" style="float: left; display: block;  margin-right: 20px; width: 35px; margin-top: 0px">Connection not available
-        {% endif %}
-        {% if (((parameter.mobilesignalstrength | int)  > 1) and ((parameter.mobilesignalstrength | int)  < 10))%}
-        <img src="../static/11.jpg" style="float: left; display: block;  margin-right: 20px; width: 35px; margin-top: 0px">Marginal
-        {% endif %}
-        {% if (((parameter.mobilesignalstrength | int)  > 9) and ((parameter.mobilesignalstrength | int)  < 15))%}
-        <img src="../static/22.jpg" style="float: left; display: block;  margin-right: 20px; width: 35px; margin-top: 0px">OK
-        {% endif %}
-        {% if (((parameter.mobilesignalstrength | int)  > 14) and ((parameter.mobilesignalstrength | int)  < 20))%}
-        <img src="../static/33.jpg" style="float: left; display: block;  margin-right: 20px; width: 35px; margin-top: 0px">Good
-        {% endif %}
-        {% if (((parameter.mobilesignalstrength | int)  > 19))%}
-        <img src="../static/44.jpg" style="float: left; display: block;  margin-right: 20px; width: 35px; margin-top: 0px">Excellent
-        {% endif %}
-        ({{ parameter.mobilesignalstrength }})
-      </td>
-    </tr>
-        <tr>
-      <td>
-        Duration connected
-      </td>
-      <td>
-        {{ parameter.mobileconnectionduration }}
-      </td>
-    </tr>
-        <tr>
-      <td>
-        Operator name
-      </td>
-      <td>
-        {{ parameter.mobileoperatorname }}
-      </td>
-    </tr>
-            <tr>
-      <td>
-        Operator ID
-      </td>
-      <td>
-        {{ parameter.mobileoperatorid }}
-      </td>
-    </tr>
-    <tr>
-      <td>
-        APN
-      </td>
-      <td>
-        {{ parameter.mobileapn }}
-      </td>
-    </tr>
-        <tr>
-      <td>
-        Number
-      </td>
-      <td>
-        {{ parameter.mobilenumber }}
-      </td>
-    </tr>
-            <tr>
-      <td>
-        IMEI
-      </td>
-      <td>
-        {{ parameter.mobileimei }}
-      </td>
-    </tr>
-                <tr>
-      <td>
-        Phone Number
-      </td>
-      <td>
-        {{ parameter.mobilephonenumber }}
-      </td>
-    </tr>
-        <tr>
-    </tr>
-
-  </table><br>
-    <form action="/mobilereset" method="post">
-        <div class="row">
-      <input type="submit" value="Reset connection">
-    </div>
-  </form>
-</div><br>
-{% else %}
-<div class="container">
-  <h2>Connection status</h2>
-  <table>
-
-{% if  parameter.eth0ipaddress != "no IP-Address" %}
-        <tr>
-      <td>
-        IP-Address eth0
-      </td>
-      <td>
-        {{ parameter.eth0ipaddress }}
-      </td>
-          </tr>
-            <tr>
-      <td>
-        Subnet-mask eth0
-      </td>
-      <td>
-        {{ parameter.eth0mask }}
-      </td>
-          </tr>
-    {% endif %}
-    {% if  parameter.eth1ipaddress != "no IP-Address" %}
-
-            <tr>
-      <td>
-        IP-Address eth1
-      </td>
-      <td>
-        {{ parameter.eth1ipaddress }}
-      </td>
-          </tr>
-            <tr>
-      <td>
-        Subnet-mask eth1
-      </td>
-      <td>
-        {{ parameter.eth1mask }}
-      </td>
-          </tr>
-    {% endif %}
-  </table>
-</div>
-
-{% endif %}
-<div class="container">
-  <h2>VPN status</h2>
-    <table>
-  <tr>
-    <td>Connection status</td>
-    <td>
-      {% if  parameter.vpnconnected == "true" %}
-<div class="success">connected</div>
-{% else %}
-<div class="failed">disconnected</div>
-{% endif %}</td>
-  </tr>
-    <tr>
-      <td style="width: 30%">
-        IP-Address
-      </td>
-      <td>
-        {{ parameter.vpnipaddress }}
-      </td>
-    </tr>
-          <tr>
-      <td style="width: 30%">
-        Subnet mask
-      </td>
-      <td>
-        {{ parameter.vpnsubnetmask }}
-      </td>
-    </tr>
-      <tr>
-      <td style="width: 30%">
-        Version
-      </td>
-      <td>
-        {{ parameter.vpnversion }}
-      </td>
-        <tr>
-      <td style="width: 30%">
-        Node ID
-      </td>
-      <td>
-        {{ parameter.vpnnodeid }}
-      </td>
-    </tr>
-      <tr>
-      <td style="width: 30%">
-        Network-ID
-      </td>
-      <td>
-        {{ parameter.vpnnetworkid }}
-      </td>
-    </tr>
-      <tr>
-      <td style="width: 30%">
-        Network-Name
-      </td>
-      <td>
-        {{ parameter.vpnnetworkname }}
-      </td>
-    </tr>
-    </tr>
-    </table>
-{% if parameter.vpnconnected == 'true' %}
-    <form action="/connectivity" method="post">
-    <div class="row">
-      <input type="submit" value="Disconnect VPN" align="left">
-    </div>
-    </form>
-  {% else %}
-      <form action="/connectivity" method="post">
-    <div class="row">
-      <input type="button" id="connectButton" value="Connect VPN" align="left">
-    </div>
-    </form>
-    {% endif %}
-
-
-
-</div><br>
-
-{% if parameter.enable3g == "enabled" %}
-<div class="container">
-  <h2>3G-Modem Settings</h2>
-  <form action="/mobilesendpin" method="post">
-
-
-    <div class="row">
-      <div class="col-25">
-        <label for="pin">PIN</label>
-      </div>
-      <div class="col-75">
-        <input type="text" id="pin" name="pin" value={{parameter.mobilepin}}>
-      </div>
-    </div>
-  {% if "sendpinresultsuccess" in parameter %}
-    <br><div class="success">PIN Successfully send</div><br>
-  {% endif %}
-      {% if "sendpinresultfailed" in parameter %}
-    <br><div class="failed">Command failed: {{parameter.sendpinresultfailed}}</div><br>
-  {% endif %}
-
-    <div class="row">
-      <input type="submit" value="Send PIN">
-    </div>
-  </form>
-    <form action="/mobileatcommand" method="post">
-
-
-    <div class="row">
-      <div class="col-25">
-        <label for="pin">AT-Command</label>
-      </div>
-      <div class="col-75">
-        <input type="text" id="atcommand" name="atcommand" placeholder="AT command">
-      </div>
-    </div>
-  {% if "sendatresultsuccess" in parameter %}
-    <br><div class="success">AT command Successfully send</div><br>
-  {% endif %}
-      {% if "sendatresultfailed" in parameter %}
-    <br><div class="failed">Command failed: {{parameter.sendatresultfailed}}</div><br>
-  {% endif %}
-
-        {% if "sendatanswer" in parameter %}
-
-    <div class="success">Answer from 3G Modem:<br>
-      {% autoescape false %}
-        {{ parameter.sendatanswer }}
-      {% endautoescape %}
-    </div><br>
-
-
-
-  {% endif %}
-
-    <div class="row">
-      <input type="submit" value="Send AT-command">
-    </div>
-  </form>
-<!--
-      <form action="/mobilesetapn" method="post">
-
-
-    <div class="row">
-      <div class="col-25">
-        <label for="pin">New APN</label>
-      </div>
-      <div class="col-75">
-        <input type="text" id="apn" name="apn" placeholder="New APN">
-      </div>
-    </div>
-  {% if "sentapnsuccess" in parameter %}
-    <br><div class="success">New APN successfully accepted</div><br>
-  {% endif %}
-      {% if "sentapnfailed" in parameter %}
-    <br><div class="failed">Command failed: {{parameter.sentapnfailed}}</div><br>
-  {% endif %}
-
-    <div class="row">
-      <input type="submit" value="Set new APN">
-    </div>
-  </form>
-
-</div>-->
-  {% endif %}
-<br>
-<!--
-<div class="container">
-    <h2>Ethernet-Settings eth0</h2>
-  <form action="/ethernetconnectivityform" method="post">
-      <div class="row">
-
-        <input type="radio" name="dhcp" value="Enable DHCP" checked> Enable DHCP<br>
-        <input type="radio" name="dhcp" value="Disable DHCP"> Disable DHCP<br>
-      </div>
-    <div class="row">
-      <div class="col-25">
-        <label for="ethipaddress">IP-Address</label>
-      </div>
-      <div class="col-75">
-        <input type="text" id="ethipaddress" name="ethipaddress" value={{parameter.eth0ipaddress}}>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-25">
-        <label for="ethsubnetmask">Subnet Mask</label>
-      </div>
-      <div class="col-75">
-
-        <input type="text" id="ethsubnetmask" name="ethsubnetmask" value={{parameter.eth0mask}}>
-      </div>
-    </div>
-
-
-
-    <div class="row">
-      <input type="submit" value="Submit">
-    </div>
-  {% if "seteth0parametersuccess" in parameter %}
-    <br><div class="success">Paramter for eth0 changed</div><br>
-  {% endif %}
-      {% if "seteth0parameterfailed" in parameter %}
-    <br><div class="failed">Command failed: {{parameter.seteth0parameterfailed}}</div><br>
-  {% endif %}
-  </form>
-
-
-</div>
--->
-<!--
-<br><br>
-
-
-<div class="container">
-  <form action="/wificonnectivityform" method="post">
-      <h2>WIFI-Settings</h2>
-      <div class="row">
-
-        <input type="radio" name="enable" value="Enable WIFI connection"> Enable WIFI connection<br>
-        <input type="radio" name="enable" value="Disable WIFI connection" checked> Disable WIFI connection<br>
-      </div>
-      <br>
-      <div class="row">
-
-        <input type="radio" name="dhcp" value="Enable DHCP" checked> Enable DHCP<br>
-        <input type="radio" name="dhcp" value="Disable DHCP"> Disable DHCP<br>
-      </div>
-    <div class="row">
-      <div class="col-25">
-        <label for="ipaddress">IP-Address</label>
-      </div>
-      <div class="col-75">
-        <input type="text" id="ipaddress" name="ipaddress" placeholder="192.168.178.101">
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-25">
-        <label for="subnetmask">Subnet Mask</label>
-      </div>
-      <div class="col-75">
-        <input type="text" id="subnetmask" name="subnetmask" placeholder="255.255.255.0">
-      </div>
-    </div>
-          <div class="row">
-      <div class="col-25">
-        <label for="gateway">Gateway</label>
-      </div>
-
-      <div class="col-75">
-        <input type="text" id="gateway" name="gateway" placeholder="0.0.0.0">
-      </div>
-                </div>
-              <div class="row">
-      <div class="col-25">
-        <label for="ssid">SSID</label>
-      </div>
-
-      <div class="col-75">
-        <input type="text" id="ssid" name="ssid" placeholder="inblic">
-      </div>
-                  </div>
-                  <div class="row">
-      <div class="col-25">
-        <label for="key">key</label>
-      </div>
-
-      <div class="col-75">
-        <input type="text" id="key" name="key" placeholder="connectinblic">
-      </div>
-</div>
-    <div class="row">
-      <input type="submit" value="Submit">
-    </div>
-  </form>
-          </div>
-
-<br><br>
--->
-
-
-
-<!---------------------------------------------------- Choose Network ID Modal -->
-<div id="chooseNetworkIDModal" class="modal">
-
-  <!-- Modal content -->
-  <div class="modal-content">
-          <div class="modal-header">
-      <span class="close" id="closeNetworkIDModal">&times;</span>
-      <h2>Choose Network ID to connect</h2>
-    </div>
-      <br>
-    <form action="/connectivity" method="post">
-
-        <div class="row">
-          <div class="col-25">
-            <label>Network-ID</label>
-          </div>
-          <div class="col-65">
-              <input type="text" name="networkID">
-          </div>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            body {
+                margin: 0;
+                background-color: white;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 110%;
+            }
+            .topnav {
+                overflow: hidden;
+                background-color: #333;
+            }
+            .topnav a {
+                float: left;
+                display: block;
+                color: #f2f2f2;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+                font-size: 17px;
+            }
+            .topnav a:hover {
+                background-color: #ddd;
+                color: black;
+            }
+            .active {
+                background-color: #4CAF50;
+                color: white;
+            }
+            .topnav .icon {
+                display: none;
+            }
+            @media screen and (max-width: 600px) {
+                .topnav a:not(:first-child) {display: none;}
+                .topnav a.icon {
+                    float: right;
+                    display: block;
+                }
+            }
+            @media screen and (max-width: 600px) {
+                .topnav.responsive {position: relative;}
+                .topnav.responsive .icon {
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                }
+                .topnav.responsive a {
+                    float: none;
+                    display: block;
+                    text-align: left;
+                }
+            }
+            input[type=text], select, textarea {
+                width: 100%;
+                padding: 12px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                resize: vertical;
+                font-size: 110%;
+            }
+            label {
+                padding: 12px 12px 12px 0;
+                display: inline-block;
+            }
+            input[type=submit] {
+                background-color: #4CAF50;
+                color: white;
+                padding: 12px 20px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                float: right;
+            }
+            input[type=button] {
+                background-color: #4CAF50;
+                color: white;
+                padding: 12px 20px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                float: right;
+            }
+            table {
+                font-family: arial, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+            }
+            td, th {
+                border: 1px solid #dddddd;
+                text-align: left;
+                padding: 8px;
+            }
+            tr:nth-child(even) {
+                background-color: #dddddd;
+            }
+            input[type=submit]:hover {
+                background-color: #45a049;
+            }
+            input[type=button]:hover {
+                background-color: #45a049;
+            }
+            .container {
+                border-radius: 5px;
+                background-color: #f2f2f2;
+                padding: 20px;
+            }
+            .col-25 {
+                float: left;
+                width: 15%;
+                margin-top: 6px;
+            }
+            .col-75 {
+                float: left;
+                width: 85%;
+                margin-top: 6px;
+            }
+            .col-65 {
+                float: left;
+                width: 65%;
+                margin-top: 6px;
+            }
+            /* Clear floats after the columns */
+            .row:after {
+                content: "";
+                display: table;
+                clear: both;
+            }
+            @media (max-width: 600px) {
+                .col-25, .col-75, input[type=submit] {
+                    width: 100%;
+                    margin-top: 0;
+                }
+            }
+            .success {
+                background-color: #4CAF50;
+                color: white;
+            }
+            .failed {
+                background-color: red;
+                color: white;
+            }
+            .white {
+                margin: 0;
+                background-color: white;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+            /* The Modal (background) */
+            .modal {
+                display: none; /* Hidden by default */
+                position: fixed; /* Stay in place */
+                z-index: 1; /* Sit on top */
+                left: 0;
+                top: 0;
+                width: 100%; /* Full width */
+                height: 100%; /* Full height */
+                overflow: auto; /* Enable scroll if needed */
+                background-color: rgb(0,0,0); /* Fallback color */
+                background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            }
+            /* Modal Content/Box */
+            .modal-content {
+                background-color: #fefefe;
+                margin: 15% auto; /* 15% from the top and centered */
+                padding: 20px;
+                border: 1px solid #888;
+                width: 60%; /* Could be more or less, depending on screen size */
+            }
+            /* The Close Button */
+            .close {
+                color: #aaa;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+            }
+            .close:hover,
+            .close:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
+            .modal-header {
+                padding: 2px 16px;
+                background-color: #5cb85c;
+                color: white;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="topnav" id="myTopnav">
+            <a href="/index">Home</a>
+            <a href="/fileuploads">Config Import/Export</a>
+            <a href="/connectivity" class="active">Connectivity</a>
+            {% if  admin %}
+                <a href="/gatewayconfiguration">GW Advance Configuration</a>
+                <a href="/modbus">Modbus configuration</a>
+            {% endif %}
+            <a href="/showlog">Show log</a>
+            <a href="/latestreading">Latest Readings</a>
+            <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
+            <img src="../static/wise-logo-png.png" alt="Inblic logo" align="right" style="width: 285px; height: auto; background-color:white">
         </div>
-        <br>
-        <input type="submit" value="Connect">
-    </form>
-    <br><br>
-  </div>
+        <script>
+            function myFunction() {
+                var x = document.getElementById("myTopnav");
+                if (x.className === "topnav") {
+                    x.className += " responsive";
+                }
+                else {
+                    x.className = "topnav";
+                }
+            }
+        </script>
+        {% if parameter.enable3g == "enabled" %}
+            <div class="container">
+                <table>
+                    <tr>
+                        <h2>Modem status</h2>
+                        <td>Connection status</td>
+                        <td>
+                            {% if  parameter.mobileconnectionstatus == "connected" %}
+                                <div class="success">{{ parameter.mobileconnectionstatus }}</div>
+                            {% else %}
+                                <div class="failed">{{ parameter.mobileconnectionstatus }}</div>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Signal strength
+                        </td>
+                        <td  style="display: flex; align-items: center;">
+                            {% if ((parameter.mobilesignalstrength | int)  < 2)%}
+                                <img src="../static/00.jpg" style="float: left; display: block;  margin-right: 20px; width: 35px; margin-top: 0px">Connection not available
+                            {% endif %}
+                            {% if (((parameter.mobilesignalstrength | int)  > 1) and ((parameter.mobilesignalstrength | int)  < 10))%}
+                                <img src="../static/11.jpg" style="float: left; display: block;  margin-right: 20px; width: 35px; margin-top: 0px">Marginal
+                            {% endif %}
+                            {% if (((parameter.mobilesignalstrength | int)  > 9) and ((parameter.mobilesignalstrength | int)  < 15))%}
+                                <img src="../static/22.jpg" style="float: left; display: block;  margin-right: 20px; width: 35px; margin-top: 0px">OK
+                            {% endif %}
+                            {% if (((parameter.mobilesignalstrength | int)  > 14) and ((parameter.mobilesignalstrength | int)  < 20))%}
+                                <img src="../static/33.jpg" style="float: left; display: block;  margin-right: 20px; width: 35px; margin-top: 0px">Good
+                            {% endif %}
+                            {% if (((parameter.mobilesignalstrength | int)  > 19))%}
+                                <img src="../static/44.jpg" style="float: left; display: block;  margin-right: 20px; width: 35px; margin-top: 0px">Excellent
+                            {% endif %}
+                            ({{ parameter.mobilesignalstrength }})
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Duration connected
+                        </td>
+                        <td>
+                            {{ parameter.mobileconnectionduration }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Operator name
+                        </td>
+                        <td>
+                            {{ parameter.mobileoperatorname }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Operator ID
+                        </td>
+                        <td>
+                            {{ parameter.mobileoperatorid }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            APN
+                        </td>
+                        <td>
+                            {{ parameter.mobileapn }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Number
+                        </td>
+                        <td>
+                            {{ parameter.mobilenumber }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            IMEI
+                        </td>
+                        <td>
+                            {{ parameter.mobileimei }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Phone Number
+                        </td>
+                        <td>
+                            {{ parameter.mobilephonenumber }}
+                        </td>
+                    </tr>
+                    <tr>
+                    </tr>
+                </table><br>
+                <form action="/mobilereset" method="post">
+                    <div class="row">
+                        <input type="submit" value="Reset connection">
+                    </div>
+                </form>
+            </div><br>
+        {% else %}
+            <div class="container">
+                <h2>Connection status</h2>
+                <table>
+                    {% if  parameter.eth0ipaddress != "no IP-Address" %}
+                        <tr>
+                            <td>
+                                IP-Address eth0
+                            </td>
+                            <td>
+                                {{ parameter.eth0ipaddress }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Subnet-mask eth0
+                            </td>
+                            <td>
+                                {{ parameter.eth0mask }}
+                            </td>
+                        </tr>
+                    {% endif %}
+                    {% if  parameter.eth1ipaddress != "no IP-Address" %}
+                        <tr>
+                            <td>
+                                IP-Address eth1
+                            </td>
+                            <td>
+                                {{ parameter.eth1ipaddress }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Subnet-mask eth1
+                            </td>
+                            <td>
+                                {{ parameter.eth1mask }}
+                            </td>
+                        </tr>
+                    {% endif %}
+                </table>
+            </div>
+        {% endif %}
+        <div class="container">
+            <h2>VPN status</h2>
+            <table>
+                <tr>
+                    <td>Connection status</td>
+                    <td>
+                        {% if  parameter.vpnconnected == "true" %}
+                            <div class="success">connected</div>
+                        {% else %}
+                            <div class="failed">disconnected</div>
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 30%">
+                        IP-Address
+                    </td>
+                    <td>
+                        {{ parameter.vpnipaddress }}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 30%">
+                        Subnet mask
+                    </td>
+                    <td>
+                        {{ parameter.vpnsubnetmask }}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 30%">
+                        Version
+                    </td>
+                    <td>
+                        {{ parameter.vpnversion }}
+                    </td>
+                    <tr>
+                        <td style="width: 30%">
+                            Node ID
+                        </td>
+                        <td>
+                            {{ parameter.vpnnodeid }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 30%">
+                            Network-ID
+                        </td>
+                        <td>
+                            {{ parameter.vpnnetworkid }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 30%">
+                            Network-Name
+                        </td>
+                        <td>
+                            {{ parameter.vpnnetworkname }}
+                        </td>
+                    </tr>
+                </tr>
+            </table>
+            {% if parameter.vpnconnected == 'true' %}
+                <form action="/connectivity" method="post">
+                    <div class="row">
+                        <input type="submit" value="Disconnect VPN" align="left">
+                    </div>
+                </form>
+            {% else %}
+                <form action="/connectivity" method="post">
+                    <div class="row">
+                        <input type="button" id="connectButton" value="Connect VPN" align="left">
+                    </div>
+                </form>
+            {% endif %}
+        </div><br>
+        {% if parameter.enable3g == "enabled" %}
+        <div class="container">
+            <h2>3G-Modem Settings</h2>
+            <form action="/mobilesendpin" method="post">
+                <div class="row">
+                    <div class="col-25">
+                        <label for="pin">PIN</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" id="pin" name="pin" value={{parameter.mobilepin}}>
+                    </div>
+                </div>
+                {% if "sendpinresultsuccess" in parameter %}
+                    <br><div class="success">PIN Successfully send</div><br>
+                {% endif %}
+                {% if "sendpinresultfailed" in parameter %}
+                    <br><div class="failed">Command failed: {{parameter.sendpinresultfailed}}</div><br>
+                {% endif %}
+                <div class="row">
+                    <input type="submit" value="Send PIN">
+                </div>
+            </form>
+            <form action="/mobileatcommand" method="post">
+                <div class="row">
+                    <div class="col-25">
+                        <label for="pin">AT-Command</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" id="atcommand" name="atcommand" placeholder="AT command">
+                    </div>
+                </div>
+                {% if "sendatresultsuccess" in parameter %}
+                    <br><div class="success">AT command Successfully send</div><br>
+                {% endif %}
+                {% if "sendatresultfailed" in parameter %}
+                    <br><div class="failed">Command failed: {{parameter.sendatresultfailed}}</div><br>
+                {% endif %}
+                {% if "sendatanswer" in parameter %}
+                    <div class="success">Answer from 3G Modem:<br>
+                        {% autoescape false %}
+                        {{ parameter.sendatanswer }}
+                        {% endautoescape %}
+                    </div><br>
+                {% endif %}
+                <div class="row">
+                    <input type="submit" value="Send AT-command">
+                </div>
+            </form>
+            <!--
+            <form action="/mobilesetapn" method="post">
+                <div class="row">
+                    <div class="col-25">
+                        <label for="pin">New APN</label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" id="apn" name="apn" placeholder="New APN">
+                    </div>
+                </div>
+                {% if "sentapnsuccess" in parameter %}
+                    <br><div class="success">New APN successfully accepted</div><br>
+                {% endif %}
+                {% if "sentapnfailed" in parameter %}
+                    <br><div class="failed">Command failed: {{parameter.sentapnfailed}}</div><br>
+                {% endif %}
+                <div class="row">
+                    <input type="submit" value="Set new APN">
+                </div>
+            </form>
+            </div>-->
+        {% endif %}
+            <br>
+            <!--
+            <div class="container">
+                <h2>Ethernet-Settings eth0</h2>
+                <form action="/ethernetconnectivityform" method="post">
+                    <div class="row">
+                        <input type="radio" name="dhcp" value="Enable DHCP" checked> Enable DHCP<br>
+                        <input type="radio" name="dhcp" value="Disable DHCP"> Disable DHCP<br>
+                    </div>
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="ethipaddress">IP-Address</label>
+                        </div>
+                        <div class="col-75">
+                            <input type="text" id="ethipaddress" name="ethipaddress" value={{parameter.eth0ipaddress}}>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="ethsubnetmask">Subnet Mask</label>
+                        </div>
+                        <div class="col-75">
+                            <input type="text" id="ethsubnetmask" name="ethsubnetmask" value={{parameter.eth0mask}}>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <input type="submit" value="Submit">
+                    </div>
+                    {% if "seteth0parametersuccess" in parameter %}
+                        <br><div class="success">Paramter for eth0 changed</div><br>
+                    {% endif %}
+                    {% if "seteth0parameterfailed" in parameter %}
+                        <br><div class="failed">Command failed: {{parameter.seteth0parameterfailed}}</div><br>
+                    {% endif %}
+                </form>
+            </div>
+            -->
+            <!--
+            <br><br>
+            <div class="container">
+                <form action="/wificonnectivityform" method="post">
+                    <h2>WIFI-Settings</h2>
+                    <div class="row">
+                        <input type="radio" name="enable" value="Enable WIFI connection"> Enable WIFI connection<br>
+                        <input type="radio" name="enable" value="Disable WIFI connection" checked> Disable WIFI connection<br>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <input type="radio" name="dhcp" value="Enable DHCP" checked> Enable DHCP<br>
+                        <input type="radio" name="dhcp" value="Disable DHCP"> Disable DHCP<br>
+                    </div>
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="ipaddress">IP-Address</label>
+                        </div>
+                        <div class="col-75">
+                            <input type="text" id="ipaddress" name="ipaddress" placeholder="192.168.178.101">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="subnetmask">Subnet Mask</label>
+                        </div>
+                        <div class="col-75">
+                            <input type="text" id="subnetmask" name="subnetmask" placeholder="255.255.255.0">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="gateway">Gateway</label>
+                        </div>
+                        <div class="col-75">
+                            <input type="text" id="gateway" name="gateway" placeholder="0.0.0.0">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="ssid">SSID</label>
+                        </div>
+                        <div class="col-75">
+                            <input type="text" id="ssid" name="ssid" placeholder="inblic">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="key">key</label>
+                        </div>
+                        <div class="col-75">
+                            <input type="text" id="key" name="key" placeholder="connectinblic">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <input type="submit" value="Submit">
+                    </div>
+                </form>
+            </div>
+            <br><br>
+            -->
 
-</div>
-  </div><br><br>
+            <!---------------------------------------------------- Choose Network ID Modal -->
 
-<script>
-  // Get the modal
-var modal = document.getElementById("chooseNetworkIDModal");
-
-// Get the button that opens the modal
-var btn = document.getElementById("connectButton");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks on the button, open the modal
-btn.onclick = function() {
-  modal.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
-</script>
-
-
-</body>
+            <div id="chooseNetworkIDModal" class="modal">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span class="close" id="closeNetworkIDModal">&times;</span>
+                        <h2>Choose Network ID to connect</h2>
+                    </div>
+                    <br>
+                    <form action="/connectivity" method="post">
+                        <div class="row">
+                            <div class="col-25">
+                                <label>Network-ID</label>
+                            </div>
+                            <div class="col-65">
+                                <input type="text" name="networkID">
+                            </div>
+                        </div>
+                        <br>
+                        <input type="submit" value="Connect">
+                    </form>
+                    <br><br>
+                </div>
+            </div>
+        </div>
+        <br><br>
+        <script>
+            // Get the modal
+            var modal = document.getElementById("chooseNetworkIDModal");
+            // Get the button that opens the modal
+            var btn = document.getElementById("connectButton");
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+            // When the user clicks on the button, open the modal
+            btn.onclick = function() {
+                modal.style.display = "block";
+            }
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        </script>
+    </body>
 </html>

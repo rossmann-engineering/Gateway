@@ -1,8 +1,8 @@
-'''
+"""
 Created on 13.11.2020
 
 @author: Stefan Rossmann
-'''
+"""
 import config as cfg
 import ModbusClient
 import datalogger
@@ -11,7 +11,11 @@ import traceback
 from collections import OrderedDict
 import struct
 
+
 def execute_writeorders():
+    """
+    execute order write
+    """
     config = cfg.Config.getConfig()
 
     for read_order in config['readorders']:
@@ -21,7 +25,7 @@ def execute_writeorders():
             # ----------------------------------Search for the Target Read-Order
             for target_readorder in config['readorders']:
                 if read_order.get('target', '') == target_readorder['name']:
-                    transportid = int(target_readorder.get('transportid',1))
+                    transportid = int(target_readorder.get('transportid', 1))
                     # ---------------------------------------------Serch for the Transport ID
                     for device in config['devices']:
                         if device['transportid'] == transportid:
@@ -53,17 +57,19 @@ def execute_writeorders():
                                     if (not modbusClient.is_connected()):
                                         modbusClient.connect()
                                     if (read_order['bits'] == 16):
-                                        modbusClient.write_single_register(address-1, int(round(read_order['value'] * read_order['multiplefactor'])))
+                                        modbusClient.write_single_register(address - 1, int(round(
+                                            read_order['value'] * read_order['multiplefactor'])))
                                     elif (read_order['bits'] == 32):
-                                        registervalue = list ([((int(read_order['value'] * read_order['multiplefactor'])&0xFFFF0000) >>16),int(read_order['value'] * read_order['multiplefactor'])&0xFFFF])
+                                        registervalue = list([((int(
+                                            read_order['value'] * read_order['multiplefactor']) & 0xFFFF0000) >> 16),
+                                                              int(read_order['value'] * read_order[
+                                                                  'multiplefactor']) & 0xFFFF])
                                         modbusClient.write_multiple_registers(address - 1, registervalue)
                                 except Exception:
-                                    datalogger.logData('Unable to Write to Modbus Register : ' + str(traceback.format_exc()))
+                                    datalogger.logData(
+                                        'Unable to Write to Modbus Register : ' + str(traceback.format_exc()))
                                 finally:
                                     modbusClient.close()
-
-
-
 
                             break;
 
