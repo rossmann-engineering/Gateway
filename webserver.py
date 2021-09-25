@@ -482,7 +482,7 @@ def do_admin_login():
         loginadmin = False
         logindistributor = False
 
-        if request.form['password'] == '123456' and request.form['username'] == 'wiseenergy':
+        if request.form['password'] == '123456' and request.form['username'] == 'sre':
             loginadmin = True
             logindistributor = False
             return index()
