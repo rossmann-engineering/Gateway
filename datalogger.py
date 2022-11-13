@@ -17,8 +17,9 @@ from logging import StreamHandler
 try:
     os.makedirs('unitdatabase')
 except OSError as e:
-    if e.errno != errno.EEXIST:
-        raise
+    pass
+    #if e.errno != errno.EEXIST:
+    #    raise
 
 my_logger3 = logging.getLogger('MyMQTTPayloadLogger')
 my_logger3.setLevel(logging.DEBUG)
