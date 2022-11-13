@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            body {
+                margin: 0;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 110%;
+            }
+            .success {
+                background-color: #4CAF50;
+                color: white;
+            }
+            .failed {
+                background-color: red;
+                color: white;
+            }
+            input[type=text], select, textarea {
+                width: 100%;
+                padding: 12px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                resize: vertical;
+            }
+            label {
+                padding: 12px 12px 12px 0;
+                display: inline-block;
+            }
+            input[type=submit] {
+                background-color: #4CAF50;
+                color: white;
+                padding: 12px 20px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                float: center;
+            }
+            input[type=submit]:hover {
+                background-color: #45a049;
+            }
+            .container {
+                border-radius: 5px;
+                background-color: #f2f2f2;
+                padding: 20px;
+            }
+            .col-25 {
+                float: left;
+                width: 250px;
+                margin-top: 6px;
+            }
+            .col-75 {
+                float: left;
+                width: 85%;
+                margin-top: 6px;
+            }
+            /* Clear floats after the columns */
+            .row:after {
+                content: "";
+                display: table;
+                clear: both;
+            }
+            @media screen and (max-width: 600px) {
+                .nobreak { white-space: nowrap }
+                .success {
+                    background-color: #4CAF50;
+                    color: white;
+                }
+                .failed {
+                    background-color: red;
+                    color: white;
+                }
+            }
+            .navbar-logo {
+                padding: 15px;
+                color: #fff;
+            }
+            .navbar-mainbg {
+                background-color: #3498DB;
+                padding: 0px;
+            }
+            #navbarSupportedContent {
+                overflow: hidden;
+                position: relative;
+            }
+            #navbarSupportedContent ul {
+                padding: 0px;
+                margin: 0px;
+            }
+            #navbarSupportedContent ul li a i {
+                margin-right: 10px;
+            }
+            #navbarSupportedContent li {
+                list-style-type: none;
+                float: left;
+            }
+            #navbarSupportedContent ul li a {
+                color: rgba(255, 255, 255, 0.5);
+                text-decoration: none;
+                font-size: 15px;
+                display: block;
+                padding: 20px 20px;
+                transition-duration: 0.6s;
+                transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+                position: relative;
+            }
+            #navbarSupportedContent>ul>li.active>a {
+                color: #3498DB;
+                background-color: transparent;
+                transition: all 0.7s;
+                }
+            #navbarSupportedContent a:not(:only-child):after {
+                content: "\f105";
+                position: absolute;
+                right: 20px;
+                top: 10px;
+                font-size: 14px;
+                font-family: "Font Awesome 5 Free";
+                display: inline-block;
+                padding-right: 3px;
+                vertical-align: middle;
+                font-weight: 900;
+                transition: 0.5s;
+            }
+            #navbarSupportedContent .active>a:not(:only-child):after {
+                transform: rotate(90deg);
+            }
+            .hori-selector {
+                display: inline-block;
+                position: absolute;
+                height: 100%;
+                top: 0px;
+                left: 0px;
+                transition-duration: 0.6s;
+                transition-timing-function: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+                background-color: #fff;
+                border-top-left-radius: 15px;
+                border-top-right-radius: 15px;
+                margin-top: 10px;
+            }
+            .hori-selector .right,
+            .hori-selector .left {
+                position: absolute;
+                width: 25px;
+                height: 25px;
+                background-color: #fff;
+                bottom: 10px;
+            }
+            .hori-selector .right {
+                right: -25px;
+            }
+            .hori-selector .left {
+                left: -25px;
+            }
+            .hori-selector .right:before,
+            .hori-selector .left:before {
+                content: '';
+                position: absolute;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                background-color: #3498DB;
+            }
+            .hori-selector .right:before {
+                bottom: 0;
+                right: -25px;
+            }
+            .hori-selector .left:before {
+                bottom: 0;
+                left: -25px;
+            }
+            @media (max-width: 991px) {
+                #navbarSupportedContent ul li a {
+                    padding: 12px 30px;
+                }
+                .hori-selector {
+                    margin-top: 0px;
+                    margin-left: 10px;
+                    border-radius: 0;
+                    border-top-left-radius: 25px;
+                    border-bottom-left-radius: 25px;
+                }
+                .hori-selector .left,
+                .hori-selector .right {
+                    right: 10px;
+                }
+                .hori-selector .left {
+                    top: -25px;
+                    left: auto;
+                }
+                .hori-selector .right {
+                    bottom: -25px;
+                }
+                .hori-selector .left:before {
+                    left: -25px;
+                    top: -25px;
+                }
+                .hori-selector .right:before {
+                    bottom: -25px;
+                    left: -25px;
+                }
+                .navbar{
+                    padding: 0px 0px;
+                }
+            }
+        </style>
+        <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css'>
+        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css'>
+        <script src='https://code.jquery.com/jquery-3.4.1.min.js'></script>
+        <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js'></script>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-mainbg" style="padding: 0">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars text-white"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <div class="hori-selector"><div class="left"></div><div class="right"></div></div>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/index"><i class="fas fa-house"></i>Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/fileuploads"><i class="fas fa-right-left"></i>Config Import/Export</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/connectivity"><i class="fas fa-signal"></i>Connectivity</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/gatewayconfiguration"><i class="fas fa-gear"></i>GW Advance Configuration</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/modbus"><i class="fas fa-microchip"></i>Modbus Configuration</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/showlog"><i class="fas fa-table-list"></i>Show Log</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/latestreading"><i class="fas fa-gauge-simple"></i>Latest Readings</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <script>
+            function test(){
+                var tabsNewAnim = $('#navbarSupportedContent');
+                var selectorNewAnim = $('#navbarSupportedContent').find('li').length;
+                var activeItemNewAnim = tabsNewAnim.find('.active');
+                var activeWidthNewAnimHeight = activeItemNewAnim.innerHeight();
+                var activeWidthNewAnimWidth = activeItemNewAnim.innerWidth();
+                var itemPosNewAnimTop = activeItemNewAnim.position();
+                var itemPosNewAnimLeft = activeItemNewAnim.position();
+                $(".hori-selector").css({
+                    "top":itemPosNewAnimTop.top + "px",
+                    "left":itemPosNewAnimLeft.left + "px",
+                    "height": activeWidthNewAnimHeight + "px",
+                    "width": activeWidthNewAnimWidth + "px"
+                });
+                $("#navbarSupportedContent").on("click","li",function(e){
+                    $('#navbarSupportedContent ul li').removeClass("active");
+                    $(this).addClass('active');
+                    var activeWidthNewAnimHeight = $(this).innerHeight();
+                    var activeWidthNewAnimWidth = $(this).innerWidth();
+                    var itemPosNewAnimTop = $(this).position();
+                    var itemPosNewAnimLeft = $(this).position();
+                    $(".hori-selector").css({
+                        "top":itemPosNewAnimTop.top + "px",
+                        "left":itemPosNewAnimLeft.left + "px",
+                        "height": activeWidthNewAnimHeight + "px",
+                        "width": activeWidthNewAnimWidth + "px"
+                    });
+                });
+            }
+            $(document).ready(function(){
+                setTimeout(function(){ test(); });
+            });
+            $(window).on('resize', function(){
+                setTimeout(function(){ test(); }, 500);
+            });
+            $(".navbar-toggler").click(function(){
+                setTimeout(function(){ test(); });
+            });
+        </script>
+        <h3>Welcome to SRE-Solutions Webserver!</h3>
+        <br>
+        <table>
+            <td>
+                <img src="../static/sre-solutions_logo_medium.png" style="float: left; display: block;  margin-right: 20px; width: 250px">
+            </td>
+            <td class="nobreak">
+                Python SW Version: {{ parameter.pythonswversion }}<br>
+                Webserver Version: {{ parameter.webserverversion }}<br>
+            </td>
+        </table>
+        {% if parameter.enable3g == "enabled" %}
+            <h4>Connection-Status:</h4>
+            <div class="container">
+                <b>3G-Interface</b><br><br>
+                {% if  parameter.mobileconnectionstatus == "connected" %}
+                    <div class="success"> Connection-Status: {{ parameter.mobileconnectionstatus }}</div>
+                {% else %}
+                    <div class="failed"> Connection-Status: {{ parameter.mobileconnectionstatus }}</div>
+                {% endif %}
+                <!--IP-Address: {{ parameter.mobileipaddress }}<br>
+                Gateway: {{ parameter.mobilegateway }}<br>-->
+                Signal strength: {{ parameter.mobilesignalstrength }}<br>
+                Duration connected:{{ parameter.mobileconnectionduration }}<br>
+                Operator name:{{ parameter.mobileoperatorname }}<br>
+                APN:{{ parameter.mobileapn }}<br>
+                IMEI:{{ parameter.mobileimei }}<br>
+                Number: {{ parameter.mobilenumber }}<br>
+            </div>
+        {% else %}
+            <br>
+            <div class="container">
+                <b>Ethernet-Interface</b><br><br>
+                {% if  parameter.eth0ipaddress != "no IP-Address" %}
+                    IP-Address eth0: {{ parameter.eth0ipaddress }}<br>
+                    Subnet-mask eth0: {{ parameter.eth0mask }}<br>
+                {% endif %}
+                {% if  parameter.eth1ipaddress != "no IP-Address" %}
+                    IP-Address wlan0: {{ parameter.wlan0ipaddress }}<br>
+                    Subnet-mask wlan0: {{ parameter.wlan0mask }}<br>
+                {% endif %}
+            </div>
+            <br>
+        {% endif %}
+        <br>
+        <div class="container">
+            <b>Gateway Properties</b><br><br>
+            GW CPU-Architecture: {{ parameter.gwarchitecture }}<br>
+            GW CPU-Model: {{ parameter.gwmodelname }}<br>
+            GW CPU-Max (MHz): {{ parameter.gwcpumaxmhz }}<br>
+            GW CPU-Min (MHz): {{ parameter.gwcpuminmhz }}<br>
+            Number of events: {{ parameter.eventcounter }}<br>
+            {% if  admin %}
+                <form action="/index" method="post">
+                    <div class="row">
+                        <input type="submit" name="type" value="Reset Event counter" align="left">
+                        <input type="submit" name="type" value="Restart Gateway"  align="left">
+                    </div>
+                </form>
+            {% endif %}
+        </div>
+    </body>
+</html>
