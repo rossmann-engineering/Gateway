@@ -21,8 +21,12 @@ import pos_edge
 import datalogger
 
 # ------------------------- Initiate logging Start
+packagedir = os.path.dirname(
+    os.path.abspath(__file__))  # get the Package directory, from there we get the subdirectoties
+directory = os.path.join(packagedir, 'unitdatabase')  # Subdirectory
+
 try:
-    os.makedirs('unitdatabase')
+    os.makedirs(directory)
 except OSError as e:
     if e.errno != errno.EEXIST:
         raise
@@ -35,11 +39,11 @@ if config.get('loglevel', 'debug') == 'info':
     loglevel = logging.INFO
 
 logging.getLogger().setLevel(loglevel)
-
+filename = os.path.join(directory, 'logdata.txt')
 logging.getLogger().setLevel(logging.DEBUG)
 # Add the log message handler to the logger
 handler1 = logging.handlers.RotatingFileHandler(
-    'unitdatabase/logdata.txt', maxBytes=2000000, backupCount=5)
+    filename, maxBytes=2000000, backupCount=5)
 logging.getLogger().addHandler(handler1)
 formatter1 = logging.Formatter("%(asctime)s;%(message)s",
                                "%Y-%m-%d %H:%M:%S")

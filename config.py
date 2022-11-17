@@ -50,7 +50,11 @@ class Config(object):
         self.uploadalldata = False
         self.registerlogfilecounter = 0  # This is a Counter to store the Modbus data in the file (registerlogdataxxx.csv) (to consider to multiplier)
         self.mqttconnectionlost = False
-        with open('configuration/config.json') as json_data:
+        packagedir = os.path.dirname(
+            os.path.abspath(__file__))  # get the Package directory, from there we get the subdirectoties
+        directory = os.path.join(packagedir, 'configuration')  # Subdirectory
+        filename = os.path.join(directory, 'config.json')
+        with open(filename) as json_data:
             json_data = json_data.read()
             self.config = json.loads(json_data)
             self.read_version()

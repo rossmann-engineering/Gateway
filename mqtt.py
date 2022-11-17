@@ -72,7 +72,7 @@ class Clients(object):
                 self.clients[loopcounter]['mid'] = 0
 
                 logging.info('Added MQTT Client at initialization to List')
-                db_conn = database.connect("eh.db")
+                db_conn = database.connect("eh.db", cfg.Config.getInstance().get('databasetype', ''))
                 database.create_tables(db_conn)
                 loopcounter = loopcounter + 1
             except:
@@ -154,7 +154,7 @@ def publish_message(serverid, topic, payload):
 
         logging.info('Store Message to Database, ServerID ' + str(serverid) + ' Message: ' + payload)
         if len(payload) > 5:
-            db_conn = database.connect("eh.db")
+            db_conn = database.connect("eh.db", config.get('databasetype', ''))
             database.add_message_queue(db_conn, datetime.datetime.now(), serverid, topic, payload)
             cfg.Config.getInstance().eventcounter = cfg.Config.getInstance().eventcounter + 1
     except:
@@ -162,7 +162,7 @@ def publish_message(serverid, topic, payload):
 
     try:
         # check message queue for entries
-        db_conn = database.connect("eh.db")
+        db_conn = database.connect("eh.db", config.get('databasetype', ''))
         datatosend = database.get_message_queue(db_conn, serverid)
         if len(datatosend) > 5:
             for t in Clients.getInstance().clients:

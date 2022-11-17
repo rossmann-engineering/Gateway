@@ -339,7 +339,11 @@ def index3():
     gurke
     :return: gurke
     """
-    with open('configuration/config.json') as json_data:
+    packagedir = os.path.dirname(
+        os.path.abspath(__file__))  # get the Package directory, from there we get the subdirectoties
+    directory = os.path.join(packagedir, 'configuration')  # Subdirectory
+    filename = os.path.join(directory, 'config.json')
+    with open(filename) as json_data:
         cfg.Config.getInstance().configmodel = json.load(json_data)
     for readorder in cfg.Config.getInstance().configmodel['readorders']:
         for device in cfg.Config.getInstance().configmodel['devices']:
@@ -382,7 +386,7 @@ def latestreadings():
     parameter = {}
     parameter['latestreadings'] = list()
     config = cfg.Config.getConfig()
-    db_conn = database.connect("eh.db")
+    db_conn = database.connect("eh.db", config.get('databasetype', ''))
     for s in config['readorders']:
         readOrder = dict(s)
         reading = {}
