@@ -4,3 +4,4 @@ requests
 paho-mqtt
 tornado
 psycopg
+psycopg-binary

@@ -88,6 +88,12 @@ if intervall > 60:
     nextWakeUp = ((timeInAbsoluteSeconds // 60) * 60) + intervall
     nextWakeUp = ((nextWakeUp // 60) // (intervall // 60)) * (intervall // 60) * 60
 
+if intervall >= 300:
+    nextWakeUp = ((timeInAbsoluteSeconds // 300) * 300) + intervall
+    nextWakeUp = ((nextWakeUp // 300) // (intervall // 300)) * (intervall // 300) * 300
+
+
+
 myThreads = []
 
 pos_edge_sendvalues = pos_edge.pos_edge()

@@ -386,7 +386,7 @@ def latestreadings():
     parameter = {}
     parameter['latestreadings'] = list()
     config = cfg.Config.getConfig()
-    db_conn = database.connect("eh.db", config.get('databasetype', ''))
+    db_conn = database.connect(config.get('databasename', 'eh.db'))
     for s in config['readorders']:
         readOrder = dict(s)
         reading = {}

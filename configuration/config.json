@@ -1,11 +1,13 @@
 {
   "databasetype": "postgresql",
-  "readinterval": 30.0,
-  "basicinterval": 150.0,
+  "readinterval": 300.0,
+  "basicinterval": 300.0,
   "loggingmultiplier": 2,
   "loglevel": "debug",
-  "emailregisterlogfiles": "info@rossmann-engineering.de",
-  "emailerrornotification": "info@rossmann-engineering.de",
+  "databasename": "sql-meterdata.db",
+  "tablename": "tbl-meterdata",
+  "emailregisterlogfiles": "",
+  "emailerrornotification": "",
   "emailfromaddress": "gateway@sre-solutions.com",
   "smtphost": "smtp.ionos.de",
   "smtpport": 587,
@@ -14,11 +16,13 @@
   "smtpenabletls": true,
   "mqttbroker": [
     {
-      "name": "Wise Energy Gateway 1",
-      "address": "167.172.58.209",
-      "port": "1883",
-      "publishtopic": "v1/devices/me/telemetry",
-      "accesstoken": "riGZ6pCswSHu3kzRAfKM",
+      "name": "Gateway",
+      "address": "Iot-Meter-Data-1.azure-devices.net",
+      "port": "8883",
+      "publishtopic": "devices/ubuntu-lab01/messages/events/",
+      "username": "Iot-Meter-Data-1.azure-devices.net/ubuntu-lab01/?api-version=2021-04-12",
+      "password": "SharedAccessSignature sr=Iot-Meter-Data-1.azure-devices.net%2Fdevices%2Fubuntu-lab01&sig=BhItQ2%2Fd6w4S6FtxjRn808Gr9Lw%2FZlLSxT4RdKaLKLg%3D&se=1984690275",
+      "device_id": "ubuntu-lab01",
       "serverid": 1
     }
   ],
@@ -26,118 +30,50 @@
     {
       "transportid": 1,
       "type": "Modbus",
-      "ipaddress": "127.0.0.1",
-      "port": "502",
-      "unitidentifier": 1
-    },
-    {
-      "transportid": 2,
-      "type": "Modbus",
-      "ipaddress": "127.0.0.1",
-      "port": "502",
-      "unitidentifier": 1
-    },
-    {
-      "transportid": 3,
-      "type": "Modbus",
-      "ipaddress": "127.0.0.1",
-      "port": "502",
-      "unitidentifier": 1
-    },
-    {
-      "transportid": 4,
-      "type": "Modbus",
-      "ipaddress": "127.0.0.1",
-      "port": "502",
-      "unitidentifier": 1
+      "serialPort": "/dev/ttyUSB0",
+      "parity": 0,
+      "baudrate": 9600,
+      "stopbits": 0,
+      "unitidentifier": 1,
+      "meterTypeId": 1,
+      "meterNameId": 1,
+      "partKey": "4536373"
     }
   ],
   "modbuscommand": [
     {
-      "functioncode": "Read Input Registers",
+      "functioncode": "Read Holding Registers",
       "transportid": 1,
-      "startingaddress": 0,
-      "quantity": 100
-    },
-    {
-      "functioncode": "Read Input Registers",
-      "transportid": 1,
-      "startingaddress": 100,
-      "quantity": 26
+      "startingaddress": 24587,
+      "quantity": 4
     },
     {
       "functioncode": "Read Holding Registers",
       "transportid": 1,
-      "startingaddress": 0,
-      "quantity": 3
-    },
-    {
-      "functioncode": "Read Input Registers",
-      "transportid": 2,
-      "startingaddress": 0,
-      "quantity": 100
-    },
-    {
-      "functioncode": "Read Input Registers",
-      "transportid": 2,
-      "startingaddress": 100,
-      "quantity": 26
+      "startingaddress": 20497,
+      "quantity": 2
     },
     {
       "functioncode": "Read Holding Registers",
-      "transportid": 2,
-      "startingaddress": 0,
-      "quantity": 3
-    },
-    {
-      "functioncode": "Read Input Registers",
-      "transportid": 3,
-      "startingaddress": 0,
-      "quantity": 100
-    },
-    {
-      "functioncode": "Read Input Registers",
-      "transportid": 3,
-      "startingaddress": 100,
-      "quantity": 26
-    },
-    {
-      "functioncode": "Read Holding Registers",
-      "transportid": 3,
-      "startingaddress": 0,
-      "quantity": 3
-    },
-    {
-      "functioncode": "Read Input Registers",
-      "transportid": 4,
-      "startingaddress": 0,
-      "quantity": 100
-    },
-    {
-      "functioncode": "Read Input Registers",
-      "transportid": 4,
-      "startingaddress": 100,
-      "quantity": 26
-    },
-    {
-      "functioncode": "Read Holding Registers",
-      "transportid": 4,
-      "startingaddress": 0,
-      "quantity": 3
+      "transportid": 1,
+      "startingaddress": 16404,
+      "quantity": 1
     }
   ],
   "readorders": [
     {
-      "address": 1,
-      "name": "Total AC Energy Inverter 1",
+      "address": 24588,
+      "name": "fActiveEnergy",
       "bits": 32,
+      "swapregisters": true,
+      "datatype": "float",
       "absolutethreshold": 0,
       "transportid": 1,
       "logmodbusdata": true,
       "active": true,
       "registerintervaltime": 1,
       "signed": false,
-      "dataarea": "Input Register",
+      "dataarea": "Holding Register",
       "threshold": 0,
       "serverid": [
         1
@@ -152,16 +88,18 @@
       "type": "Submit Read Order"
     },
     {
-      "address": 3,
-      "name": "Hours up and running Inverter 1",
+      "address": 24588,
+      "name": "rActiveEnergy",
       "bits": 32,
+      "swapregisters": true,
+      "datatype": "float",
       "absolutethreshold": 0,
       "transportid": 1,
       "logmodbusdata": true,
       "active": true,
       "registerintervaltime": 1,
       "signed": false,
-      "dataarea": "Input Register",
+      "dataarea": "Holding Register",
       "threshold": 0,
       "serverid": [
         1
@@ -171,283 +109,23 @@
       "value": 0,
       "sendValue": false,
       "nextwakeup": 1615116930.0,
-      "latestreading": 0
+      "latestreading": 0,
+      "target": "",
+      "type": "Submit Read Order"
     },
     {
-      "address": 8,
-      "name": "Inverter Alarms Inverter 1",
-      "bits": 16,
-      "absolutethreshold": 0,
-      "transportid": 1,
-      "logmodbusdata": true,
-      "active": true,
-      "registerintervaltime": 1,
-      "signed": false,
-      "dataarea": "Input Register",
-      "threshold": 0,
-      "serverid": [
-        1
-      ],
-      "multiplefactor": 1,
-      "oldvalue": 999999999.99,
-      "value": 0,
-      "sendValue": false,
-      "nextwakeup": 1615116930.0,
-      "latestreading": 0
-    },
-    {
-      "address": 9,
-      "name": "DC input voltage Inverter 1",
-      "bits": 16,
-      "absolutethreshold": 0,
-      "transportid": 1,
-      "logmodbusdata": true,
-      "active": true,
-      "registerintervaltime": 1,
-      "signed": false,
-      "dataarea": "Input Register",
-      "threshold": 0,
-      "serverid": [
-        1
-      ],
-      "multiplefactor": 1,
-      "oldvalue": 999999999.99,
-      "value": 0,
-      "sendValue": false,
-      "nextwakeup": 1615116930.0,
-      "latestreading": 0
-    },
-    {
-      "address": 10,
-      "name": "Average input current estimation Inverter 1",
-      "bits": 16,
-      "absolutethreshold": 0,
-      "transportid": 1,
-      "logmodbusdata": true,
-      "active": true,
-      "registerintervaltime": 1,
-      "signed": false,
-      "dataarea": "Input Register",
-      "threshold": 0,
-      "serverid": [
-        1
-      ],
-      "multiplefactor": 1,
-      "oldvalue": 999999999.99,
-      "value": 0,
-      "sendValue": false,
-      "nextwakeup": 1615116930.0,
-      "latestreading": 0
-    },
-    {
-      "address": 11,
-      "name": "Grid RMS Voltage, phase 1 Inverter 1",
-      "bits": 16,
-      "absolutethreshold": 0,
-      "transportid": 1,
-      "logmodbusdata": true,
-      "active": true,
-      "registerintervaltime": 1,
-      "signed": false,
-      "dataarea": "Input Register",
-      "threshold": 0,
-      "serverid": [
-        1
-      ],
-      "multiplefactor": 1,
-      "oldvalue": 999999999.99,
-      "value": 0,
-      "sendValue": false,
-      "nextwakeup": 1615116930.0,
-      "latestreading": 0
-    },
-    {
-      "address": 12,
-      "name": "Grid RMS Voltage, phase 2 Inverter 1",
-      "bits": 16,
-      "absolutethreshold": 0,
-      "transportid": 1,
-      "logmodbusdata": true,
-      "active": true,
-      "registerintervaltime": 1,
-      "signed": false,
-      "dataarea": "Input Register",
-      "threshold": 0,
-      "serverid": [
-        1
-      ],
-      "multiplefactor": 1,
-      "oldvalue": 999999999.99,
-      "value": 0,
-      "sendValue": false,
-      "nextwakeup": 1615116930.0,
-      "latestreading": 0
-    },
-    {
-      "address": 13,
-      "name": "Grid RMS Voltage, phase 3 Inverter 1",
-      "bits": 16,
-      "absolutethreshold": 0,
-      "transportid": 1,
-      "logmodbusdata": true,
-      "active": true,
-      "registerintervaltime": 1,
-      "signed": false,
-      "dataarea": "Input Register",
-      "threshold": 0,
-      "serverid": [
-        1
-      ],
-      "multiplefactor": 1,
-      "oldvalue": 999999999.99,
-      "value": 0,
-      "sendValue": false,
-      "nextwakeup": 1615116930.0,
-      "latestreading": 0
-    },
-    {
-      "address": 14,
-      "name": "Grid RMS Current, phase 1 Inverter 1",
-      "bits": 16,
-      "absolutethreshold": 0,
-      "transportid": 1,
-      "logmodbusdata": true,
-      "active": true,
-      "registerintervaltime": 1,
-      "signed": false,
-      "dataarea": "Input Register",
-      "threshold": 0,
-      "serverid": [
-        1
-      ],
-      "multiplefactor": 1,
-      "oldvalue": 999999999.99,
-      "value": 0,
-      "sendValue": false,
-      "nextwakeup": 1615116930.0,
-      "latestreading": 0
-    },
-    {
-      "address": 15,
-      "name": "Grid RMS Current, phase 2 Inverter 1",
-      "bits": 16,
-      "absolutethreshold": 0,
-      "transportid": 1,
-      "logmodbusdata": true,
-      "active": true,
-      "registerintervaltime": 1,
-      "signed": false,
-      "dataarea": "Input Register",
-      "threshold": 0,
-      "serverid": [
-        1
-      ],
-      "multiplefactor": 1,
-      "oldvalue": 999999999.99,
-      "value": 0,
-      "sendValue": false,
-      "nextwakeup": 1615116930.0,
-      "latestreading": 0
-    },
-    {
-      "address": 16,
-      "name": "Grid RMS Current, phase 3 Inverter 1",
-      "bits": 16,
-      "absolutethreshold": 0,
-      "transportid": 1,
-      "logmodbusdata": true,
-      "active": true,
-      "registerintervaltime": 1,
-      "signed": false,
-      "dataarea": "Input Register",
-      "threshold": 0,
-      "serverid": [
-        1
-      ],
-      "multiplefactor": 1,
-      "oldvalue": 999999999.99,
-      "value": 0,
-      "sendValue": false,
-      "nextwakeup": 1615116930.0,
-      "latestreading": 0
-    },
-    {
-      "address": 17,
-      "name": "Cos Phi Inverter 1",
-      "bits": 16,
-      "absolutethreshold": 0,
-      "transportid": 1,
-      "logmodbusdata": true,
-      "active": true,
-      "registerintervaltime": 1,
-      "signed": false,
-      "dataarea": "Input Register",
-      "threshold": 0,
-      "serverid": [
-        1
-      ],
-      "multiplefactor": 1000,
-      "oldvalue": 999999999.99,
-      "value": 0.0,
-      "sendValue": false,
-      "nextwakeup": 1615116930.0,
-      "latestreading": 0.0
-    },
-    {
-      "address": 19,
-      "name": "Active Power Inverter 1",
-      "bits": 16,
-      "absolutethreshold": 0,
-      "transportid": 1,
-      "logmodbusdata": true,
-      "active": true,
-      "registerintervaltime": 1,
-      "signed": false,
-      "dataarea": "Input Register",
-      "threshold": 0,
-      "serverid": [
-        1
-      ],
-      "multiplefactor": 10,
-      "oldvalue": 999999999.99,
-      "value": 0.0,
-      "sendValue": false,
-      "nextwakeup": 1615116930.0,
-      "latestreading": 0.0
-    },
-    {
-      "address": 59,
-      "name": "Energy Resetable Counter Inverter 1",
+      "address": 20498,
+      "name": "tActivePower",
       "bits": 32,
+      "swapregisters": true,
+      "datatype": "float",
       "absolutethreshold": 0,
       "transportid": 1,
       "logmodbusdata": true,
       "active": true,
       "registerintervaltime": 1,
       "signed": false,
-      "dataarea": "Input Register",
-      "threshold": 0,
-      "serverid": [
-        1
-      ],
-      "multiplefactor": 10,
-      "oldvalue": 999999999.99,
-      "value": 0.0,
-      "sendValue": false,
-      "nextwakeup": 1615116930.0,
-      "latestreading": 0.0
-    },
-    {
-      "address": 72,
-      "name": "Power electronics temperatur Inverter 1",
-      "bits": 16,
-      "absolutethreshold": 0,
-      "transportid": 1,
-      "logmodbusdata": true,
-      "active": true,
-      "registerintervaltime": 1,
-      "signed": false,
-      "dataarea": "Input Register",
+      "dataarea": "Holding Register",
       "threshold": 0,
       "serverid": [
         1
@@ -457,99 +135,13 @@
       "value": 0,
       "sendValue": false,
       "nextwakeup": 1615116930.0,
-      "latestreading": 0
+      "latestreading": 0,
+      "target": "",
+      "type": "Submit Read Order"
     },
     {
-      "address": 73,
-      "name": "Control electronics temperature Inverter 1",
-      "bits": 16,
-      "absolutethreshold": 0,
-      "transportid": 1,
-      "logmodbusdata": true,
-      "active": true,
-      "registerintervaltime": 1,
-      "signed": false,
-      "dataarea": "Input Register",
-      "threshold": 0,
-      "serverid": [
-        1
-      ],
-      "multiplefactor": 1,
-      "oldvalue": 999999999.99,
-      "value": 0,
-      "sendValue": false,
-      "nextwakeup": 1615116930.0,
-      "latestreading": 0
-    },
-    {
-      "address": 77,
-      "name": "Nominal Power Inverter 1",
-      "bits": 16,
-      "absolutethreshold": 0,
-      "transportid": 1,
-      "logmodbusdata": true,
-      "active": true,
-      "registerintervaltime": 1,
-      "signed": false,
-      "dataarea": "Input Register",
-      "threshold": 0,
-      "serverid": [
-        1
-      ],
-      "multiplefactor": 1,
-      "oldvalue": 999999999.99,
-      "value": 0,
-      "sendValue": false,
-      "nextwakeup": 1615116930.0,
-      "latestreading": 0
-    },
-    {
-      "address": 117,
-      "name": "Power reduction register Inverter 1",
-      "bits": 16,
-      "absolutethreshold": 0,
-      "transportid": 1,
-      "logmodbusdata": true,
-      "active": true,
-      "registerintervaltime": 1,
-      "signed": false,
-      "dataarea": "Input Register",
-      "threshold": 0,
-      "serverid": [
-        1
-      ],
-      "multiplefactor": 1,
-      "oldvalue": 999999999.99,
-      "value": 0,
-      "sendValue": false,
-      "nextwakeup": 1615116930.0,
-      "latestreading": 0
-    },
-    {
-      "address": 118,
-      "name": "RedPotencia Inverter 1",
-      "bits": 16,
-      "absolutethreshold": 0,
-      "transportid": 1,
-      "logmodbusdata": true,
-      "active": true,
-      "registerintervaltime": 1,
-      "signed": false,
-      "dataarea": "Input Register",
-      "threshold": 0,
-      "serverid": [
-        1
-      ],
-      "multiplefactor": 1,
-      "oldvalue": 999999999.99,
-      "value": 0,
-      "sendValue": false,
-      "nextwakeup": 1615116930.0,
-      "latestreading": 0
-    },
-    {
-      "address": 1,
-      "name": "Command code Inverter 1",
+      "address": 16405,
+      "name": "errorCode",
       "bits": 16,
       "absolutethreshold": 0,
       "transportid": 1,
@@ -567,115 +159,9 @@
       "value": 0,
       "sendValue": false,
       "nextwakeup": 1615116930.0,
-      "latestreading": 0
-    },
-    {
-      "address": 2,
-      "name": "Command Data 1 Inverter 1",
-      "bits": 16,
-      "absolutethreshold": 0,
-      "transportid": 1,
-      "logmodbusdata": true,
-      "active": true,
-      "registerintervaltime": 1,
-      "signed": false,
-      "dataarea": "Holding Register",
-      "threshold": 0,
-      "serverid": [
-        1
-      ],
-      "multiplefactor": 1,
-      "oldvalue": 999999999.99,
-      "value": 0,
-      "sendValue": false,
-      "nextwakeup": 1615116930.0,
-      "latestreading": 0
-    },
-    {
-      "address": 3,
-      "name": "Command Data 2 Inverter 1",
-      "bits": 16,
-      "absolutethreshold": 0,
-      "transportid": 1,
-      "logmodbusdata": true,
-      "active": true,
-      "registerintervaltime": 1,
-      "signed": false,
-      "dataarea": "Holding Register",
-      "threshold": 0,
-      "serverid": [
-        1
-      ],
-      "multiplefactor": 1,
-      "oldvalue": 999999999.99,
-      "value": 0,
-      "sendValue": false,
-      "nextwakeup": 1615116930.0,
-      "latestreading": 0
-    },
-    {
-      "address": 1002,
-      "name": "setPowerReduction Inverter 1",
-      "bits": 16,
-      "absolutethreshold": 0,
-      "transportid": 1,
-      "logmodbusdata": false,
-      "active": false,
-      "registerintervaltime": 1,
-      "signed": false,
-      "dataarea": "Holding Register",
-      "threshold": 0,
-      "serverid": [
-        1
-      ],
-      "multiplefactor": 327.67,
-      "oldvalue": 0.0,
-      "sendValue": false,
-      "nextwakeup": 1615117050.0,
-      "target": ""
-    },
-    {
-      "address": 1001,
-      "name": "setPowerReduction1",
-      "bits": 16,
-      "absolutethreshold": 0,
-      "transportid": 1,
-      "logmodbusdata": false,
-      "active": false,
-      "registerintervaltime": 1,
-      "signed": false,
-      "dataarea": "Holding Register",
-      "threshold": 0,
-      "staticvalue": 3,
-      "serverid": [
-        1
-      ],
-      "multiplefactor": 1,
-      "oldvalue": 0.0,
-      "sendValue": false,
-      "nextwakeup": 1615117050.0,
-      "target": ""
-    },
-    {
-      "address": 1001,
-      "name": "setInverter1",
-      "bits": 16,
-      "absolutethreshold": 0,
-      "transportid": 1,
-      "logmodbusdata": false,
-      "active": false,
-      "registerintervaltime": 1,
-      "signed": false,
-      "dataarea": "Holding Register",
-      "threshold": 0,
-      "serverid": [
-        1
-      ],
-      "multiplefactor": 1,
-      "oldvalue": 0.0,
-      "sendValue": false,
-      "nextwakeup": 1615117050.0,
-      "target": ""
+      "latestreading": 0,
+      "target": "",
+      "type": "Submit Read Order"
     }
   ]
 }

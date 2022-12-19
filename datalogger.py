@@ -122,7 +122,7 @@ def registerLogFileCSV():
                 writerows['timestamp'] = ('{0:%Y-%m-%dT%H:%M:%SZ}'.format(datetime.datetime.now()))
                 for s in config['readorders']:
                     readorder = dict(s)
-                    db_conn = database.connect("eh.db", cfg.Config.getInstance().get('databasetype', ''))
+                    db_conn = database.connect(config.get('databasename', 'eh.db'))
                     database.add_daily_value(db_conn, readorder.get('serverid', list([1]))[0], readorder['name'],
                                              readorder.get('value', 0))
                     if ('logmodbusdata' in readorder):
@@ -132,7 +132,7 @@ def registerLogFileCSV():
                                     'value' in readorder):  # We only write 65535 into the CSV if the value does not exist. Most of the case there is
                                 # is a Register without readOrder
                                 writerows[readorder['name']] = readorder['value']
-                                db_conn = database.connect("eh.db", cfg.Config.getInstance().get('databasetype', ''))
+                                db_conn = database.connect(config.get('databasename', 'eh.db'))
                                 database.add_daily_value(db_conn, readorder.get('serverid', list([1]))[0],
                                                          readorder['name'], readorder['value'])
                             else:

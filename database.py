@@ -1,8 +1,12 @@
+import json
 import sqlite3
-import psycopg
 import logging
 import datetime
 import traceback
+from uuid import uuid4
+import config as cfg
+
+config = cfg.Config.getConfig()
 
 def connect(db_name, type=''):
     """
@@ -10,10 +14,7 @@ def connect(db_name, type=''):
     :param db_name: database name (filename)
     :return: connection object
     """
-    if type == 'postgresql':
-        conn = psycopg.connect(db_name)
-    else:
-        conn = sqlite3.connect(db_name)
+    conn = sqlite3.connect(db_name)
     conn.row_factory = sqlite3.Row
     return conn
 
@@ -24,19 +25,35 @@ def create_tables(conn):
     """
     try:
         cursor = conn.cursor()
-        cursor.execute("""
+        '''cursor.execute("""
             CREATE TABLE IF NOT EXISTS mqttuploads(
                 rowid INTEGER PRIMARY KEY AUTOINCREMENT,
                 moment datetime NOT NULL,
                 serverid INTEGER NOT NULL,
                 topic text NOT NULL,
                 payload text NOT NULL
-            );""")
+            );""")'''
+        cursor.execute("""
+                    CREATE TABLE IF NOT EXISTS "tbl-meterdata" (
+                        id INTEGER PRIMARY KEY AUTOINCREMENT,
+                        partKey text NOT NULL,
+                        epoch text NOT NULL,
+                        meterTypeId INTEGER NOT NULL,
+                        meterNameId INTEGER NOT NULL,
+                        readTime text NOT NULL,
+                        fActiveEnergy REAL,
+                        rActiveEnergy REAL,
+                        tActivePower REAL,
+                        errorCode text,
+                        serverid INTEGER NOT NULL,
+                        transferred INTEGER
+                    );""")
+
         conn.commit()
         cursor.execute("""
                     CREATE TABLE IF NOT EXISTS dailycache(
                         rowid INTEGER PRIMARY KEY AUTOINCREMENT,
-                        moment datetime NOT NULL,
+                        moment datextime NOT NULL,
                         serverid INTEGER NOT NULL,
                         tag text NOT NULL,
                         value float NOT NULL
@@ -69,7 +86,7 @@ def add_daily_value (conn, serverid, tag, value):
     except:
         logging.error('Exception adding daily value to queue: ' + str(traceback.format_exc()))
 
-def add_message_queue(conn, moment, serverid, topic, payload):
+def add_message_queue(conn, moment, serverid, payload, device):
     """
     Put Message in queue
     :param conn: connection object
@@ -79,8 +96,10 @@ def add_message_queue(conn, moment, serverid, topic, payload):
     """
     try:
         cursor = conn.cursor()
-        cursor.execute("INSERT INTO mqttuploads(moment,serverid,topic,payload) VALUES(?,?,?,?)",
-                       (moment.strftime("%Y-%m-%d %H:%M:00"), serverid, topic, payload))
+        dict_payload = json.loads(payload)
+        cursor.execute("INSERT INTO \"tbl-meterdata\" (readTime,epoch,partKey,meterTypeId,meterNameId,fActiveEnergy,rActiveEnergy, tActivePower, errorCode, serverid, transferred) VALUES(?,?,?,?,?,?,?,?,?,?,?)",
+                       (moment.strftime("%Y-%m-%d %H:%M:00"), moment.strftime("%Y-%m-%d %H:%M:00"),
+                        1, device['meterTypeId'], device['meterNameId'], dict_payload['values']['fActiveEnergy'], dict_payload['values']['rActiveEnergy'], dict_payload['values']['tActivePower'],None, serverid, 0))
         conn.commit()
         rowid = cursor.lastrowid
         cursor.close()
@@ -129,7 +148,7 @@ def get_message_queue(conn, serverid):
     """
     try:
         cursor = conn.cursor()
-        cursor.execute("SELECT rowid,moment,serverid,topic,payload FROM mqttuploads WHERE serverid="+str(serverid)+" ORDER by rowid")
+        cursor.execute("SELECT id, readTime,epoch,partKey,meterTypeId,meterNameId,fActiveEnergy,rActiveEnergy, tActivePower, errorCode, serverid, transferred FROM \"tbl-meterdata\" WHERE serverid="+str(serverid)+" ORDER by id")
         data = cursor.fetchall()
         returnvalue = list()
         for element in data:
@@ -148,13 +167,13 @@ def delete_message_queue(conn, rowid):
     """
     try:
         cursor = conn.cursor()
-        cursor.execute("DELETE FROM mqttuploads WHERE rowid=?", (rowid, ))
+        cursor.execute("DELETE FROM \"tbl-meterdata\" WHERE id=?", (rowid, ))
         conn.commit()
         cursor.close()
     except:
         logging.error('Exception deleting row from queue: ' + str(traceback.format_exc()))
 
 if __name__ == "__main__":
-    db_conn = connect("eh.db")
+    db_conn = connect("db-meter-data", 'postgresql')
     create_tables(db_conn)
-    add_message_queue(db_conn, datetime.datetime.now(),5,"topic","hello mqtt")
+    #add_message_queue(db_conn, datetime.datetime.now(),5,"topic","hello mqtt")

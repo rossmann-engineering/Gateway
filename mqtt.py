@@ -11,6 +11,8 @@ import datetime
 import logging
 import json
 import ModbusClient
+import ssl
+
 
 
 class Clients(object):
@@ -45,13 +47,21 @@ class Clients(object):
         for t in config['mqttbroker']:
             self.clients.append(dict())
             mqttbroker = dict(t)
-            self.clients[loopcounter]['instance'] = mqtt.Client('client' + str(loopcounter))
+            if 'device_id' in mqttbroker:
+                self.clients[loopcounter]['instance'] = mqtt.Client(client_id=mqttbroker['device_id'], protocol=mqtt.MQTTv311)
+                self.clients[loopcounter]['instance'].tls_set(certfile=None, keyfile=None,
+                               cert_reqs=ssl.CERT_REQUIRED, tls_version=ssl.PROTOCOL_TLSv1_2, ciphers=None)
+                self.clients[loopcounter]['instance'].tls_insecure_set(False)
+            else:
+                self.clients[loopcounter]['instance'] = mqtt.Client('client' + str(loopcounter))
+
             self.clients[loopcounter]['instance'].max_queued_messages_set(1)
             self.clients[loopcounter]['instance'].on_connect = self.on_connect
             self.clients[loopcounter]['instance'].on_disconnect = self.on_disconnect
             self.clients[loopcounter]['instance'].on_message = self.on_message
             self.clients[loopcounter]['instance'].on_publish = self.on_publish
-            self.clients[loopcounter]['instance'].username_pw_set(mqttbroker['accesstoken'], '')
+            if 'accesstoken' in mqttbroker:
+                self.clients[loopcounter]['instance'].username_pw_set(mqttbroker['accesstoken'], '')
             while not internet_on():
                 cfg.Config.getInstance().mqttconnectionlost = True
                 logging.info('MQTT-Client - Wait for Internet connection available')
@@ -60,6 +70,7 @@ class Clients(object):
                 if 'username' in mqttbroker and 'password' in mqttbroker:
                     self.clients[loopcounter]['instance'].username_pw_set(mqttbroker['username'],
                                                                           mqttbroker['password'])
+
                 self.clients[loopcounter]['instance'].connect(mqttbroker['address'], int(mqttbroker['port']), 6000)
                 logging.info('Initialize MQTT Client to Broker ' + str(mqttbroker['address']) + ', Port: ' + str(
                     mqttbroker['port']))
@@ -72,7 +83,7 @@ class Clients(object):
                 self.clients[loopcounter]['mid'] = 0
 
                 logging.info('Added MQTT Client at initialization to List')
-                db_conn = database.connect("eh.db", cfg.Config.getInstance().get('databasetype', ''))
+                db_conn = database.connect(config.get('databasename', 'eh.db'))
                 database.create_tables(db_conn)
                 loopcounter = loopcounter + 1
             except:
@@ -142,7 +153,7 @@ def validate_json(message):
     return True
 
 
-def publish_message(serverid, topic, payload):
+def publish_message(serverid, topic, payload, device):
     """
     publish message to gurke
     :param serverid: Server ID the Message refers to
@@ -154,16 +165,21 @@ def publish_message(serverid, topic, payload):
 
         logging.info('Store Message to Database, ServerID ' + str(serverid) + ' Message: ' + payload)
         if len(payload) > 5:
-            db_conn = database.connect("eh.db", config.get('databasetype', ''))
-            database.add_message_queue(db_conn, datetime.datetime.now(), serverid, topic, payload)
+            db_conn = database.connect(config.get('databasename', 'eh.db'))
+            database.add_message_queue(db_conn, datetime.datetime.now(), serverid, payload, device)
             cfg.Config.getInstance().eventcounter = cfg.Config.getInstance().eventcounter + 1
     except:
         logging.error('Exception storing data in Database: ' + str(traceback.format_exc()))
 
     try:
         # check message queue for entries
-        db_conn = database.connect("eh.db", config.get('databasetype', ''))
-        datatosend = database.get_message_queue(db_conn, serverid)
+        db_conn = database.connect(config.get('databasename', 'eh.db'))
+        databaseentry = database.get_message_queue(db_conn, serverid)
+        datatosend = list()
+        for entry in databaseentry:
+            datatosend.append({'payload': json.dumps(entry), 'topic': topic})
+
+
         if len(datatosend) > 5:
             for t in Clients.getInstance().clients:
                 logging.info('Message Queue exceeded max. size, trying to reconnect')
@@ -187,7 +203,7 @@ def publish_message(serverid, topic, payload):
                     if client['serverid'] == serverid:
                         if not validate_json(element['payload']):
                             logging.info('Message is no valid JSON (deleted): ' + str(element['payload']))
-                            database.delete_message_queue(db_conn, element['rowid'])
+                            database.delete_message_queue(db_conn, json.loads(element['payload'])['id'])
                             break
                         response = client['instance'].publish(element['topic'], element['payload'], qos=1)
                         logging.info('Message Published to MQTT Broker ' + str(element['payload']) + " topic: " + str(
@@ -205,7 +221,7 @@ def publish_message(serverid, topic, payload):
                                         'MQTT send Payload to Serverid ' + str(serverid) + " Topic: " + str(
                                             element['topic']) + " Payload: " + str(element['payload']))
                                     cfg.Config.getInstance().mqttconnectionlost = False
-                                    database.delete_message_queue(db_conn, element['rowid'])
+                                    database.delete_message_queue(db_conn, json.loads(element['payload'])['id'])
                                     break
                                 else:
                                     time.sleep(2)  # was 0.5 26.02.2020
@@ -349,7 +365,7 @@ def send_mqtt_data(disconnected=False, connected=False):
             payload = payload + '}}'
             if read_order_count > 0:
                 logging.info('Sending MQTT-Data to serverid' + str(mqttbroker['serverid']))
-                publish_message(mqttbroker['serverid'], mqttbroker['publishtopic'], payload)
+                publish_message(mqttbroker['serverid'], mqttbroker['publishtopic'], payload, u)
 
 
 def execute_write_order(payload):

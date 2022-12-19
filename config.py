@@ -10,7 +10,7 @@ import threading
 from collections import OrderedDict
 import copy
 import datetime
-import ModbusClient, datalogger
+#import ModbusClient, datalogger
 import traceback
 import os
 import logging
