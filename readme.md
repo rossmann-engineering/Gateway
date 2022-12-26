@@ -1,8 +1,8 @@
-# "Wise Energy Industrial IoT Gateway" Documentation
+# "Industrial IoT Gateway" Documentation
 
 ## Table of Contents
 1. [Introduction](#introduction)
-2. [Linux Service](#linuxservice)
+2. [Linux Service](#linuxservice)  
    2.1 [Install instructions](#installinstructions)
 3. [Requirements](#requirements)  
 4. [Test Instructions](#testistructions)
