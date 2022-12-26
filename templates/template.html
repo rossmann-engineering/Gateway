@@ -55,6 +55,11 @@
                 width: 85%;
                 margin-top: 6px;
             }
+            .col-65 {
+                float: left;
+                width: 65%;
+                margin-top: 6px;
+            }
             /* Clear floats after the columns */
             .row:after {
                 content: "";
@@ -203,14 +208,59 @@
                 .navbar{
                     padding: 0px 0px;
                 }
-            }
-        </style>
-        <link rel='stylesheet' href='../static/bootstrap.min.css'>
-        <link href="../static/fontawesome/css/all.css" rel="stylesheet">
-        <link href="../static/fontawesome/css/solid.css" rel="stylesheet">
 
-        <script src='../static/jquery-3.4.1.min.js'></script>
-        <script src='../static/bootstrap.min.js'></script>
+            }
+
+            /* The Modal (background) */
+.modal-local {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 90%; /* Full width */
+  height: 90%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content-local {
+  background-color: #fefefe;
+  margin: 5% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 60%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close-modal {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-header-local {
+  padding: 2px 16px;
+  background-color: #5cb85c;
+  color: white;
+}
+        </style>
+        <link rel='stylesheet' href='/static/bootstrap.min.css'>
+        <link href="/static/fontawesome/css/all.css" rel="stylesheet">
+        <link href="/static/fontawesome/css/solid.css" rel="stylesheet">
+
+        <script src='/static/jquery-3.4.1.min.js'></script>
+        <script src='/static/bootstrap.min.js'></script>
 
 
         <script>

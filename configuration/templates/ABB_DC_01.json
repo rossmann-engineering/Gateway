@@ -1,0 +1,215 @@
+{
+  "name": "EV charger eCharge4Drivers : ABB fast charger",
+  "type": "opcua",
+  "config":
+  [
+    {
+      "name": "Transport ID",
+      "variable": "config1",
+      "init": 1
+    },
+    {
+      "name": "Server ID",
+      "variable": "config2",
+      "init": 1
+    },
+    {
+      "name": "IP Address",
+      "variable": "config3",
+      "init": "192.168.71.49"
+    },
+    {
+      "name": "User",
+      "variable": "config4",
+      "init": "sr"
+    },
+    {
+      "name": "Passsword",
+      "variable": "config5",
+      "init": "Peachbarrow793!"
+    }
+  ],
+  "mqttbroker": [
+
+  ],
+  "devices": [
+    {
+      "transportid": "config1",
+      "type": "opcua",
+      "ipaddress": "config3",
+      "port": "4840",
+      "password": "config5",
+      "user": "config4"
+    }
+  ],
+  "readorders": [
+    {
+      "address": "ns=6;s=::Charger:ChargerView.SerialNr",
+      "name": "SerialNr",
+      "absolutethreshold": 0,
+      "transportid": "config1",
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "threshold": 0,
+      "serverid": [
+        "config2"
+      ],
+      "multiplefactor": 1
+    },
+    {
+      "address": "ns=6;s=::Charger:WD_Toggle",
+      "name": "Watchdog - toggle",
+      "absolutethreshold": 0,
+      "transportid": "config1",
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "threshold": 0,
+      "serverid": [
+        "config2"
+      ],
+      "multiplefactor": 1
+    },
+    {
+      "address": "ns=6;s=::Charger:OutletsView[1].Energy",
+      "name": "Energy to EV battery during charging session",
+      "absolutethreshold": 0,
+      "transportid": "config1",
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "threshold": 0,
+      "serverid": [
+        "config2"
+      ],
+      "multiplefactor": 1
+    },
+    {
+      "address": "ns=6;s=::Charger:OutletsView[1].State",
+      "name": "Status",
+      "absolutethreshold": 0,
+      "transportid": "config1",
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "threshold": 0,
+      "serverid": [
+        "config2"
+      ],
+      "multiplefactor": 1
+    },
+    {
+      "address": "ns=6;s=::Charger:OutletsView[1].Cable",
+      "name": "True when charge cable is detected",
+      "absolutethreshold": 0,
+      "transportid": "config1",
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "threshold": 0,
+      "serverid": [
+        "config2"
+      ],
+      "multiplefactor": 1
+    },
+    {
+      "address": "ns=6;s=::Charger:OutletsView[1].SOC",
+      "name": "State of charge value of the EV battery",
+      "absolutethreshold": 0,
+      "transportid": "config1",
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "threshold": 0,
+      "serverid": [
+        "config2"
+      ],
+      "multiplefactor": 1
+    },
+    {
+      "address": "ns=6;s=::Charger:OutletsView[1].VehMaxAmp",
+      "name": "Vehicle max. Amp",
+      "absolutethreshold": 0,
+      "transportid": "config1",
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "threshold": 0,
+      "serverid": [
+        "config2"
+      ],
+      "multiplefactor": 1
+    },
+    {
+      "address": "ns=6;s=::Charger:OutletsView[1].VehMaxVolt",
+      "name": "Vehicle max. Volt",
+      "absolutethreshold": 0,
+      "transportid": "config1",
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "threshold": 0,
+      "serverid": [
+        "config2"
+      ],
+      "multiplefactor": 1
+    },
+    {
+      "address": "ns=6;s=::Charger:OutletsView[1].Volt",
+      "name": "DC voltage",
+      "absolutethreshold": 0,
+      "transportid": "config1",
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "threshold": 0,
+      "serverid": [
+        "config2"
+      ],
+      "multiplefactor": 1
+    },
+    {
+      "address": "ns=6;s=::Charger:OutletsView[1].Amp",
+      "name": "DC current",
+      "absolutethreshold": 0,
+      "transportid": "config1",
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "threshold": 0,
+      "serverid": [
+        "config2"
+      ],
+      "multiplefactor": 1
+    },
+    {
+      "address": "ns=6;s=::Charger:OutletsView[1].Budget",
+      "name": "AC Current setpoint",
+      "absolutethreshold": 0,
+      "transportid": "config1",
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "threshold": 0,
+      "serverid": [
+        "config2"
+      ],
+      "multiplefactor": 1
+    },
+    {
+      "address": "ns=6;s=::Outlet:SetBudget",
+      "name": "AC set Current setpoint",
+      "absolutethreshold": 0,
+      "transportid": "config1",
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "threshold": 0,
+      "serverid": [
+        "config2"
+      ],
+      "multiplefactor": 1
+    }
+  ]
+}

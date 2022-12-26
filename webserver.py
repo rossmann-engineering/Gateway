@@ -45,20 +45,12 @@ def too_large(e):
 
 @app.route('/fileuploads')
 def fileuploads():
-    """
-    upload files
-    :return: gurke
-    """
     files = os.listdir(app.config['UPLOAD_PATH'])
     return render_template('fileupload.html', files=files, admin=loginadmin)
 
 
 @app.route('/fileuploads', methods=['POST'])
 def upload_files():
-    """
-    post update files gurke
-    :return: gurke
-    """
     uploaded_file = request.files['file']
     filename = secure_filename(uploaded_file.filename)
     if filename != '':
@@ -71,10 +63,6 @@ def upload_files():
 
 @app.route('/uploads/<filename>')
 def upload(filename):
-    """
-    gurke
-    :return: filename gurke
-    """
     return send_from_directory(app.config['UPLOAD_PATH'], filename)
 
 
@@ -92,8 +80,8 @@ def downloadFile():
 @app.route('/index', methods=['GET', 'POST'])
 def index():
     """
-    gurke
-    :return: gurke
+    Open webpage Main page
+    :return: Template
     """
     pythonswversion = "Can't read Python Version"
     webserverversion = "Can't read Webserver Version"
@@ -172,8 +160,8 @@ conectivityparameter = {}
 @app.route('/connectivity', methods=['GET', 'POST'])
 def index2():
     """
-    gurke
-    :return: gurke
+    Open webpage for connectivity
+    :return: Temlate
     """
     global conectivityparameter
     if request.method == 'POST':
@@ -231,10 +219,6 @@ def index2():
 
 @app.route('/mobilesendpin', methods=['GET', 'POST'])
 def mobilesendpin():
-    """
-    gurke
-    :return: gurke
-    """
     config = cfg.Config.getInstance()
     global conectivityparameter
     if 'sendpinresultfailed' in conectivityparameter:
@@ -256,10 +240,6 @@ def mobilesendpin():
 
 @app.route('/mobileatcommand', methods=['GET', 'POST'])
 def mobilesendat():
-    """
-    gurke
-    :return: gurke
-    """
     global conectivityparameter
     if 'sendatresultfailed' in conectivityparameter:
         del conectivityparameter['sendatresultfailed']
@@ -288,10 +268,6 @@ def mobilesendat():
 
 @app.route('/mobilesetapn', methods=['GET', 'POST'])
 def mobilesetapn():
-    """
-    gurke
-    :return: gurke
-    """
     global conectivityparameter
     if 'sentapnfailed' in conectivityparameter:
         del conectivityparameter['sentapnfailed']
@@ -313,10 +289,6 @@ def mobilesetapn():
 
 @app.route('/mobilereset', methods=['GET', 'POST'])
 def mobilereset():
-    """
-    gurke
-    :return: gurke
-    """
     global conectivityparameter
     if 'resetresultfailed' in conectivityparameter:
         del conectivityparameter['resetresultfailed']
@@ -333,12 +305,78 @@ def mobilereset():
     return render_template('connectivity.html', parameter=conectivityparameter, admin=loginadmin)
 
 
-@app.route('/gatewayconfiguration')
+@app.route('/gatewayconfiguration', methods=['GET', 'POST'])
 def index3():
     """
-    gurke
-    :return: gurke
+    Open webpage for Gatewayconfiguration
+    :return: Template
     """
+    if request.method == 'POST':
+        if "add-config" in request.form:
+            template = request.form['template']
+
+            packagedir = os.path.dirname(
+                os.path.abspath(__file__))
+            directory = os.path.join(packagedir, 'configuration', 'templates')
+            with open(os.path.join(directory, template)) as json_data:
+                json_data = json_data.read()
+                template = json.loads(json_data)
+                for device in template['devices']:
+                    #Search for Tags
+                    for k, v in device.items():
+                        if 'config' in str(v):
+                            placeholder = v
+                            device[k] = request.form[placeholder]
+                    # Check if the device id already exist
+                    exists = False
+                    for dev in cfg.Config.getConfig()['devices']:
+                        if str(dev['transportid']) == str(device['transportid']):
+                            exists = True
+                    if not exists:
+                        cfg.Config.getConfig()['devices'].append(device)
+                        cfg.Config.getInstance().write_config()
+
+                for command in template.get('modbuscommand', list()):
+                    #Search for modbuscommand
+                    for k, v in command.items():
+                        if 'config' in str(v):
+                            placeholder = v
+                            command[k] = request.form[placeholder]
+                    # Check if the command id already exist
+                    exists = False
+                    for dev in cfg.Config.getConfig()['modbuscommand']:
+                        if (str(dev['functioncode']) == str(command['functioncode']))\
+                                and (str(dev['transportid']) == str(command['transportid']))\
+                                and (str(dev['startingaddress']) == str(command['startingaddress'])):
+                            exists = True
+                    if not exists:
+                        cfg.Config.getConfig()['modbuscommand'].append(command)
+                        cfg.Config.getInstance().write_config()
+
+                for ro in template['readorders']:
+                    #Search for modbuscommand
+                    for k, v in ro.items():
+                        if 'config' in str(v):
+                            placeholder = v
+                            if type(ro[k]) is not list:
+                                ro[k] = request.form[placeholder]
+                            else:
+                                for i in range(len(ro[k])):
+                                    if 'config' in ro[k][i]:
+                                        ro[k][i] = request.form[placeholder[i]]
+                    # Check if the command id already exist
+                    exists = False
+                    for readorder in cfg.Config.getConfig()['readorders']:
+                        if (str(readorder['address']) == str(ro['address']))\
+                                and (str(readorder['name']) == str(ro['name']))\
+                                and (str(readorder['transportid']) == str(ro['transportid'])):
+                            exists = True
+                    if not exists:
+                        cfg.Config.getConfig()['readorders'].append(ro)
+                        cfg.Config.getInstance().write_config()
+
+
+
     packagedir = os.path.dirname(
         os.path.abspath(__file__))  # get the Package directory, from there we get the subdirectoties
     directory = os.path.join(packagedir, 'configuration')  # Subdirectory
@@ -352,10 +390,25 @@ def index3():
                     readorder['fieldbustype'] = 'Bacnet'
                 elif device.get('type', 'Modbus') == 'EthernetIP':
                     readorder['fieldbustype'] = 'EthernetIP'
+                elif device.get('type', 'Modbus') == 'opcua':
+                    readorder['fieldbustype'] = 'opcua'
                 else:
                     readorder['fieldbustype'] = 'Modbus'
+    # ------------------------Read Templates
+    packagedir = os.path.dirname(
+        os.path.abspath(__file__))  # get the Package directory, from there we get the subdirectoties
+    directory = os.path.join(packagedir, 'configuration', 'templates')  # Subdirectory
+    arr = os.listdir(directory)
+    templates = list()
+    for template_file  in arr:
+        with open(os.path.join(directory, template_file)) as json_data:
+            json_data = json_data.read()
+            template = json.loads(json_data)
+            template['filename'] = template_file
+            templates.append(template)
     if loginadmin:
         return render_template('gatewayconfiguration.html', parameter=cfg.Config.getInstance().configmodel,
+                               templates=templates,
                                admin=loginadmin)
     else:
         return do_admin_login()
@@ -364,8 +417,8 @@ def index3():
 @app.route('/modbus')
 def index4():
     """
-    gurke
-    :return: gurke
+    Open Modbus Webpage
+    :return: Template
     """
     parameter = {}
     readparameter = {}
@@ -380,8 +433,8 @@ def index4():
 @app.route('/latestreading')
 def latestreadings():
     """
-    gurke
-    :return: gurke
+    Open latestreading webpage
+    :return: Template
     """
     parameter = {}
     parameter['latestreadings'] = list()
@@ -413,8 +466,8 @@ showcontentlogfile = 1000;
 @app.route('/showlog', methods=['GET', 'POST'])
 def index5():
     """
-    gurke
-    :return: gurke
+    Open Showlog webpage
+    :return: Template
     """
     global showcontentlogfile
     showcontentlogfile = 1000
@@ -442,8 +495,8 @@ def index5():
 @app.route('/showmore', methods=['GET', 'POST'])
 def showmore():
     """
-    shows more
-    :return: more gurke
+    Load more entries to show in log webpage
+    :return: Template
     """
     global showcontentlogfile
     packagedir = os.path.dirname(
@@ -476,8 +529,8 @@ logindistributor = False
 @app.route('/', methods=['GET', 'POST'])
 def do_admin_login():
     """
-    gurke
-    :return: gurke
+    Show login Page
+    :return: Template
     """
     global loginadmin
     global logindistributor
@@ -503,10 +556,6 @@ def do_admin_login():
 
 @app.route('/configure', methods=['GET', 'POST'])
 def configure():
-    """
-    gurke
-    :return: gurke
-    """
     parameter = {}
     if request.method == 'POST':
         parameter = request.form['parameter']
@@ -523,10 +572,6 @@ def configure():
 
 @app.route('/modbussendalldata', methods=['GET', 'POST'])
 def modbussendalldata():
-    """
-    gurke
-    :return: gurke
-    """
     readparameter = {}
     response = dict()
     parameter = {}
@@ -548,10 +593,6 @@ def modbussendalldata():
 
 @app.route('/modbuswriteform', methods=['GET', 'POST'])
 def modbuswrite():
-    """
-    gurke
-    :return: gurke
-    """
     readparameter = {}
     response = dict()
     parameter = {}
@@ -614,10 +655,6 @@ def modbuswrite():
 
 @app.route('/modbusreadform', methods=['GET', 'POST'])
 def modbusread():
-    """
-    gurke
-    :return: gurke
-    """
     readparameter = {}
     response = dict()
     parameter = {}
@@ -736,10 +773,6 @@ def modbuscheckconnectivity():
 
 @app.route('/configurationform', methods=['GET', 'POST'])
 def configform():
-    """
-    gurke
-    :return: gurke
-    """
     if request.method == 'POST':
         try:
             configuration = request.form
@@ -767,10 +800,6 @@ def configform():
 
 @app.route('/configurationformmqttservers', methods=['GET', 'POST'])
 def configformmqttservers():
-    """
-    gurke
-    :return: gurke
-    """
     if request.method == 'POST':
         try:
             configuration = request.form
@@ -793,10 +822,6 @@ def configformmqttservers():
 
 @app.route('/configurationformdevices', methods=['GET', 'POST'])
 def configformdevices():
-    """
-    gurke
-    :return: gurke
-    """
     if request.method == 'POST':
         try:
             configuration = request.form
@@ -827,10 +852,6 @@ def configformdevices():
 
 @app.route('/adddevice', methods=['GET', 'POST'])
 def adddevice():
-    """
-    add a new device
-    :return: gurke
-    """
     if request.method == 'POST':
         try:
             configuration = request.form
@@ -883,10 +904,6 @@ def adddevice():
 
 @app.route('/addreadorder', methods=['GET', 'POST'])
 def addreadorder():
-    """
-    add gurke
-    :return: gurke
-    """
     if request.method == 'POST':
         try:
             configuration = request.form
@@ -932,7 +949,6 @@ def addreadorder():
 def addmodbuscommand():
     """
     add modbus command
-    :return: gurke
     """
     if request.method == 'POST':
         try:
@@ -957,7 +973,6 @@ def addmodbuscommand():
 def configformmodbuscommand():
     """
     configuration from modbus command
-    :return. gurke
     """
     if request.method == 'POST':
         try:
@@ -984,10 +999,6 @@ def configformmodbuscommand():
 
 @app.route('/configurationformreadorders', methods=['GET', 'POST'])
 def configformreadorders():
-    """
-    configuration from gurke
-    :return: gurke
-    """
     if request.method == 'POST':
         try:
             config = cfg.Config.getConfig()
@@ -1080,9 +1091,6 @@ def configformreadorders():
 #    app.secret_key = os.urandom(12)
 #    app.run('0.0.0.0', 5000)
 def start():
-    """
-    start gurke
-    """
     if not os.path.exists('configuration'):
         os.makedirs('configuration')
     app.config['MAX_CONTENT_LENGTH'] = 2 * 1024 * 1024
@@ -1110,7 +1118,7 @@ stop = False
 
 def askstop():
     """
-    ask to stop gurke
+    ask to stop
     """
     global stop
     if stop:

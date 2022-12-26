@@ -3,6 +3,8 @@ Created on 28.10.2020
 
 @author: Stefan Rossmann
 """
+import asyncio
+
 import config as cfg
 import ModbusClient
 import datalogger
@@ -12,6 +14,7 @@ from collections import OrderedDict
 import struct
 import execute_writeorders
 import logging
+import opc_ua
 
 
 def execute_readorders():
@@ -22,8 +25,8 @@ def execute_readorders():
 
     cfg.Config.getInstance().lock.acquire()
 
-    inputRegisters = [[None for i in range(5)] for j in range(15000)]
-    holdingRegisters = [[None for i in range(5)] for j in range(15000)]
+    inputRegisters = [[None for i in range(5)] for j in range(20000)]
+    holdingRegisters = [[None for i in range(5)] for j in range(20000)]
     registerValues = list()
     retryCounter = 0  # This counter is to ensure  to try 3 times to read data from the Server
     for s in config['modbuscommand']:
@@ -32,27 +35,27 @@ def execute_readorders():
         startingAddress = (ModbusCommand['startingaddress'])
         quantity = (ModbusCommand['quantity'])
         if ('transportid' in ModbusCommand):
-            transportid = (ModbusCommand['transportid'])
+            transportid = int(ModbusCommand['transportid'])
         else:
             transportid = 1
 
         # This is Modbus-RTU
         if ('serialPort' in config['devices'][transportid - 1]):
-            modbusClient = ModbusClient.ModbusClient(str(config['devices'][transportid - 1]['serialPort']))
-            modbusClient.Parity = config['devices'][transportid - 1]['parity']
-            modbusClient.Baudrate = config['devices'][transportid - 1]['baudrate']
-            modbusClient.Stopbits = config['devices'][transportid - 1]['stopbits']
-            if ('type' in config['devices'][transportid - 1]):
-                if (config['devices'][transportid - 1]['type'] == 'RS485'):
+            modbusClient = ModbusClient.ModbusClient(str(config['devices'][int(transportid) - 1]['serialPort']))
+            modbusClient.Parity = config['devices'][int(transportid) - 1]['parity']
+            modbusClient.Baudrate = config['devices'][int(transportid) - 1]['baudrate']
+            modbusClient.Stopbits = config['devices'][int(transportid) - 1]['stopbits']
+            if ('type' in config['devices'][int(transportid) - 1]):
+                if (config['devices'][int(transportid) - 1]['type'] == 'RS485'):
                     modbusClient.RS485 = True
         # This is Modbus-TCP
-        if ('ipaddress' in config['devices'][transportid - 1]):
-            if (not ('port' in config['devices'][transportid - 1])):
-                config['devices'][transportid - 1]['port'] = 502
-            modbusClient = ModbusClient.ModbusClient(str(config['devices'][transportid - 1]['ipaddress']),
-                                                     int(config['devices'][transportid - 1]['port']))
-        if ('unitidentifier' in config['devices'][transportid - 1]):
-            modbusClient.UnitIdentifier = config['devices'][transportid - 1]['unitidentifier']
+        if ('ipaddress' in config['devices'][int(transportid) - 1]):
+            if (not ('port' in config['devices'][int(transportid) - 1])):
+                config['devices'][int(transportid) - 1]['port'] = 502
+            modbusClient = ModbusClient.ModbusClient(str(config['devices'][int(transportid) - 1]['ipaddress']),
+                                                     int(config['devices'][int(transportid) - 1]['port']))
+        if ('unitidentifier' in config['devices'][int(transportid) - 1]):
+            modbusClient.UnitIdentifier = config['devices'][int(transportid) - 1]['unitidentifier']
         modbusClient.Timeout = 5
         success = False
         while (not success and retryCounter < 3):
@@ -65,7 +68,7 @@ def execute_readorders():
 
                     logging.debug('Input Registers received : ' + str(registerValues))
                     for i in range(0, len(registerValues)):
-                        inputRegisters[startingAddress + i + 1][transportid - 1] = registerValues[i]
+                        inputRegisters[startingAddress + i + 1][int(transportid) - 1] = registerValues[i]
 
                 if (functionCode == 'Read Holding Registers'):
                     logging.debug('Request for Holding Registers, starting Value:' + str(startingAddress))
@@ -74,7 +77,7 @@ def execute_readorders():
                     logging.debug('Holding Registers received : ' + str(registerValues))
 
                     for i in range(0, len(registerValues)):
-                        holdingRegisters[startingAddress + i + 1][transportid - 1] = registerValues[i]
+                        holdingRegisters[startingAddress + i + 1][int(transportid) - 1] = registerValues[i]
 
                 success = True
                 time.sleep(0.01)
@@ -96,14 +99,66 @@ def execute_readorders():
             if (modbusClient.is_connected()):
                 modbusClient.close()
 
+
+    # Read OPC values
+    for device in config['devices']:
+        if device.get('type', 'modbus') == 'opcua':
+            values_to_read = list()
+            for ro in config['readorders']:
+                if int(device['transportid']) == int(ro['transportid']):
+                    values_to_read.append(ro)
+            asyncio.run(opc_ua.main('opc.tcp://' + device['ipaddress'] + ':' + device['port'], device['user'], device['password'], values_to_read))
+
+
+
+
+
     for i in range(0, len(config['readorders'])):
         readOrder = OrderedDict(config['readorders'][i])
 
-        transportid = readOrder.get('transportid', 1)
+        transportid = int(readOrder.get('transportid', 1))
         # Search for devices with the given transportid
-        device = next(device for device in config['devices'] if device['transportid'] == transportid)
+        device = next(device for device in config['devices'] if int(device['transportid']) == transportid)
         if device.get('type', 'modbus').lower() == 'bacnet' or device.get('type', 'modbus').lower() == 'ethernetip':
             continue
+
+        if device.get('type', 'modbus').lower() == 'opcua':
+            if (not 'oldvalue' in readOrder):
+                readOrder['oldvalue'] = 0.0
+            if (not 'absolutethreshold' in readOrder):
+                if (not 'relativethreshold' in readOrder):
+                    readOrder['threshold'] = 0
+                else:
+                    if ('latestreading' in readOrder):
+                        readOrder['threshold'] = readOrder['latestreading'] * readOrder['relativethreshold'] / 100.0
+                        # If the Threshold is not equal 0 and Threshold is 0 we set it to a very short numbber 0.00001
+                        if ((readOrder['threshold']) == 0) & (readOrder['relativethreshold'] > 0):
+                            readOrder['threshold'] = 0.0001
+                    elif ('value' in readOrder):
+                        readOrder['threshold'] = readOrder['value'] * readOrder['relativethreshold'] / 100.0
+                        # If the Threshold is not equal 0 and Threshold is 0 we set it to a very short numbber 0.00001
+                        if ((readOrder['threshold']) == 0) & (readOrder['relativethreshold'] > 0):
+                            readOrder['threshold'] = 0.0001
+                    else:
+                        readOrder['threshold'] = 0
+            else:
+                readOrder['threshold'] = readOrder['absolutethreshold']
+
+            if ('address' in readOrder):
+                register = (readOrder['address'])
+                if (not 'multiplefactor' in readOrder):
+                    readOrder['multiplefactor'] = 1
+
+            if ('value' in readOrder):  # Check if Value already exists in dictionary
+                if (readOrder['oldvalue'] == 999999999.99):
+                    readOrder['oldvalue'] = readOrder['value']
+
+
+
+
+
+            continue
+
 
         if (not 'oldvalue' in readOrder):
             readOrder['oldvalue'] = 0.0

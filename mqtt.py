@@ -57,6 +57,9 @@ class Clients(object):
                 logging.info('MQTT-Client - Wait for Internet connection available')
                 time.sleep(2)
             try:
+                db_conn = database.connect("eh.db", '')
+                database.create_tables(db_conn)
+
                 if 'username' in mqttbroker and 'password' in mqttbroker:
                     self.clients[loopcounter]['instance'].username_pw_set(mqttbroker['username'],
                                                                           mqttbroker['password'])
@@ -72,8 +75,7 @@ class Clients(object):
                 self.clients[loopcounter]['mid'] = 0
 
                 logging.info('Added MQTT Client at initialization to List')
-                db_conn = database.connect("eh.db", cfg.Config.getInstance().get('databasetype', ''))
-                database.create_tables(db_conn)
+
                 loopcounter = loopcounter + 1
             except:
                 logging.error('Exception connecting to MQTT-Broker: ' + str(traceback.format_exc()))
@@ -336,7 +338,7 @@ def send_mqtt_data(disconnected=False, connected=False):
                         else:
                             sendValue = False
 
-                        if active & sendValue & (readOrder['transportid'] == u['transportid']):
+                        if active & sendValue & (int(readOrder['transportid']) == int(u['transportid'])):
                             if read_order_count > 0:
                                 payload = payload + ','
                             payload = payload + '"' + str(readOrder['name']) + '":' + str(readOrder['value'])

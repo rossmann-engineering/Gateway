@@ -55,7 +55,7 @@
                                 <div class="col-25">
                                     <label for={{key}}>{{key}}</label>
                                 </div>
-                                <div class="col-75">
+                                <div class="col-65">
                                     {% if (key != "loglevel") and (key != "smtpenabletls") %}
                                     <input type="text" id={{key}} name={{key}} value="{{value}}">
                                     {% elif (key == "loglevel") %}
@@ -82,6 +82,44 @@
             <br>
         </form>
 
+        <!---------------------------------------------------- Add Configuration from Template -->
+            <form action="/gatewayconfiguration" method="post">
+                <div class="container">
+                    <h5>Add configuration from Template</h5>
+                <div class="row">
+                    <select name="template" id="template" style="width: 100%"  onchange="templateSelectionChanged()">
+                        {% for item in templates %}
+                            <option value="{{item.filename}}">{{item.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <br><br>
+                {% if templates|length > 0 %}
+                    <div id="templates_content">
+
+                    {% for config_item in templates[0].config %}
+
+                        <div class="row">
+                        <div class="col-25">
+                            <label>{{ config_item.name }}</label>
+                        </div>
+                        <div class="col-65">
+                        <input type="text" id="{{ config_item.variable }}" name="{{ config_item.variable }}" value="{{config_item.init}}">
+                        </div>
+                        </div>
+                    {% endfor %}
+                    </div>
+                {% endif %}
+
+                <br><br>
+                    <div class="row">
+                        <input type="Submit" name="add-config" value="Add configuration from Template">
+                    </div>
+                </div>
+                <br>
+            </form>
+
+
         <!---------------------------------------------------- Read Orders Form -->
 
         <form action="/configurationformreadorders" method="post">
@@ -91,7 +129,7 @@
                         <div class="col-25">
                             <label>Select Read-Order</label>
                         </div>
-                        <div class="col-60">
+                        <div class="col-65">
                             <select id="readorders" name="readorders" style="width: 100%" onchange="readOrderSelctionChanged()">
                                 {% for readorders in parameter.readorders %}
                                     <option value={{key}}>{{readorders.name}}</option>
@@ -101,7 +139,7 @@
                     </div>
                     <div class="row">
                         <div class="col-10"></div>
-                        <div class="col-60">
+                        <div class="col-65">
                             <label id="sourceLabel" style="color: #ff0000"></label>
                         </div>
                     </div>
@@ -110,8 +148,10 @@
                         <div class="col-25">
                             <label>Name</label>
                         </div>
-                        <div class="col-60">
+                        <div class="col-65">
+                            {% if parameter.readorders|length > 0 %}
                             <input type="text" id="name" name="name" value="{{parameter.readorders[0].name}}">
+                            {% endif %}
                         </div>
                     </div>
                     <div class="row">
@@ -119,10 +159,12 @@
                         <div class="col-25">
                             <label>Active</label>
                         </div>
-                        <div class="col-60">
+                        <div class="col-65">
                             <select name="active" id="active" style="width: 100%">
+                            {% if parameter.readorders|length > 0 %}
                                 <option value="true" {% if parameter.readorders[0].active %} selected {% endif %}>True</option>
                                 <option value="false" {% if not parameter.readorders[0].active %} selected {% endif %}>False</option>
+                            {% endif %}
                             </select>
                         </div>
                     </div>
@@ -131,35 +173,43 @@
                         <div class="col-25">
                             <label>Transport-ID</label>
                         </div>
-                        <div class="col-60">
+                        <div class="col-65">
+                            {% if parameter.readorders|length > 0 %}
                             <input type="text" id="transportid" name="transportid" value="{{parameter.readorders[0].transportid}}">
-                        </div>
+                            {% endif %}
+                                </div>
                     </div>
                     <div class="row">
                         <div class="col-10"></div>
                         <div class="col-25">
                             <label>Absolute Threshold</label>
                         </div>
-                        <div class="col-60">
-                            <input type="text" id="absolutethreshold" name="absolutethreshold" value="{{parameter.readorders[0].absolutethreshold}}">
-                        </div>
+                        <div class="col-65">
+                            {% if parameter.readorders|length > 0 %}
+
+                                <input type="text" id="absolutethreshold" name="absolutethreshold" value="{{parameter.readorders[0].absolutethreshold}}">
+                                {% endif %}
+                                </div>
                     </div>
                     <div class="row">
                         <div class="col-10"></div>
                         <div class="col-25">
                             <label>Relative Threshold</label>
                         </div>
-                        <div class="col-60">
+                        <div class="col-65">
+                            {% if parameter.readorders|length > 0 %}
                             <input type="text" id="relativethreshold" name="relativethreshold" value="{{parameter.readorders[0].relativethreshold}}">
-                        </div>
+                        {% endif %}
+                                </div>
                     </div>
                     <div class="row">
                         <div class="col-10"></div>
                         <div class="col-25">
                             <label>Data Area</label>
                         </div>
-                        {% if parameter.readorders[0].fieldbustype != "EthernetIP" %}
-                            <div class="col-60">
+                    {% if parameter.readorders|length > 0 %}
+                        {% if (parameter.readorders[0].fieldbustype != "EthernetIP") and (parameter.readorders[0].fieldbustype != "opcua") %}
+                            <div class="col-65">
                                 <select name="dataarea" id="dataarea" style="width: 100%">
                                     {% if parameter.readorders[0].fieldbustype == "Modbus" %}
                                         <option value="Input Register" {% if parameter.readorders[0].dataarea == "Input Register" %} selected {% endif %}>Input Register</option>
@@ -175,25 +225,31 @@
                                 </select>
                             </div>
                         {% endif %}
+                        {% endif %}
                     </div>
                     <div class="row">
                         <div class="col-10"></div>
                         <div class="col-25">
                             <label>Registerintervaltime</label>
                         </div>
-                        <div class="col-60">
+                        <div class="col-65">
+                            {% if parameter.readorders|length > 0 %}
                             <input type="text" id="registerintervaltime" name="registerintervaltime" value="{{parameter.readorders[0].registerintervaltime}}">
-                        </div>
+                            {% endif %}
+                                </div>
                     </div>
                     <div class="row">
                         <div class="col-10"></div>
                         <div class="col-25">
                             <label>Multiplefactor</label>
                         </div>
-                        <div class="col-60">
+                        <div class="col-65">
+                            {% if parameter.readorders|length > 0 %}
                             <input type="text" id="multiplefactor" name="multiplefactor" value="{{parameter.readorders[0].multiplefactor}}">
-                        </div>
+                        {% endif %}
+                                </div>
                     </div>
+                    {% if parameter.readorders|length > 0 %}
                     {% if parameter.readorders[0].fieldbustype == "Modbus" %}
                         <div id="readordersmodbus">
                             <div class="row">
@@ -201,7 +257,7 @@
                                 <div class="col-25">
                                     <label>Signed</label>
                                 </div>
-                                <div class="col-60">
+                                <div class="col-65">
                                     <input type="text" id="signed" name="signed" value="{{parameter.readorders[0].signed}}">
                                 </div>
                             </div>
@@ -210,83 +266,103 @@
                                 <div class="col-25">
                                     <label>Bits</label>
                                 </div>
-                                <div class="col-60">
+                                <div class="col-65">
                                     <input type="text" id="bits" name="bits" value="{{parameter.readorders[0].bits}}">
                                 </div>
                             </div>
                         </div>
                     {% endif %}
+                        {% endif %}
+
+                    {% if parameter.readorders|length > 0 %}
                     <div class="row" id="classidrow" {% if parameter.readorders[0].fieldbustype != "EthernetIP" %}style="display: none"{% endif %}>
                         <div class="col-10"></div>
                         <div class="col-25">
                             <label>Class-ID</label>
                         </div>
-                        <div class="col-60">
+                        <div class="col-65">
                             <input type="text" id="classid" name="classid" value="{{parameter.readorders[0].classid}}">
                         </div>
                     </div>
+                        {% endif %}
+
+                    {% if parameter.readorders|length > 0 %}
                     <div class="row" id="instanceidrow" {% if parameter.readorders[0].fieldbustype != "EthernetIP" %}style="display: none"{% endif %}>
                         <div class="col-10"></div>
                         <div class="col-25">
                             <label>Instance-ID</label>
                         </div>
-                        <div class="col-60">
+                        <div class="col-65">
                             <input type="text" id="instanceid" name="instanceid" value="{{parameter.readorders[0].instanceid}}">
                         </div>
                     </div>
+                        {% endif %}
+                    {% if parameter.readorders|length > 0 %}
                     <div class="row"  id="attributeidrow" {% if parameter.readorders[0].fieldbustype != "EthernetIP" %}style="display: none"{% endif %}>
                         <div class="col-10"></div>
                         <div class="col-25">
                             <label>Attribute-ID</label>
                         </div>
-                        <div class="col-60">
+                        <div class="col-65">
                             <input type="text" id="attributeid" name="attributeid" value="{{parameter.readorders[0].attributeid}}">
                         </div>
                     </div>
+                        {% endif %}
+                    {% if parameter.readorders|length > 0 %}
                     <div class="row"  id="maskrow" {% if parameter.readorders[0].fieldbustype != "EthernetIP" %}style="display: none"{% endif %}>
                         <div class="col-10"></div>
                         <div class="col-25">
                             <label>Mask</label>
                         </div>
-                        <div class="col-60">
+                        <div class="col-65">
                             <input type="text" id="mask" name="mask" value="{{parameter.readorders[0].mask}}">
                         </div>
                     </div>
+                        {% endif %}
+                    {% if parameter.readorders|length > 0 %}
                     <div class="row"  id="startingbyterow" {% if parameter.readorders[0].fieldbustype != "EthernetIP" %}style="display: none"{% endif %}>
                         <div class="col-10"></div>
                         <div class="col-25">
                             <label>Starting Byte</label>
                         </div>
-                        <div class="col-60">
+                        <div class="col-65">
                             <input type="text" id="startingbyte" name="startingbyte" value="{{parameter.readorders[0].startingbyte}}">
                         </div>
                     </div>
+                        {% endif %}
+                    {% if parameter.readorders|length > 0 %}
                     <div class="row"  id="numberofbytesrow" {% if parameter.readorders[0].fieldbustype != "EthernetIP" %}style="display: none"{% endif %}>
                         <div class="col-10"></div>
                         <div class="col-25">
                             <label>Number of bytes</label>
                         </div>
-                        <div class="col-60">
+                        <div class="col-65">
                             <input type="text" id="numberofbytes" name="numberofbytes" value="{{parameter.readorders[0].numberofbytes}}">
                         </div>
                     </div>
+                        {% endif %}
                     <div class="row">
                         <div class="col-10"></div>
                         <div class="col-25">
                             <label>Address</label>
                         </div>
-                        <div class="col-60">
+                        <div class="col-65">
+                            {% if parameter.readorders|length > 0 %}
                             <input type="text" id="address" name="address" value="{{parameter.readorders[0].address}}">
-                        </div>
+                        {% endif %}
+                                </div>
                     </div>
                     <div class="row">
                         <div class="col-10"></div>
                         <div class="col-25">
                             <label>Server ID</label>
                         </div>
-                        <div class="col-60">
-                            <input type="text" id="serverid" name="serverid" value="{{parameter.readorders[0].serverid}}">
-                        </div>
+                        <div class="col-65">
+                            {% if parameter.readorders|length > 0 %}
+
+                                <input type="text" id="serverid" name="serverid" value="{{parameter.readorders[0].serverid}}">
+                        {% endif %}
+                                </div>
                     </div>
                 {% endif %}
                 <div class="row">
@@ -294,8 +370,10 @@
                     <div class="col-25">
                         <label>Target (Readorder name)</label>
                     </div>
-                    <div class="col-60">
+                    <div class="col-65">
+                        {% if parameter.readorders|length > 0 %}
                         <input type="text" id="target" name="target" value="{{parameter.readorders[0].target}}">
+                    {% endif %}
                     </div>
                 </div>
                 <div class="row">
@@ -316,7 +394,7 @@
                         <div class="col-25">
                             <label>Select Modbus-Command</label>
                         </div>
-                        <div class="col-60">
+                        <div class="col-65">
                             <select id="modbuscommands" name="modbuscommands" style="width: 100%"
                                 onchange="modbuscommandSelctionChanged()">
                                 {% for modbuscommand in parameter.modbuscommand %}
@@ -332,13 +410,16 @@
                         <div class="col-25">
                             <label>Modbus Command</label>
                         </div>
-                        <div class="col-60">
+                        <div class="col-65">
                             <select name="functioncode" id="functioncode" style="width: 100%">
+                            {% if parameter.modbuscommand|length > 0 %}
                                 <option value="Read Input Registers" {% if parameter.modbuscommand[0].functioncode == "Read Input Registers" %} selected {% endif %}>Read Input Registers</option>
                                 <option value="Read Holding Registers" {% if parameter.modbuscommand[0].functioncode == "Read Holding Registers" %} selected {% endif %}>Read Holding Registers</option>
-                            </select>
+                            {% endif %}
+                                </select>
                         </div>
                     </div>
+                    {% if parameter.modbuscommand|length > 0 %}
                     {% for key, value in parameter.modbuscommand[0].items() %}
                         {% if (key != "functioncode") %}
                             <div class="row">
@@ -346,12 +427,13 @@
                                 <div class="col-25">
                                     <label>{{key}}</label>
                                 </div>
-                                <div class="col-60">
+                                <div class="col-65">
                                     <input type="text" id={{key}} name={{key}} value="{{value}}">
                                 </div>
                             </div>
                         {% endif %}
                     {% endfor %}
+                        {% endif %}
                 {% endif %}
                 <div class="row">
                     <input type="submit" name="type" value="Submit Modbus Command" style="margin: 10px">
@@ -376,11 +458,12 @@
                                 <div class="col-25">
                                     <label>Fieldbus Type</label>
                                 </div>
-                                <div class="col-60">
+                                <div class="col-65">
                                     <select name="type{{result.transportid}}_{{key}}" id="type{{result.transportid}}_{{key}}" style="width: 100%">
                                         <option value="Modbus" {% if result.type == "Modbus" %} selected {% endif %}>Modbus</option>
                                         <option value="Bacnet" {% if result.type == "Bacnet" %} selected {% endif %}>Bacnet</option>
                                         <option value="EthernetIP" {% if result.type == "EthernetIP" %} selected {% endif %}>Ethernet/IP</option>
+                                        <option value="opcua" {% if result.type == "opcua" %} selected {% endif %}>OPC-UA</option>
                                     </select>
                                 </div>
                             </div>
@@ -389,7 +472,7 @@
                                     <div class="col-25">
                                         <label for="{{key}}">{{key}}</label>
                                     </div>
-                                    <div class="col-75">
+                                    <div class="col-65">
                                         <input type="text" id="transportid{{result.transportid}}_{{key}}" name="transportid{{result.transportid}}_{{key}}" value="{{value}}">
                                     </div>
                                 </div>
@@ -424,7 +507,7 @@
                                             <div class="col-25">
                                                 <label for="{{key}}">{{key}}</label>
                                             </div>
-                                            <div class="col-75">
+                                            <div class="col-65">
                                                 <input type="text" id="serverid{{result.serverid}}_{{key}}" name="serverid{{result.serverid}}_{{key}}" value="{{value}}">
                                             </div>
                                         </div>
@@ -443,11 +526,11 @@
 
             <!---------------------------------------------------- Add Device Modal -->
 
-            <div id="addDeviceModal" class="modal">
+            <div id="addDeviceModal" class="modal-local">
                 <!-- Modal content -->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <span class="close">&times;</span>
+                <div class="modal-content-local">
+                    <div class="modal-header-local">
+                        <span class="close-modal">&times;</span>
                         <h2>Add Device</h2>
                     </div>
                     <br>
@@ -456,13 +539,14 @@
                             <div class="col-25">
                                 <label for="newDeviceFieldbus">Select Fieldbus</label>
                             </div>
-                            <div class="col-60">
+                            <div class="col-65">
                                 <select name="newDeviceFieldbus" id="newDeviceFieldbus" style="width: 100%"
                                     onchange="fieldbusSelectionChanged()">
                                     <option value="ModbusRTU">Modbus-RTU</option>
                                     <option value="ModbusTCP">Modbus-TCP</option>
                                     <option value="Bacnet">Bacnet-IP</option>
                                     <option value="EthernetIP">Ethernet/IP</option>
+                                    <option value="OPCUA">OPC-UA</option>
                                 </select>
                             </div>
                         </div>
@@ -478,7 +562,7 @@
                             <div class="col-25">
                                 <label>CIP-Messaging Type</label>
                             </div>
-                            <div class="col-60">
+                            <div class="col-65">
                                 <select name="newDeviceCipMessagingType" id="newDeviceCipMessagingTypeValue" style="width: 100%" onchange="fieldbusSelectionChanged()">
                                     <option value="Explicit">Explicit Messaging</option>
                                     <option value="Implicit">Implicit Messaging</option>
@@ -489,7 +573,7 @@
                             <div class="col-25">
                                 <label>Requested Packet Rate T->O [ms]</label>
                             </div>
-                            <div class="col-60">
+                            <div class="col-65">
                                 <input type="text" name="newDeviceCipRequestedPacketRateTO" value="500">
                             </div>
                         </div>
@@ -497,7 +581,7 @@
                             <div class="col-25">
                                 <label>Requested Packet Rate O->T [ms]</label>
                             </div>
-                            <div class="col-60">
+                            <div class="col-65">
                                 <input type="text" name="newDeviceCipRequestedPacketRateOT" value="500">
                             </div>
                         </div>
@@ -505,7 +589,7 @@
                             <div class="col-25">
                                 <label>Instance-ID T->O</label>
                             </div>
-                            <div class="col-60">
+                            <div class="col-65">
                                 <input type="text" name="newDeviceCipInstanceIDTO" value="0x65">
                             </div>
                         </div>
@@ -513,7 +597,7 @@
                             <div class="col-25">
                                 <label>Instance-ID O->T</label>
                             </div>
-                            <div class="col-60">
+                            <div class="col-65">
                                 <input type="text" name="newDeviceCipInstanceIDOT" value="0x64">
                             </div>
                         </div>
@@ -521,7 +605,7 @@
                             <div class="col-25">
                                 <label>Message length T->O</label>
                             </div>
-                            <div class="col-60">
+                            <div class="col-65">
                                 <input type="text" name="newDeviceCipLengthTO" value="505">
                             </div>
                         </div>
@@ -529,7 +613,7 @@
                             <div class="col-25">
                                 <label>Message length O->T</label>
                             </div>
-                            <div class="col-60">
+                            <div class="col-65">
                                 <input type="text" name="newDeviceCipLengthOT" value="505">
                             </div>
                         </div>
@@ -537,7 +621,7 @@
                             <div class="col-25">
                                 <label>Realtime Format T->O</label>
                             </div>
-                            <div class="col-60">
+                            <div class="col-65">
                                 <select name="newDeviceCipRealTimeFormatTO" style="width: 100%">
                                     <option value="MODELESS" selected>Modeless</option>
                                     <option value="ZEROLENGTH">Zero length</option>
@@ -550,7 +634,7 @@
                             <div class="col-25">
                                 <label>Realtime Format O->T</label>
                             </div>
-                            <div class="col-60">
+                            <div class="col-65">
                                 <select name="newDeviceCipRealTimeFormatOT" style="width: 100%">
                                     <option value="MODELESS">Modeless</option>
                                     <option value="ZEROLENGTH">Zero length</option>
@@ -563,7 +647,7 @@
                             <div class="col-25">
                                 <label>Connection Type T->O</label>
                             </div>
-                            <div class="col-60">
+                            <div class="col-65">
                                 <select name="newDeviceCipConnectionTypeTO" style="width: 100%">
                                     <option value="NULL">Null</option>
                                     <option value="MULTICAST" selected>Multicast</option>
@@ -575,7 +659,7 @@
                             <div class="col-25">
                                 <label>Connection Type O->T</label>
                             </div>
-                            <div class="col-60">
+                            <div class="col-65">
                                 <select name="newDeviceCipConnectionTypeOT" style="width: 100%">
                                     <option value="NULL">Null</option>
                                     <option value="MULTICAST">Multicast</option>
@@ -678,11 +762,11 @@
 
             <!---------------------------------------------------- Add Read Order Modal -->
 
-            <div id="addReadOrderModal" class="modal">
+            <div id="addReadOrderModal" class="modal-local">
                 <!-- Modal content -->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <span class="close" id="closeReadOrderModal">&times;</span>
+                <div class="modal-content-local">
+                    <div class="modal-header-local">
+                        <span class="close-modal" id="closeReadOrderModal">&times;</span>
                         <h2>Add Read Order</h2>
                     </div>
                     <br>
@@ -699,7 +783,7 @@
                             <div class="col-25">
                                 <label>Enable Upload</label>
                             </div>
-                            <div class="col-60">
+                            <div class="col-65">
                                 <select name="newReadOrderEnableUpload" id="newReadOrderEnableUpload" style="width: 100%">
                                     <option value="True">True</option>
                                     <option value="False">False</option>
@@ -710,7 +794,7 @@
                             <div class="col-25">
                                 <label>Transport-ID</label>
                             </div>
-                            <div class="col-60">
+                            <div class="col-65">
                                 <select name="newReadOrderTransportID" id="newReadOrderTransportID" style="width: 100%" onchange="readOrderTransportIdChanged()">
                                     {% for device in parameter.devices %}
                                         <option value="{{ device.transportid }}">{{ device.transportid }} {% if device.type %}({{ device.type }}) {% endif %}</option>
@@ -730,7 +814,7 @@
                             <div class="col-25">
                                 <label>Data Area</label>
                             </div>
-                            <div class="col-60">
+                            <div class="col-65">
                                 <select name="newReadOrderDataArea" style="width: 100%">
                                     <option value="Input Register">Input Register</option>
                                     <option value="Holding Register">Holding Register</option>
@@ -894,11 +978,11 @@
 
         <!---------------------------------------------------- Add Modbus Command Modal -->
 
-        <div id="addModbusCommandModal" class="modal">
+        <div id="addModbusCommandModal" class="modal-local">
             <!-- Modal content -->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <span class="close" id="closeModbusCommandModal">&times;</span>
+            <div class="modal-content-local">
+                <div class="modal-header-local">
+                    <span class="close-modal" id="closeModbusCommandModal">&times;</span>
                     <h2>Add Modbus Command</h2>
                 </div>
                 <br>
@@ -1178,6 +1262,8 @@
                 document.getElementById("registerintervaltime").value = "";
                 if (document.getElementById("signed") !== null)
                     document.getElementById("signed").value = "";
+                if (document.getElementById("dataarea") !== null)
+                    document.getElementById("dataarea").value = "";
                 if (document.getElementById("multiplefactor") !== null)
                     document.getElementById("multiplefactor").value = "";
                 if (document.getElementById("bits") !== null)
@@ -1245,6 +1331,27 @@
                     if (document.getElementById("startingbyterow") !== null)
                         document.getElementById("startingbyterow").style.display = "block";
                 }
+                else if (user.readorders[selectedindex].fieldbustype == "opcua")
+                {
+                    if (document.getElementById("classidrow") !== null)
+                        document.getElementById("classidrow").style.display = "none";
+                    if (document.getElementById("instanceidrow") !== null)
+                        document.getElementById("instanceidrow").style.display = "none";
+                    if (document.getElementById("attributeidrow") !== null)
+                        document.getElementById("attributeidrow").style.display = "none";
+                    if (document.getElementById("maskrow") !== null)
+                        document.getElementById("maskrow").style.display = "none";
+                    if (document.getElementById("numberofbytesrow") !== null)
+                        document.getElementById("numberofbytesrow").style.display = "none";
+                    if (document.getElementById("startingbyterow") !== null)
+                        document.getElementById("startingbyterow").style.display = "none";
+                    if (document.getElementById("readordersmodbus") !== null)
+                        document.getElementById("readordersmodbus").style.display = "none";
+
+                    if (document.getElementById("dataarea") !== null)
+                        document.getElementById("dataarea").style.display = "none";
+
+                }
                 else
                 {
                     if (document.getElementById("classidrow") !== null)
@@ -1261,6 +1368,7 @@
                         document.getElementById("startingbyterow").style.display = "none";
                     if (document.getElementById("readordersmodbus") !== null)
                         document.getElementById("readordersmodbus").style.display = "none";
+
                     if (document.getElementById("dataarea") !== null)
                         document.getElementById("dataarea").options.length = 0;
                     var option = document.createElement("option");
@@ -1308,6 +1416,43 @@
                     //console.log(user.readorders[0][key])
                 }
             }
+
+            function templateSelectionChanged() {
+                //First remove all row elements - Thats necessary because the new Template might have more or less entries
+                var templates_content = document.getElementById('templates_content');
+                var rows = templates_content.getElementsByClassName('row')
+                while(rows.length > 0) {
+                    rows[0].parentNode.removeChild(rows[0]);
+                }
+                var user = JSON.parse('{{ templates | tojson | safe}}');
+                for (var index in user[document.getElementById("template").selectedIndex]['config']) {
+                    var new_row = document.createElement('div')
+                    new_row.classList.add('row');
+                    var new_col25 = document.createElement('div')
+                    new_col25.classList.add('col-25');
+                    var new_label = document.createElement('label');
+                    new_label.innerHTML = user[document.getElementById("template").selectedIndex]['config'][index]['name']
+                    new_col25.appendChild(new_label);
+                    var new_col65 = document.createElement('div');
+                    new_col65.classList.add('col-65');
+                    var new_input = document.createElement('input');
+                    new_input.id = user[document.getElementById("template").selectedIndex]['config'][index]['variable']
+                    new_input.name = new_input.id;
+                    new_input.type = 'text'
+                    new_col65.appendChild(new_input);
+                    new_row.appendChild(new_col25);
+                    new_row.appendChild(new_col65);
+                    templates_content.appendChild(new_row);
+
+                    console.log(user[document.getElementById("template").selectedIndex]['config'][index]['variable']);
+                    document.getElementById(user[document.getElementById("template").selectedIndex]['config'][index]['variable']).value = user[document.getElementById("template").selectedIndex]['config'][index]['init']
+                    //document.getElementById(key.variable).value = user[document.getElementById("template").selectedIndex][key.variable];
+                    //console.log(key)
+                    //console.log(user.readorders[0][key])
+                }
+            }
+
+
         </script>
         <script>
             function devicesSelectionChanged() {

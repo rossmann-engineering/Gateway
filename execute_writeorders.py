@@ -28,7 +28,7 @@ def execute_writeorders():
                     transportid = int(target_readorder.get('transportid', 1))
                     # ---------------------------------------------Serch for the Transport ID
                     for device in config['devices']:
-                        if device['transportid'] == transportid:
+                        if int(device['transportid']) == transportid:
                             address = target_readorder['address']
                             type = device.get('type', 'Modbus')
                             # ------------------------------------------------Modbus
