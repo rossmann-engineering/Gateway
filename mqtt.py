@@ -11,6 +11,7 @@ import datetime
 import logging
 import json
 import ModbusClient
+import ssl
 
 
 class Clients(object):
@@ -51,7 +52,16 @@ class Clients(object):
             self.clients[loopcounter]['instance'].on_disconnect = self.on_disconnect
             self.clients[loopcounter]['instance'].on_message = self.on_message
             self.clients[loopcounter]['instance'].on_publish = self.on_publish
-            self.clients[loopcounter]['instance'].username_pw_set(mqttbroker['accesstoken'], '')
+            if str(mqttbroker.get('tls', 'false')) == 'True':
+                self.clients[loopcounter]['instance'].tls_set(certfile=None,
+                               keyfile=None,
+                               cert_reqs=ssl.CERT_NONE)
+            username = ''
+            if 'username' in mqttbroker:
+                username = mqttbroker['username']
+            self.clients[loopcounter]['instance'].username_pw_set(mqttbroker['password'], username)
+
+
             while not internet_on():
                 cfg.Config.getInstance().mqttconnectionlost = True
                 logging.info('MQTT-Client - Wait for Internet connection available')

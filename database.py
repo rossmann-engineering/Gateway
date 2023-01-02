@@ -1,5 +1,4 @@
 import sqlite3
-import psycopg
 import logging
 import datetime
 import traceback
@@ -10,10 +9,8 @@ def connect(db_name, type=''):
     :param db_name: database name (filename)
     :return: connection object
     """
-    if type == 'postgresql':
-        conn = psycopg.connect(db_name)
-    else:
-        conn = sqlite3.connect(db_name)
+
+    conn = sqlite3.connect(db_name)
     conn.row_factory = sqlite3.Row
     return conn
 

@@ -107,7 +107,10 @@ def execute_readorders():
             for ro in config['readorders']:
                 if int(device['transportid']) == int(ro['transportid']):
                     values_to_read.append(ro)
-            asyncio.run(opc_ua.main('opc.tcp://' + device['ipaddress'] + ':' + device['port'], device['user'], device['password'], values_to_read))
+            try:
+                asyncio.run(opc_ua.main('opc.tcp://' + device['ipaddress'] + ':' + device['port'], device['user'], device['password'], values_to_read))
+            except:
+                logging.error('Unable to read from OPC-UA Server: ' + str(traceback.format_exc()))
 
 
 
@@ -152,13 +155,7 @@ def execute_readorders():
             if ('value' in readOrder):  # Check if Value already exists in dictionary
                 if (readOrder['oldvalue'] == 999999999.99):
                     readOrder['oldvalue'] = readOrder['value']
-
-
-
-
-
             continue
-
 
         if (not 'oldvalue' in readOrder):
             readOrder['oldvalue'] = 0.0

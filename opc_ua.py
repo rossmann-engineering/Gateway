@@ -1,8 +1,9 @@
 import asyncio
 import logging
+import os
 
 from asyncua import Client
-
+from asyncua.crypto.security_policies import SecurityPolicyBasic256Sha256, SecurityPolicyBasic256
 
 class HelloClient:
     def __init__(self, endpoint):
@@ -17,10 +18,32 @@ class HelloClient:
 
 
 async def main(url, user, password, nodes):
+
     client = Client(url=url)
     client.set_user(user)
     client.set_password(password)
+
+    packagedir = os.path.dirname(
+        os.path.abspath(__file__))  # get the Package directory, from there we get the subdirectoties
+    directory = os.path.join(packagedir, 'certificates')  # Subdirectory
+    filename = os.path.join(directory, 'UaServerCpp@192.168.178.9 [3377E1809C827EAB87F9A5D22F2796BED0C436FB].der')
+    client.application_uri = "URI:urn:example.org:FreeOpcUa:python-opcua"
+    await client.load_client_certificate('my_cert.pem')
+    await client.load_private_key('my_private_key.pem')
+    #await client.set_security_string("Basic256Sha256,SignAndEncrypt,my_cert.pem,my_private_key.pem")
+
+    await client.set_security(
+        SecurityPolicyBasic256Sha256,
+        certificate='my_cert.pem',
+        private_key='my_private_key.pem',
+        #server_certificate=filename
+    )
+
+
+
+
     async with client:
+
         objects = client.nodes.objects
         client.get_server_node()
         print("Children of root are: %r", await client.nodes.objects.get_children())
