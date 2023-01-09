@@ -37,8 +37,8 @@
     {
       "functioncode": "Read Holding Registers",
       "transportid": "1",
-      "startingaddress": 12152,
-      "quantity": 2
+      "startingaddress": 12151,
+      "quantity": 4
     },
     {
       "functioncode": "Read Holding Registers",
@@ -55,7 +55,7 @@
   ],
   "readorders": [
     {
-      "address": 12152,
+      "address": 12151,
       "name": "Active Node Power",
       "bits": 32,
       "datatype": "float",
