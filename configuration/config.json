@@ -136,6 +136,7 @@
       "absolutethreshold": 0,
       "transportid": "1",
       "logmodbusdata": true,
+      "swapregisters": true,
       "active": true,
       "registerintervaltime": 1,
       "signed": false,
