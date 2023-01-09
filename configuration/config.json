@@ -43,8 +43,8 @@
     {
       "functioncode": "Read Holding Registers",
       "transportid": "1",
-      "startingaddress": 11944,
-      "quantity": 6
+      "startingaddress": 11940,
+      "quantity": 12
     },
     {
       "functioncode": "Read Holding Registers",
@@ -74,7 +74,7 @@
       "multiplefactor": 1
     },
     {
-      "address": 11944,
+      "address": 11945,
       "name": "Current L1",
       "bits": 32,
       "datatype": "float",
