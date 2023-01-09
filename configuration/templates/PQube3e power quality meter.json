@@ -69,7 +69,7 @@
       "serverid": [
         "config2"
       ],
-      "multiplefactor": 0
+      "multiplefactor": 1
     },
     {
       "address": 11944,
@@ -87,7 +87,7 @@
       "serverid": [
         "config2"
       ],
-      "multiplefactor": 0
+      "multiplefactor": 1
     },
     {
       "address": 11946,
@@ -105,7 +105,7 @@
       "serverid": [
         "config2"
       ],
-      "multiplefactor": 0
+      "multiplefactor": 1
     },
     {
       "address": 11948,
@@ -123,7 +123,7 @@
       "serverid": [
         "config2"
       ],
-      "multiplefactor": 0
+      "multiplefactor": 1
     },
     {
       "address": 7036,
@@ -141,7 +141,7 @@
       "serverid": [
         "config2"
       ],
-      "multiplefactor": 0
+      "multiplefactor": 1
     },
     {
       "address": 7060,
@@ -159,7 +159,7 @@
       "serverid": [
         "config2"
       ],
-      "multiplefactor": 0
+      "multiplefactor": 1
     }
   ]
 }
