@@ -139,6 +139,7 @@
       "registerintervaltime": 1,
       "signed": false,
       "dataarea": "Holding Register",
+      "swapregisters": true,
       "threshold": 0,
       "serverid": [
         "1"
@@ -156,6 +157,7 @@
       "active": true,
       "registerintervaltime": 1,
       "signed": false,
+      "swapregisters": true,
       "dataarea": "Holding Register",
       "threshold": 0,
       "serverid": [
