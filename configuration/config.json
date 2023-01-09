@@ -1,6 +1,6 @@
 {
-  "readinterval": 30.0,
-  "basicinterval": 30.0,
+  "readinterval": 10.0,
+  "basicinterval": 10.0,
   "loggingmultiplier": 1,
   "loglevel": "debug",
   "emailregisterlogfiles": "",
@@ -81,7 +81,6 @@
       "absolutethreshold": 0,
       "transportid": "1",
       "logmodbusdata": true,
-      "swapregisters": true,
       "active": true,
       "registerintervaltime": 1,
       "signed": false,
