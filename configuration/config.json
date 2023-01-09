@@ -129,7 +129,7 @@
       "multiplefactor": 1
     },
     {
-      "address": 7037,
+      "address": 7036,
       "name": "Active Grid Power",
       "bits": 32,
       "datatype": "float",
