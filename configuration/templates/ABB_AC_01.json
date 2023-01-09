@@ -24,6 +24,7 @@
   ],
   "devices": [
     {
+      "name": "ABB Terra AC W22-T-RD-MC-0",
       "transportid": "config1",
       "type": "Modbus",
       "ipaddress": "config3",

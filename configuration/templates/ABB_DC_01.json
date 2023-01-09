@@ -34,6 +34,7 @@
   ],
   "devices": [
     {
+      "name": "EV charger eCharge4Drivers : ABB fast charger",
       "transportid": "config1",
       "type": "opcua",
       "ipaddress": "config3",

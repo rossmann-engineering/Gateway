@@ -3,5 +3,4 @@ pyserial
 requests
 paho-mqtt
 tornado
-psycopg
 asyncua

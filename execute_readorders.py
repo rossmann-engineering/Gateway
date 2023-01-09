@@ -56,7 +56,7 @@ def execute_readorders():
                                                      int(config['devices'][int(transportid) - 1]['port']))
         if ('unitidentifier' in config['devices'][int(transportid) - 1]):
             modbusClient.UnitIdentifier = config['devices'][int(transportid) - 1]['unitidentifier']
-        modbusClient.Timeout = 5
+        modbusClient.Timeout = 1
         success = False
         while (not success and retryCounter < 3):
             try:

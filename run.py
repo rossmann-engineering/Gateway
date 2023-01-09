@@ -209,13 +209,16 @@ while True:
             config['readorders'][i] = readOrder
 
         cfg.Config.getInstance().lock.release()
+        if cfg.Config.getInstance().uploadalldata & resendValues:
+            cfg.Config.getInstance().uploadalldata = False
+            send_value = True
+
         if (send_value):
             if len(config.get('mqttbroker', list())) > 0:
                 thread5 = threading.Thread(target=mqtt.send_mqtt_data(), args=())
                 thread5.start()
 
-        if cfg.Config.getInstance().uploadalldata & resendValues:
-            cfg.Config.getInstance().uploadalldata = False
+
 
         time.sleep(0.5)
         oneshot = True

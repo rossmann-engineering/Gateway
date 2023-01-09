@@ -12,6 +12,7 @@ import logging
 import json
 import ModbusClient
 import ssl
+import math
 
 
 class Clients(object):
@@ -317,51 +318,117 @@ def send_mqtt_data(disconnected=False, connected=False):
     config = cfg.Config.getConfig()
     logging.info('Sending MQTT-Data...')
     for s in config['mqttbroker']:
-        for u in config['devices']:
-            mqttbroker = dict(s)
-            payload = '{"ts":' + str(int(datetime_to_unix_timestamp(datetime.datetime.now())))
 
-            payload = payload + ', "values":{'
+        mqttbroker = dict(s)
+        payload = '{"Time":' + str(int(datetime_to_unix_timestamp(datetime.datetime.now())/1000))
 
-            # This is the Message we send if the Modbus Device is not connected
-            if disconnected:
-                payload = payload + '"Modbus Connected":0'
+        #Power and Energy for grid values
+        power = 0
+        energy = 0
+        for device in config['devices']:
+            if (device.get('name', 'PQube3e power quality meter') == "PQube3e power quality meter"):
+                if (device['transportid'] == ro['transportid']) & (device.get('name', 'PQube3e power quality meter') == "PQube3e power quality meter"):
+                    if ro['name'] == 'Active Grid Power':
+                        power = float(ro.get('value', 0))
+                    elif ro['name'] == 'Active Grid Energy':
+                        energy = float(ro.get('value', 0))
 
-            # This is the Message we send if the Modbus Device is connected
-            if connected:
-                payload = payload + '"Modbus Connected":1'
+        payload = payload + ', "Grid":{"Power":' + str(power) + ', "Energy": ' + str(energy) + '},'
 
-            if not connected and not disconnected:
-                cfg.Config.getInstance().lock.acquire()
-                # Send Readorders
-                try:
-                    read_order_count = 0
-                    for t in config['readorders']:
-                        readOrder = dict(t)
-                        active = (readOrder['active'] == True)
-                        if 'serverid' in readOrder:
-                            serverids = readOrder['serverid']
-                        else:
-                            serverids = [1];
-                        if ('sendValue' in readOrder) and (mqttbroker['serverid'] in serverids):
-                            sendValue = (readOrder['sendValue'] == True)
-                        else:
-                            sendValue = False
+        #Add Production (Energymeters) to MQTT Message (We take the Transport ID as nr
+        payload = payload + '"Production":['
+        for device in config['devices']:
+            for ro in config['readorders']:
+                if (device['transportid'] == ro['transportid']) & (device.get('name', 'PQube3e power quality meter') == "PQube3e power quality meter"):
+                    if (ro['name'] == 'Active Node Power'):
+                        payload = payload + ('{"nr":'+str(device['transportid'])+', "Power": '+str(ro.get('value', 0))+'},')
+        # Remove last comma
+        payload = payload[:-1]
+        payload = payload + '],'
 
-                        if active & sendValue & (int(readOrder['transportid']) == int(u['transportid'])):
-                            if read_order_count > 0:
-                                payload = payload + ','
-                            payload = payload + '"' + str(readOrder['name']) + '":' + str(readOrder['value'])
-                            read_order_count = read_order_count + 1
-                except Exception:
-                    logging.error('Exception send_mqtt_data to MQTT-Broker: ' + str(traceback.format_exc()))
-                finally:
-                    cfg.Config.getInstance().lock.release()
+        payload = payload + '"Node":[{"nr":1, "Power": 6221, "Current": [9016,9016,9016]}'
+        payload = payload + ', {"nr":2, "Power": 4321, "Current": [6262,6262,6262]}],'
 
-            payload = payload + '}}'
-            if read_order_count > 0:
-                logging.info('Sending MQTT-Data to serverid' + str(mqttbroker['serverid']))
-                publish_message(mqttbroker['serverid'], mqttbroker['publishtopic'], payload)
+        # EVChargers:
+        payload = payload + '"EVChargers":['
+        for device in config['devices']:
+            if device.get('name',
+                       'EV charger eCharge4Drivers : ABB fast charger') == "EV charger eCharge4Drivers : ABB fast charger":
+                soc = 0
+                status = 0
+                power = 0
+                dc_voltage = 0
+                dc_current = 0
+                power_max = 999
+                energy = 0
+                current = [0, 0, 0]
+                for ro in config['readorders']:
+                    if (device['transportid'] == ro['transportid']):
+
+
+                        if (ro['name'] == 'State of charge value of the EV battery'):
+                            soc = float(ro.get('value', 0))
+                        if (ro['name'] == 'Status'):
+                            status = float(ro.get('value', 0))
+                        if (ro['name'] == 'DC voltage'):
+                            dc_voltage = float(ro.get('value', 0))
+                        if (ro['name'] == 'DC current'):
+                            dc_current = float(ro.get('value', 0))
+                            current[0] = dc_current / math.sqrt(3)
+                            current[1] = dc_current / math.sqrt(3)
+                            current[2] = dc_current / math.sqrt(3)
+                        if (ro['name'] == 'Energy to EV battery during charging session'):
+                            energy = float(ro.get('value', 0))
+
+
+
+                payload = payload + ('{"nr":' + str(device['transportid']) + ', "Status": ' + status + ', "Power": ' + power + ', "Power_max": '+ power_max +', "Energy": ' + energy + ', "Current": ['+ current[0] +',' + current[1] + ','+ current[2] +'], "SOC": ' + soc + '},')
+
+
+            if device.get('name',
+                       'EV charger eCharge4Drivers : ABB fast charger') == "ABB Terra AC W22-T-RD-MC-0":
+                soc = 0
+                status = 0
+                power = 0
+                dc_voltage = 0
+                dc_current = 0
+                power_max = 999
+                energy = 0
+                current = [0, 0, 0]
+                for ro in config['readorders']:
+                    if (device['transportid'] == ro['transportid']):
+                        if (ro['name'] == 'Charging state'):
+                            status = float(ro.get('value', 0))
+                        if (ro['name'] == 'Active Power'):
+                            power = float(ro.get('value', 0))
+                        if (ro['name'] == 'Charging current phase 1'):
+                            current[0] = float(ro.get('value', 0))
+                        if (ro['name'] == 'Charging current phase 2'):
+                            current[1] = float(ro.get('value', 0))
+                        if (ro['name'] == 'Charging current phase 3'):
+                            current[2] = float(ro.get('value', 0))
+                        if (ro['name'] == 'Energy delivered in charging session'):
+                            energy = float(ro.get('value', 0))
+
+
+
+                payload = payload + ('{"nr":' + str(device['transportid']) + ', "Status": '+status+', "Power": ' + power + ', "Power_max": '+ power_max +', "Energy": ' + energy + ', "Current": ['+ current[0] +',' + current[1] + ','+ current[2] +']},')
+
+
+
+        #payload = payload + '{"nr":1, "Status": 2,"Power": 6557, "Power_max": 8000, "Energy": 15665, "Current": [9503,9503,9503]},'
+        #payload = payload + '{"nr":1, "Status": 2,"Power": 6557, "Power_max": 8000, "Energy": 15665, "Current": [9503,9503,9503], "SOC": 5423}'
+
+
+
+        # Remove last comma
+        payload = payload[:-1]
+        payload = payload + ']}'
+
+
+
+        logging.info('Sending MQTT-Data to serverid' + str(mqttbroker['serverid']))
+        publish_message(mqttbroker['serverid'], mqttbroker['publishtopic'], payload)
 
 
 def execute_write_order(payload):
