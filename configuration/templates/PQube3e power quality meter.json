@@ -54,7 +54,7 @@
   ],
   "readorders": [
     {
-      "address": 12152,
+      "address": 12153,
       "name": "Active Node Power",
       "bits": 32,
       "datatype": "float",
@@ -72,7 +72,7 @@
       "multiplefactor": 1
     },
     {
-      "address": 11944,
+      "address": 11945,
       "name": "Current L1",
       "bits": 32,
       "datatype": "float",
@@ -90,7 +90,7 @@
       "multiplefactor": 1
     },
     {
-      "address": 11946,
+      "address": 11947,
       "name": "Current L2",
       "bits": 32,
       "datatype": "float",
@@ -108,7 +108,7 @@
       "multiplefactor": 1
     },
     {
-      "address": 11948,
+      "address": 11949,
       "name": "Current L3",
       "bits": 32,
       "datatype": "float",
@@ -126,7 +126,7 @@
       "multiplefactor": 1
     },
     {
-      "address": 7036,
+      "address": 7037,
       "name": "Active Grid Power",
       "bits": 32,
       "datatype": "float",
@@ -144,7 +144,7 @@
       "multiplefactor": 1
     },
     {
-      "address": 7060,
+      "address": 7061,
       "name": "Active Grid Energy",
       "bits": 32,
       "datatype": "float",

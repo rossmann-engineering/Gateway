@@ -366,7 +366,7 @@ def send_mqtt_data(disconnected=False, connected=False):
                             current[1] = float(ro.get('value', 0))
                         if ro['name'] == 'Current L3':
                             current[2] = float(ro.get('value', 0))
-                payload = payload + '"{"nr":' + str(device['transportid']) + ', "Power": ' + str(power) + ', "Current": ['+ str(current[0]) +','+ str(current[1]) +','+ str(current[2]) +']},'
+                payload = payload + '{"nr":' + str(device['transportid']) + ', "Power": ' + str(power) + ', "Current": ['+ str(current[0]) +','+ str(current[1]) +','+ str(current[2]) +']},'
         # Remove last comma
         if payload[-1] == ',':
             payload = payload[:-1]
