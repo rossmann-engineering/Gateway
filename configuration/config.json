@@ -24,6 +24,14 @@
     }
   ],
   "devices": [
+    {
+      "name": "PQube3e power quality meter",
+      "transportid": "1",
+      "type": "Modbus",
+      "ipaddress": "192.168.68.132",
+      "port": "502",
+      "unitidentifier": 1
+    }
   ],
   "modbuscommand": [
     {
@@ -40,18 +48,119 @@
     },
     {
       "functioncode": "Read Holding Registers",
-      "transportid": "2",
-      "startingaddress": 12152,
-      "quantity": 2
-    },
-    {
-      "functioncode": "Read Holding Registers",
-      "transportid": "2",
-      "startingaddress": 11944,
-      "quantity": 6
+      "transportid": "1",
+      "startingaddress": 7035,
+      "quantity": 7
     }
   ],
   "readorders": [
-
+    {
+      "address": 12152,
+      "name": "Active Node Power",
+      "bits": 32,
+      "datatype": "float",
+      "absolutethreshold": 0,
+      "transportid": "1",
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "signed": false,
+      "dataarea": "Holding Register",
+      "threshold": 0,
+      "serverid": [
+        "1"
+      ],
+      "multiplefactor": 0
+    },
+    {
+      "address": 11944,
+      "name": "Current L1",
+      "bits": 32,
+      "datatype": "float",
+      "absolutethreshold": 0,
+      "transportid": "1",
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "signed": false,
+      "dataarea": "Holding Register",
+      "threshold": 0,
+      "serverid": [
+        "1"
+      ],
+      "multiplefactor": 0
+    },
+    {
+      "address": 11946,
+      "name": "Current L2",
+      "bits": 32,
+      "datatype": "float",
+      "absolutethreshold": 0,
+      "transportid": "1",
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "signed": false,
+      "dataarea": "Holding Register",
+      "threshold": 0,
+      "serverid": [
+        "1"
+      ],
+      "multiplefactor": 0
+    },
+    {
+      "address": 11948,
+      "name": "Current L3",
+      "bits": 32,
+      "datatype": "float",
+      "absolutethreshold": 0,
+      "transportid": "1",
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "signed": false,
+      "dataarea": "Holding Register",
+      "threshold": 0,
+      "serverid": [
+        "1"
+      ],
+      "multiplefactor": 0
+    },
+    {
+      "address": 7036,
+      "name": "Active Grid Power",
+      "bits": 32,
+      "datatype": "float",
+      "absolutethreshold": 0,
+      "transportid": "1",
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "signed": false,
+      "dataarea": "Holding Register",
+      "threshold": 0,
+      "serverid": [
+        "1"
+      ],
+      "multiplefactor": 0
+    },
+    {
+      "address": 7060,
+      "name": "Active Grid Energy",
+      "bits": 32,
+      "datatype": "float",
+      "absolutethreshold": 0,
+      "transportid": "1",
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "signed": false,
+      "dataarea": "Holding Register",
+      "threshold": 0,
+      "serverid": [
+        "1"
+      ],
+      "multiplefactor": 0
+    }
   ]
 }
