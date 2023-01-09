@@ -353,7 +353,7 @@ def send_mqtt_data(disconnected=False, connected=False):
 
         for device in config['devices']:
             if device.get('name',
-                       'EV charger eCharge4Drivers : ABB fast charger') == "EV charger eCharge4Drivers : ABB fast charger":
+                       'EV charger eCharge4Drivers : ABB fast charger') == "PQube3e power quality meter":
                 power = 0
                 current = [0, 0, 0]
                 for ro in config['readorders']:
