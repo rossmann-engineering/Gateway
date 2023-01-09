@@ -48,8 +48,8 @@
     {
       "functioncode": "Read Holding Registers",
       "transportid": "config1",
-      "startingaddress": 7035,
-      "quantity": 7
+      "startingaddress": 7034,
+      "quantity": 40
     }
   ],
   "readorders": [

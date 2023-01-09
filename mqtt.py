@@ -347,8 +347,33 @@ def send_mqtt_data(disconnected=False, connected=False):
         payload = payload[:-1]
         payload = payload + '],'
 
-        payload = payload + '"Node":[{"nr":1, "Power": 6221, "Current": [9016,9016,9016]}'
-        payload = payload + ', {"nr":2, "Power": 4321, "Current": [6262,6262,6262]}],'
+
+        # Nodes
+        payload = payload + '"Node":['
+
+        for device in config['devices']:
+            if device.get('name',
+                       'EV charger eCharge4Drivers : ABB fast charger') == "EV charger eCharge4Drivers : ABB fast charger":
+                power = 0
+                current = [0, 0, 0]
+                for ro in config['readorders']:
+                    if (device['transportid'] == ro['transportid']):
+                        if (ro['name'] == 'Active Node Power'):
+                            power = float(ro.get('value', 0))
+                        if ro['name'] == 'Current L1':
+                            current[0] = float(ro.get('value', 0))
+                        if ro['name'] == 'Current L2':
+                            current[1] = float(ro.get('value', 0))
+                        if ro['name'] == 'Current L3':
+                            current[2] = float(ro.get('value', 0))
+                payload = payload + '"{"nr":' + str(device['transportid']) + ', "Power": ' + str(power) + ', "Current": ['+ str(current[0]) +','+ str(current[1]) +','+ str(current[2]) +']},'
+        # Remove last comma
+        if payload[-1] == ',':
+            payload = payload[:-1]
+        payload = payload + ']}'
+
+        #payload = payload + '"{"nr":1, "Power": 6221, "Current": [9016,9016,9016]}'
+        #payload = payload + ', {"nr":2, "Power": 4321, "Current": [6262,6262,6262]}],'
 
         # EVChargers:
         payload = payload + '"EVChargers":['
