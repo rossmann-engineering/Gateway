@@ -408,7 +408,7 @@ def send_mqtt_data(disconnected=False, connected=False):
 
 
 
-                payload = payload + ('{"nr":' + str(device['transportid']) + ', "Status": ' + status + ', "Power": ' + power + ', "Power_max": '+ power_max +', "Energy": ' + energy + ', "Current": ['+ current[0] +',' + current[1] + ','+ current[2] +'], "SOC": ' + soc + '},')
+                payload = payload + ('{"nr":' + str(device['transportid']) + ', "Status": ' + str(status) + ', "Power": ' + str(power) + ', "Power_max": '+ str(power_max) +', "Energy": ' + str(energy) + ', "Current": ['+ str(current[0]) +',' + str(current[1]) + ','+ str(current[2]) +'], "SOC": ' + str(soc) + '},')
 
 
             if device.get('name',
