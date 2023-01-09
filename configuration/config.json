@@ -66,6 +66,7 @@
       "registerintervaltime": 1,
       "signed": false,
       "dataarea": "Holding Register",
+      "swapregisters": true,
       "threshold": 0,
       "serverid": [
         "1"
