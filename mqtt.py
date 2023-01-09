@@ -370,7 +370,7 @@ def send_mqtt_data(disconnected=False, connected=False):
         # Remove last comma
         if payload[-1] == ',':
             payload = payload[:-1]
-        payload = payload + ']},'
+        payload = payload + '],'
 
         #payload = payload + '"{"nr":1, "Power": 6221, "Current": [9016,9016,9016]}'
         #payload = payload + ', {"nr":2, "Power": 4321, "Current": [6262,6262,6262]}],'
