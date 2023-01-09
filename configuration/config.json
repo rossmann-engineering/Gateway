@@ -50,7 +50,7 @@
       "functioncode": "Read Holding Registers",
       "transportid": "1",
       "startingaddress": 7034,
-      "quantity": 7
+      "quantity": 40
     }
   ],
   "readorders": [
