@@ -423,7 +423,8 @@ def send_mqtt_data(disconnected=False, connected=False):
 
 
         # Remove last comma
-        payload = payload[:-1]
+        if payload[-1] == ',':
+            payload = payload[:-1]
         payload = payload + ']}'
 
 
