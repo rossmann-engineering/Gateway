@@ -327,11 +327,12 @@ def send_mqtt_data(disconnected=False, connected=False):
         energy = 0
         for device in config['devices']:
             if (device.get('name', 'PQube3e power quality meter') == "PQube3e power quality meter"):
-                if (device['transportid'] == ro['transportid']) & (device.get('name', 'PQube3e power quality meter') == "PQube3e power quality meter"):
-                    if ro['name'] == 'Active Grid Power':
-                        power = float(ro.get('value', 0))
-                    elif ro['name'] == 'Active Grid Energy':
-                        energy = float(ro.get('value', 0))
+                for ro in config['readorders']:
+                    if (device['transportid'] == ro['transportid']) & (device.get('name', 'PQube3e power quality meter') == "PQube3e power quality meter"):
+                        if ro['name'] == 'Active Grid Power':
+                            power = float(ro.get('value', 0))
+                        elif ro['name'] == 'Active Grid Energy':
+                            energy = float(ro.get('value', 0))
 
         payload = payload + ', "Grid":{"Power":' + str(power) + ', "Energy": ' + str(energy) + '},'
 
