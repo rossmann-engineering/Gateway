@@ -20,12 +20,12 @@ class HelloClient:
 async def main(url, user, password, nodes):
 
     client = Client(url=url)
-    client.set_user(user)
-    client.set_password(password)
+    #client.set_user(user)
+    #client.set_password(password)
 
     packagedir = os.path.dirname(
         os.path.abspath(__file__))  # get the Package directory, from there we get the subdirectoties
-    directory = os.path.join(packagedir, 'certificates')  # Subdirectory
+    #directory = os.path.join(packagedir, 'certificates')  # Subdirectory
     #filename = os.path.join(directory, 'UaServerCpp@192.168.178.9 [3377E1809C827EAB87F9A5D22F2796BED0C436FB].der')
     #client.application_uri = "URI:urn:example.org:FreeOpcUa:python-opcua"
     #await client.load_client_certificate('my_cert.pem')
