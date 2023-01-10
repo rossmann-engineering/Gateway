@@ -330,20 +330,6 @@
         "1"
       ],
       "multiplefactor": 1
-    },
-    {
-      "address": "ns=6;s=::Outlet:SetBudget",
-      "name": "AC set Current setpoint",
-      "absolutethreshold": 0,
-      "transportid": "2",
-      "logmodbusdata": true,
-      "active": true,
-      "registerintervaltime": 1,
-      "threshold": 0,
-      "serverid": [
-        "1"
-      ],
-      "multiplefactor": 1
     }
   ]
 }
