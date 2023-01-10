@@ -380,35 +380,71 @@ def send_mqtt_data(disconnected=False, connected=False):
         for device in config['devices']:
             if device.get('name',
                        'EV charger eCharge4Drivers : ABB fast charger') == "EV charger eCharge4Drivers : ABB fast charger":
-                soc = 0
-                status = 0
-                power = 0
-                dc_voltage = 0
-                dc_current = 0
-                power_max = 999
-                energy = 0
-                current = [0, 0, 0]
+                soc1 = 0
+                status1 = 0
+                power1 = 0
+                dc_voltage1 = 0
+                dc_current1 = 0
+                power_max1 = 999
+                energy1= 0
+                current1 = [0, 0, 0]
+                soc2 = 0
+                status2 = 0
+                power2 = 0
+                dc_voltage2 = 0
+                dc_current2 = 0
+                power_max2 = 999
+                energy2 = 0
+                current2 = [0, 0, 0]
+                nr1 = 1
+                nr2 = 2
                 for ro in config['readorders']:
                     if (device['transportid'] == ro['transportid']):
 
 
-                        if (ro['name'] == 'State of charge value of the EV battery'):
-                            soc = float(ro.get('value', 0))
-                        if (ro['name'] == 'Status'):
-                            status = float(ro.get('value', 0))
-                        if (ro['name'] == 'DC voltage'):
-                            dc_voltage = float(ro.get('value', 0))
-                        if (ro['name'] == 'DC current'):
-                            dc_current = float(ro.get('value', 0))
-                            current[0] = dc_current / math.sqrt(3)
-                            current[1] = dc_current / math.sqrt(3)
-                            current[2] = dc_current / math.sqrt(3)
-                        if (ro['name'] == 'Energy to EV battery during charging session'):
-                            energy = float(ro.get('value', 0))
+                        if (ro['name'] == 'State of charge value of the EV battery outlet 1'):
+                            soc1 = float(ro.get('value', 0))
+                            nr1 = ro.get('nr', 1)
+                        if (ro['name'] == 'Status outlet 1'):
+                            status1 = float(ro.get('value', 0))
+                            nr1 = ro.get('nr', 1)
+                        if (ro['name'] == 'DC voltage outlet 1'):
+                            dc_voltage1 = float(ro.get('value', 0))
+                            nr1 = ro.get('nr', 1)
+                        if (ro['name'] == 'DC current outlet 1'):
+                            dc_current1 = float(ro.get('value', 0))
+                            current1[0] = dc_current / math.sqrt(3)
+                            current1[1] = dc_current / math.sqrt(3)
+                            current1[2] = dc_current / math.sqrt(3)
+                            nr1 = ro.get('nr', 1)
+                        if (ro['name'] == 'Energy to EV battery during charging session outlet 1'):
+                            energy1 = float(ro.get('value', 0))
+                            nr1 = ro.get('nr', 1)
+
+                        if (ro['name'] == 'State of charge value of the EV battery outlet 2'):
+                            soc2 = float(ro.get('value', 0))
+                            nr2 = ro.get('nr', 1)
+                        if (ro['name'] == 'Status outlet 2'):
+                            status2 = float(ro.get('value', 0))
+                            nr2 = ro.get('nr', 1)
+                        if (ro['name'] == 'DC voltage outlet 2'):
+                            dc_voltage2 = float(ro.get('value', 0))
+                            nr2 = ro.get('nr', 1)
+                        if (ro['name'] == 'DC current outlet 2'):
+                            dc_current2 = float(ro.get('value', 0))
+                            current2[0] = dc_current / math.sqrt(3)
+                            current2[1] = dc_current / math.sqrt(3)
+                            current2[2] = dc_current / math.sqrt(3)
+                            nr2 = ro.get('nr', 1)
+                        if (ro['name'] == 'Energy to EV battery during charging session outlet 2'):
+                            energy2 = float(ro.get('value', 0))
+                            nr2 = ro.get('nr', 1)
 
 
 
-                payload = payload + ('{"nr":' + str(device['transportid']) + ', "Status": ' + str(status) + ', "Power": ' + str(power) + ', "Power_max": '+ str(power_max) +', "Energy": ' + str(energy) + ', "Current": ['+ str(current[0]) +',' + str(current[1]) + ','+ str(current[2]) +'], "SOC": ' + str(soc) + '},')
+                payload = payload + ('{"nr":' + str(nr1) + ', "Status": ' + str(status1) + ', "Power": ' + str(power1) + ', "Power_max": '+ str(power_max1) +', "Energy": ' + str(energy1) + ', "Current": ['+ str(current1[0]) +',' + str(current1[1]) + ','+ str(current1[2]) +'], "SOC": ' + str(soc1) + '},')
+                payload = payload + ('{"nr":' + str(nr2) + ', "Status": ' + str(status2) + ', "Power": ' + str(power2) + ', "Power_max": '+ str(power_max2) +', "Energy": ' + str(energy2) + ', "Current": ['+ str(current2[0]) +',' + str(current2[1]) + ','+ str(current2[2]) +'], "SOC": ' + str(soc2) + '},')
+
 
 
             if device.get('name',
