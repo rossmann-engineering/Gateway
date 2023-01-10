@@ -167,6 +167,9 @@ while True:
                     readOrder['latestreading'] = readOrder['value']  # This is only for the webserver
 
             else:
+                if type(readOrder.get('value', 0)) is str:
+                    continue
+
                 if timeInAbsoluteSeconds >= readOrder['nextwakeup']:
                     readOrder['nextwakeup'] = readOrder['nextwakeup'] + interval
                     while readOrder['nextwakeup'] < timeInAbsoluteSeconds:
