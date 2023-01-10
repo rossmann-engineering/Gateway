@@ -94,9 +94,9 @@ class Clients(object):
     def on_connect(self, client, userdata, flags, rc):
         """ connect to mqtt """
         cfg.mqttconnectionlost = False
-
-        client.subscribe('v1/devices/me/rpc/request/+')
-        client.subscribe('v1/devices/me/attributes')
+        config = cfg.Config.getConfig()
+        client.subscribe(config['mqttbroker'][0]['subscribetopic'])
+        #client.subscribe('v1/devices/me/attributes')
         pass
 
     def on_disconnect(self, client, userdata, rc):
