@@ -9,6 +9,16 @@
       "init": 1
     },
     {
+      "name": "Charging Point 1 nr",
+      "variable": "config6",
+      "init": 1
+    },
+    {
+      "name": "Charging Point 2 nr",
+      "variable": "config7",
+      "init": 1
+    },
+    {
       "name": "Server ID",
       "variable": "config2",
       "init": 1
@@ -74,11 +84,12 @@
     },
     {
       "address": "ns=6;s=::Charger:OutletsView[1].Energy",
-      "name": "Energy to EV battery during charging session",
+      "name": "Energy to EV battery during charging session outlet 1",
       "absolutethreshold": 0,
       "transportid": "config1",
       "logmodbusdata": true,
       "active": true,
+      "nr": "config6",
       "registerintervaltime": 1,
       "threshold": 0,
       "serverid": [
@@ -88,11 +99,12 @@
     },
     {
       "address": "ns=6;s=::Charger:OutletsView[1].State",
-      "name": "Status",
+      "name": "Status outlet 1",
       "absolutethreshold": 0,
       "transportid": "config1",
       "logmodbusdata": true,
       "active": true,
+      "nr": "config6",
       "registerintervaltime": 1,
       "threshold": 0,
       "serverid": [
@@ -102,11 +114,12 @@
     },
     {
       "address": "ns=6;s=::Charger:OutletsView[1].Cable",
-      "name": "True when charge cable is detected",
+      "name": "True when charge cable is detected outlet 1",
       "absolutethreshold": 0,
       "transportid": "config1",
       "logmodbusdata": true,
       "active": true,
+      "nr": "config6",
       "registerintervaltime": 1,
       "threshold": 0,
       "serverid": [
@@ -116,11 +129,12 @@
     },
     {
       "address": "ns=6;s=::Charger:OutletsView[1].SOC",
-      "name": "State of charge value of the EV battery",
+      "name": "State of charge value of the EV battery outlet 1",
       "absolutethreshold": 0,
       "transportid": "config1",
       "logmodbusdata": true,
       "active": true,
+      "nr": "config6",
       "registerintervaltime": 1,
       "threshold": 0,
       "serverid": [
@@ -130,11 +144,12 @@
     },
     {
       "address": "ns=6;s=::Charger:OutletsView[1].VehMaxAmp",
-      "name": "Vehicle max. Amp",
+      "name": "Vehicle max. Amp outlet 1",
       "absolutethreshold": 0,
       "transportid": "config1",
       "logmodbusdata": true,
       "active": true,
+      "nr": "config6",
       "registerintervaltime": 1,
       "threshold": 0,
       "serverid": [
@@ -144,11 +159,12 @@
     },
     {
       "address": "ns=6;s=::Charger:OutletsView[1].VehMaxVolt",
-      "name": "Vehicle max. Volt",
+      "name": "Vehicle max. Volt outlet 1",
       "absolutethreshold": 0,
       "transportid": "config1",
       "logmodbusdata": true,
       "active": true,
+      "nr": "config6",
       "registerintervaltime": 1,
       "threshold": 0,
       "serverid": [
@@ -158,11 +174,12 @@
     },
     {
       "address": "ns=6;s=::Charger:OutletsView[1].Volt",
-      "name": "DC voltage",
+      "name": "DC voltage outlet 1",
       "absolutethreshold": 0,
       "transportid": "config1",
       "logmodbusdata": true,
       "active": true,
+      "nr": "config6",
       "registerintervaltime": 1,
       "threshold": 0,
       "serverid": [
@@ -172,11 +189,12 @@
     },
     {
       "address": "ns=6;s=::Charger:OutletsView[1].Amp",
-      "name": "DC current",
+      "name": "DC current outlet 1",
       "absolutethreshold": 0,
       "transportid": "config1",
       "logmodbusdata": true,
       "active": true,
+      "nr": "config6",
       "registerintervaltime": 1,
       "threshold": 0,
       "serverid": [
@@ -186,11 +204,147 @@
     },
     {
       "address": "ns=6;s=::Charger:OutletsView[1].Budget",
-      "name": "AC Current setpoint",
+      "name": "AC Current setpoint outlet 1",
       "absolutethreshold": 0,
       "transportid": "config1",
       "logmodbusdata": true,
       "active": true,
+      "nr": "config6",
+      "registerintervaltime": 1,
+      "threshold": 0,
+      "serverid": [
+        "config2"
+      ],
+      "multiplefactor": 1
+    },
+    {
+      "address": "ns=6;s=::Charger:OutletsView[1].Energy",
+      "name": "Energy to EV battery during charging session outlet 2",
+      "absolutethreshold": 0,
+      "transportid": "config1",
+      "logmodbusdata": true,
+      "active": true,
+      "nr": "config7",
+      "registerintervaltime": 1,
+      "threshold": 0,
+      "serverid": [
+        "config2"
+      ],
+      "multiplefactor": 1
+    },
+    {
+      "address": "ns=6;s=::Charger:OutletsView[1].State",
+      "name": "Status outlet 2",
+      "absolutethreshold": 0,
+      "transportid": "config1",
+      "logmodbusdata": true,
+      "active": true,
+      "nr": "config7",
+      "registerintervaltime": 1,
+      "threshold": 0,
+      "serverid": [
+        "config2"
+      ],
+      "multiplefactor": 1
+    },
+    {
+      "address": "ns=6;s=::Charger:OutletsView[1].Cable",
+      "name": "True when charge cable is detected outlet 2",
+      "absolutethreshold": 0,
+      "transportid": "config1",
+      "logmodbusdata": true,
+      "active": true,
+      "nr": "config7",
+      "registerintervaltime": 1,
+      "threshold": 0,
+      "serverid": [
+        "config2"
+      ],
+      "multiplefactor": 1
+    },
+    {
+      "address": "ns=6;s=::Charger:OutletsView[1].SOC",
+      "name": "State of charge value of the EV battery outlet 2",
+      "absolutethreshold": 0,
+      "transportid": "config1",
+      "logmodbusdata": true,
+      "active": true,
+      "nr": "config7",
+      "registerintervaltime": 1,
+      "threshold": 0,
+      "serverid": [
+        "config2"
+      ],
+      "multiplefactor": 1
+    },
+    {
+      "address": "ns=6;s=::Charger:OutletsView[1].VehMaxAmp",
+      "name": "Vehicle max. Amp outlet 2",
+      "absolutethreshold": 0,
+      "transportid": "config1",
+      "logmodbusdata": true,
+      "active": true,
+      "nr": "config7",
+      "registerintervaltime": 1,
+      "threshold": 0,
+      "serverid": [
+        "config2"
+      ],
+      "multiplefactor": 1
+    },
+    {
+      "address": "ns=6;s=::Charger:OutletsView[1].VehMaxVolt",
+      "name": "Vehicle max. Volt outlet 2",
+      "absolutethreshold": 0,
+      "transportid": "config1",
+      "logmodbusdata": true,
+      "active": true,
+      "nr": "config7",
+      "registerintervaltime": 1,
+      "threshold": 0,
+      "serverid": [
+        "config2"
+      ],
+      "multiplefactor": 1
+    },
+    {
+      "address": "ns=6;s=::Charger:OutletsView[1].Volt",
+      "name": "DC voltage outlet 2",
+      "absolutethreshold": 0,
+      "transportid": "config1",
+      "logmodbusdata": true,
+      "active": true,
+      "nr": "config7",
+      "registerintervaltime": 1,
+      "threshold": 0,
+      "serverid": [
+        "config2"
+      ],
+      "multiplefactor": 1
+    },
+    {
+      "address": "ns=6;s=::Charger:OutletsView[1].Amp",
+      "name": "DC current outlet 2",
+      "absolutethreshold": 0,
+      "transportid": "config1",
+      "logmodbusdata": true,
+      "active": true,
+      "nr": "config7",
+      "registerintervaltime": 1,
+      "threshold": 0,
+      "serverid": [
+        "config2"
+      ],
+      "multiplefactor": 1
+    },
+    {
+      "address": "ns=6;s=::Charger:OutletsView[1].Budget",
+      "name": "AC Current setpoint outlet 2",
+      "absolutethreshold": 0,
+      "transportid": "config1",
+      "logmodbusdata": true,
+      "active": true,
+      "nr": "config7",
       "registerintervaltime": 1,
       "threshold": 0,
       "serverid": [
