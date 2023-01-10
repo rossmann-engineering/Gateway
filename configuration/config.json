@@ -181,304 +181,6 @@
       "address": "ns=6;s=::Charger:ChargerView.SerialNr",
       "name": "SerialNr",
       "absolutethreshold": 0,
-      "transportid": "1",
-      "logmodbusdata": true,
-      "active": true,
-      "registerintervaltime": 1,
-      "threshold": 0,
-      "serverid": [
-        "1"
-      ],
-      "multiplefactor": 1
-    },
-    {
-      "address": "ns=6;s=::Charger:WD_Toggle",
-      "name": "Watchdog - toggle",
-      "absolutethreshold": 0,
-      "transportid": "1",
-      "logmodbusdata": true,
-      "active": true,
-      "registerintervaltime": 1,
-      "threshold": 0,
-      "serverid": [
-        "1"
-      ],
-      "multiplefactor": 1
-    },
-    {
-      "address": "ns=6;s=::Charger:OutletsView[1].Energy",
-      "name": "Energy to EV battery during charging session outlet 1",
-      "absolutethreshold": 0,
-      "transportid": "1",
-      "logmodbusdata": true,
-      "active": true,
-      "nr": "1",
-      "registerintervaltime": 1,
-      "threshold": 0,
-      "serverid": [
-        "1"
-      ],
-      "multiplefactor": 1
-    },
-    {
-      "address": "ns=6;s=::Charger:OutletsView[1].State",
-      "name": "Status outlet 1",
-      "absolutethreshold": 0,
-      "transportid": "1",
-      "logmodbusdata": true,
-      "active": true,
-      "nr": "1",
-      "registerintervaltime": 1,
-      "threshold": 0,
-      "serverid": [
-        "1"
-      ],
-      "multiplefactor": 1
-    },
-    {
-      "address": "ns=6;s=::Charger:OutletsView[1].Cable",
-      "name": "True when charge cable is detected outlet 1",
-      "absolutethreshold": 0,
-      "transportid": "1",
-      "logmodbusdata": true,
-      "active": true,
-      "nr": "1",
-      "registerintervaltime": 1,
-      "threshold": 0,
-      "serverid": [
-        "1"
-      ],
-      "multiplefactor": 1
-    },
-    {
-      "address": "ns=6;s=::Charger:OutletsView[1].SOC",
-      "name": "State of charge value of the EV battery outlet 1",
-      "absolutethreshold": 0,
-      "transportid": "1",
-      "logmodbusdata": true,
-      "active": true,
-      "nr": "1",
-      "registerintervaltime": 1,
-      "threshold": 0,
-      "serverid": [
-        "1"
-      ],
-      "multiplefactor": 1
-    },
-    {
-      "address": "ns=6;s=::Charger:OutletsView[1].VehMaxAmp",
-      "name": "Vehicle max. Amp outlet 1",
-      "absolutethreshold": 0,
-      "transportid": "1",
-      "logmodbusdata": true,
-      "active": true,
-      "nr": "1",
-      "registerintervaltime": 1,
-      "threshold": 0,
-      "serverid": [
-        "1"
-      ],
-      "multiplefactor": 1
-    },
-    {
-      "address": "ns=6;s=::Charger:OutletsView[1].VehMaxVolt",
-      "name": "Vehicle max. Volt outlet 1",
-      "absolutethreshold": 0,
-      "transportid": "1",
-      "logmodbusdata": true,
-      "active": true,
-      "nr": "1",
-      "registerintervaltime": 1,
-      "threshold": 0,
-      "serverid": [
-        "1"
-      ],
-      "multiplefactor": 1
-    },
-    {
-      "address": "ns=6;s=::Charger:OutletsView[1].Volt",
-      "name": "DC voltage outlet 1",
-      "absolutethreshold": 0,
-      "transportid": "1",
-      "logmodbusdata": true,
-      "active": true,
-      "nr": "1",
-      "registerintervaltime": 1,
-      "threshold": 0,
-      "serverid": [
-        "1"
-      ],
-      "multiplefactor": 1
-    },
-    {
-      "address": "ns=6;s=::Charger:OutletsView[1].Amp",
-      "name": "DC current outlet 1",
-      "absolutethreshold": 0,
-      "transportid": "1",
-      "logmodbusdata": true,
-      "active": true,
-      "nr": "1",
-      "registerintervaltime": 1,
-      "threshold": 0,
-      "serverid": [
-        "1"
-      ],
-      "multiplefactor": 1
-    },
-    {
-      "address": "ns=6;s=::Charger:OutletsView[1].Budget",
-      "name": "AC Current setpoint outlet 1",
-      "absolutethreshold": 0,
-      "transportid": "1",
-      "logmodbusdata": true,
-      "active": true,
-      "nr": "1",
-      "registerintervaltime": 1,
-      "threshold": 0,
-      "serverid": [
-        "1"
-      ],
-      "multiplefactor": 1
-    },
-    {
-      "address": "ns=6;s=::Charger:OutletsView[1].Energy",
-      "name": "Energy to EV battery during charging session outlet 2",
-      "absolutethreshold": 0,
-      "transportid": "1",
-      "logmodbusdata": true,
-      "active": true,
-      "nr": "1",
-      "registerintervaltime": 1,
-      "threshold": 0,
-      "serverid": [
-        "1"
-      ],
-      "multiplefactor": 1
-    },
-    {
-      "address": "ns=6;s=::Charger:OutletsView[1].State",
-      "name": "Status outlet 2",
-      "absolutethreshold": 0,
-      "transportid": "1",
-      "logmodbusdata": true,
-      "active": true,
-      "nr": "1",
-      "registerintervaltime": 1,
-      "threshold": 0,
-      "serverid": [
-        "1"
-      ],
-      "multiplefactor": 1
-    },
-    {
-      "address": "ns=6;s=::Charger:OutletsView[1].Cable",
-      "name": "True when charge cable is detected outlet 2",
-      "absolutethreshold": 0,
-      "transportid": "1",
-      "logmodbusdata": true,
-      "active": true,
-      "nr": "1",
-      "registerintervaltime": 1,
-      "threshold": 0,
-      "serverid": [
-        "1"
-      ],
-      "multiplefactor": 1
-    },
-    {
-      "address": "ns=6;s=::Charger:OutletsView[1].SOC",
-      "name": "State of charge value of the EV battery outlet 2",
-      "absolutethreshold": 0,
-      "transportid": "1",
-      "logmodbusdata": true,
-      "active": true,
-      "nr": "1",
-      "registerintervaltime": 1,
-      "threshold": 0,
-      "serverid": [
-        "1"
-      ],
-      "multiplefactor": 1
-    },
-    {
-      "address": "ns=6;s=::Charger:OutletsView[1].VehMaxAmp",
-      "name": "Vehicle max. Amp outlet 2",
-      "absolutethreshold": 0,
-      "transportid": "1",
-      "logmodbusdata": true,
-      "active": true,
-      "nr": "1",
-      "registerintervaltime": 1,
-      "threshold": 0,
-      "serverid": [
-        "1"
-      ],
-      "multiplefactor": 1
-    },
-    {
-      "address": "ns=6;s=::Charger:OutletsView[1].VehMaxVolt",
-      "name": "Vehicle max. Volt outlet 2",
-      "absolutethreshold": 0,
-      "transportid": "1",
-      "logmodbusdata": true,
-      "active": true,
-      "nr": "1",
-      "registerintervaltime": 1,
-      "threshold": 0,
-      "serverid": [
-        "1"
-      ],
-      "multiplefactor": 1
-    },
-    {
-      "address": "ns=6;s=::Charger:OutletsView[1].Volt",
-      "name": "DC voltage outlet 2",
-      "absolutethreshold": 0,
-      "transportid": "1",
-      "logmodbusdata": true,
-      "active": true,
-      "nr": "1",
-      "registerintervaltime": 1,
-      "threshold": 0,
-      "serverid": [
-        "1"
-      ],
-      "multiplefactor": 1
-    },
-    {
-      "address": "ns=6;s=::Charger:OutletsView[1].Amp",
-      "name": "DC current outlet 2",
-      "absolutethreshold": 0,
-      "transportid": "1",
-      "logmodbusdata": true,
-      "active": true,
-      "nr": "1",
-      "registerintervaltime": 1,
-      "threshold": 0,
-      "serverid": [
-        "1"
-      ],
-      "multiplefactor": 1
-    },
-    {
-      "address": "ns=6;s=::Charger:OutletsView[1].Budget",
-      "name": "AC Current setpoint outlet 2",
-      "absolutethreshold": 0,
-      "transportid": "1",
-      "logmodbusdata": true,
-      "active": true,
-      "nr": "1",
-      "registerintervaltime": 1,
-      "threshold": 0,
-      "serverid": [
-        "1"
-      ],
-      "multiplefactor": 1
-    },
-    {
-      "address": "ns=6;s=::Charger:ChargerView.SerialNr",
-      "name": "SerialNr",
-      "absolutethreshold": 0,
       "transportid": "2",
       "logmodbusdata": true,
       "active": true,
@@ -645,7 +347,7 @@
       "transportid": "2",
       "logmodbusdata": true,
       "active": true,
-      "nr": "1",
+      "nr": "2",
       "registerintervaltime": 1,
       "threshold": 0,
       "serverid": [
@@ -660,7 +362,7 @@
       "transportid": "2",
       "logmodbusdata": true,
       "active": true,
-      "nr": "1",
+      "nr": "2",
       "registerintervaltime": 1,
       "threshold": 0,
       "serverid": [
@@ -675,7 +377,7 @@
       "transportid": "2",
       "logmodbusdata": true,
       "active": true,
-      "nr": "1",
+      "nr": "2",
       "registerintervaltime": 1,
       "threshold": 0,
       "serverid": [
@@ -690,7 +392,7 @@
       "transportid": "2",
       "logmodbusdata": true,
       "active": true,
-      "nr": "1",
+      "nr": "2",
       "registerintervaltime": 1,
       "threshold": 0,
       "serverid": [
@@ -705,7 +407,7 @@
       "transportid": "2",
       "logmodbusdata": true,
       "active": true,
-      "nr": "1",
+      "nr": "2",
       "registerintervaltime": 1,
       "threshold": 0,
       "serverid": [
@@ -720,7 +422,7 @@
       "transportid": "2",
       "logmodbusdata": true,
       "active": true,
-      "nr": "1",
+      "nr": "2",
       "registerintervaltime": 1,
       "threshold": 0,
       "serverid": [
@@ -735,7 +437,7 @@
       "transportid": "2",
       "logmodbusdata": true,
       "active": true,
-      "nr": "1",
+      "nr": "2",
       "registerintervaltime": 1,
       "threshold": 0,
       "serverid": [
@@ -750,7 +452,7 @@
       "transportid": "2",
       "logmodbusdata": true,
       "active": true,
-      "nr": "1",
+      "nr": "2",
       "registerintervaltime": 1,
       "threshold": 0,
       "serverid": [
@@ -765,7 +467,7 @@
       "transportid": "2",
       "logmodbusdata": true,
       "active": true,
-      "nr": "1",
+      "nr": "2",
       "registerintervaltime": 1,
       "threshold": 0,
       "serverid": [
