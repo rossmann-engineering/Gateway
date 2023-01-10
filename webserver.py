@@ -336,44 +336,46 @@ def index3():
                         cfg.Config.getConfig()['devices'].append(device)
                         cfg.Config.getInstance().write_config()
 
-                for command in template.get('modbuscommand', list()):
-                    #Search for modbuscommand
-                    for k, v in command.items():
-                        if 'config' in str(v):
-                            placeholder = v
-                            command[k] = request.form[placeholder]
-                    # Check if the command id already exist
-                    exists = False
-                    for dev in cfg.Config.getConfig()['modbuscommand']:
-                        if (str(dev['functioncode']) == str(command['functioncode']))\
-                                and (str(dev['transportid']) == str(command['transportid']))\
-                                and (str(dev['startingaddress']) == str(command['startingaddress'])):
-                            exists = True
-                    if not exists:
-                        cfg.Config.getConfig()['modbuscommand'].append(command)
-                        cfg.Config.getInstance().write_config()
+                if not exists:
 
-                for ro in template['readorders']:
-                    #Search for modbuscommand
-                    for k, v in ro.items():
-                        if 'config' in str(v):
-                            placeholder = v
-                            if type(ro[k]) is not list:
-                                ro[k] = request.form[placeholder]
-                            else:
-                                for i in range(len(ro[k])):
-                                    if 'config' in ro[k][i]:
-                                        ro[k][i] = request.form[placeholder[i]]
-                    # Check if the command id already exist
-                    exists = False
-                    for readorder in cfg.Config.getConfig()['readorders']:
-                        if (str(readorder['address']) == str(ro['address']))\
-                                and (str(readorder['name']) == str(ro['name']))\
-                                and (str(readorder['transportid']) == str(ro['transportid'])):
-                            exists = True
-                    if not exists:
-                        cfg.Config.getConfig()['readorders'].append(ro)
-                        cfg.Config.getInstance().write_config()
+                    for command in template.get('modbuscommand', list()):
+                        #Search for modbuscommand
+                        for k, v in command.items():
+                            if 'config' in str(v):
+                                placeholder = v
+                                command[k] = request.form[placeholder]
+                        # Check if the command id already exist
+                        exists = False
+                        for dev in cfg.Config.getConfig()['modbuscommand']:
+                            if (str(dev['functioncode']) == str(command['functioncode']))\
+                                    and (str(dev['transportid']) == str(command['transportid']))\
+                                    and (str(dev['startingaddress']) == str(command['startingaddress'])):
+                                exists = True
+                        if not exists:
+                            cfg.Config.getConfig()['modbuscommand'].append(command)
+                            cfg.Config.getInstance().write_config()
+
+                    for ro in template['readorders']:
+                        #Search for modbuscommand
+                        for k, v in ro.items():
+                            if 'config' in str(v):
+                                placeholder = v
+                                if type(ro[k]) is not list:
+                                    ro[k] = request.form[placeholder]
+                                else:
+                                    for i in range(len(ro[k])):
+                                        if 'config' in ro[k][i]:
+                                            ro[k][i] = request.form[placeholder[i]]
+                        # Check if the command id already exist
+                        exists = False
+                        for readorder in cfg.Config.getConfig()['readorders']:
+                            if (str(readorder['address']) == str(ro['address']))\
+                                    and (str(readorder['name']) == str(ro['name']))\
+                                    and (str(readorder['transportid']) == str(ro['transportid'])):
+                                exists = True
+                        if not exists:
+                            cfg.Config.getConfig()['readorders'].append(ro)
+                            cfg.Config.getInstance().write_config()
 
 
 
