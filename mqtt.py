@@ -413,9 +413,9 @@ def send_mqtt_data(disconnected=False, connected=False):
                             nr1 = ro.get('nr', 1)
                         if (ro['name'] == 'DC current outlet 1'):
                             dc_current1 = float(ro.get('value', 0))
-                            current1[0] = dc_current / math.sqrt(3)
-                            current1[1] = dc_current / math.sqrt(3)
-                            current1[2] = dc_current / math.sqrt(3)
+                            current1[0] = dc_current1 / math.sqrt(3)
+                            current1[1] = dc_current1 / math.sqrt(3)
+                            current1[2] = dc_current1 / math.sqrt(3)
                             nr1 = ro.get('nr', 1)
                         if (ro['name'] == 'Energy to EV battery during charging session outlet 1'):
                             energy1 = float(ro.get('value', 0))
@@ -432,9 +432,9 @@ def send_mqtt_data(disconnected=False, connected=False):
                             nr2 = ro.get('nr', 1)
                         if (ro['name'] == 'DC current outlet 2'):
                             dc_current2 = float(ro.get('value', 0))
-                            current2[0] = dc_current / math.sqrt(3)
-                            current2[1] = dc_current / math.sqrt(3)
-                            current2[2] = dc_current / math.sqrt(3)
+                            current2[0] = dc_current2 / math.sqrt(3)
+                            current2[1] = dc_current2 / math.sqrt(3)
+                            current2[2] = dc_current2 / math.sqrt(3)
                             nr2 = ro.get('nr', 1)
                         if (ro['name'] == 'Energy to EV battery during charging session outlet 2'):
                             energy2 = float(ro.get('value', 0))
