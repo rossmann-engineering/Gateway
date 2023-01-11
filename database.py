@@ -55,7 +55,6 @@ def add_daily_value (conn, serverid, tag, value):
     try:
         moment = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:00")
         cursor = conn.cursor()
-        cursor.execute('BEGIN PENDING')
         cursor.execute("INSERT INTO dailycache(moment,serverid,tag,value) VALUES(?,?,?,?)",
                        (moment, serverid, tag, value))
         conn.commit()
@@ -77,7 +76,6 @@ def add_message_queue(conn, moment, serverid, topic, payload):
     """
     try:
         cursor = conn.cursor()
-        cursor.execute('BEGIN PENDING')
         cursor.execute("INSERT INTO mqttuploads(moment,serverid,topic,payload) VALUES(?,?,?,?)",
                        (moment.strftime("%Y-%m-%d %H:%M:00"), serverid, topic, payload))
         conn.commit()
@@ -105,7 +103,6 @@ def get_daily_values(conn, tag, serverid):
     """
     try:
         cursor = conn.cursor()
-        cursor.execute('BEGIN SHARED')
         cursor.execute("SELECT rowid, moment ,serverid ,tag,value FROM dailycache WHERE tag='"+str(tag)+ "' AND serverid=" + str(serverid) + " ORDER by rowid")
         data = cursor.fetchall()
         returnvalue = dict()
@@ -129,7 +126,6 @@ def get_message_queue(conn, serverid):
     """
     try:
         cursor = conn.cursor()
-        cursor.execute('BEGIN SHARED')
         cursor.execute("SELECT rowid,moment,serverid,topic,payload FROM mqttuploads WHERE serverid="+str(serverid)+" ORDER by rowid")
         data = cursor.fetchall()
         returnvalue = list()
@@ -149,7 +145,6 @@ def delete_message_queue(conn, rowid):
     """
     try:
         cursor = conn.cursor()
-        cursor.execute('BEGIN PENDING')
         cursor.execute("DELETE FROM mqttuploads WHERE rowid=?", (rowid, ))
         conn.commit()
         cursor.close()
