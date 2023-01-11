@@ -11,6 +11,7 @@ def connect(db_name, type=''):
     """
 
     conn = sqlite3.connect(db_name)
+
     conn.row_factory = sqlite3.Row
     return conn
 
@@ -103,7 +104,7 @@ def get_daily_values(conn, tag, serverid):
     """
     try:
         cursor = conn.cursor()
-        cursor.execute("SELECT rowid, moment ,serverid ,tag,value FROM dailycache WHERE tag='"+str(tag)+ "' AND serverid=" + str(serverid) + " ORDER by rowid")
+        cursor.execute("SELECT rowid, moment ,serverid ,tag,value FROM dailycache WHERE tag='"+str(tag)+ "' AND serverid=" + str(serverid) + " ORDER by rowid DESC LIMIT 1")
         data = cursor.fetchall()
         returnvalue = dict()
         value = list()
