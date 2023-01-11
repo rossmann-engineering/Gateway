@@ -106,7 +106,8 @@ def execute_readorders():
             values_to_read = list()
             for ro in config['readorders']:
                 if int(device['transportid']) == int(ro['transportid']):
-                    values_to_read.append(ro)
+                    if ro.get('active', True):
+                        values_to_read.append(ro)
             try:
                 asyncio.run(opc_ua.main('opc.tcp://' + device['ipaddress'] + ':' + device['port'], device['user'], device['password'], values_to_read))
             except:
