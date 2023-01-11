@@ -18,7 +18,7 @@ def run():
                 if device['transportid'] == watchdog_to_plc['transportid']:
 
                     asyncio.run(opc_ua.main('opc.tcp://' + device['ipaddress'] + ':' + device['port'], device['user'],
-                                            device['password'], [watchdog_to_plc]))
+                                            device['password'], [watchdog_to_plc], write=True))
 
             time.sleep(5)
         except Exception:
