@@ -103,6 +103,7 @@ def get_daily_values(conn, tag, serverid):
     """
     try:
         cursor = conn.cursor()
+        conn.execute('BEGIN SHARED')
         cursor.execute("SELECT rowid, moment ,serverid ,tag,value FROM dailycache WHERE tag='"+str(tag)+ "' AND serverid=" + str(serverid) + " ORDER by rowid")
         data = cursor.fetchall()
         returnvalue = dict()
