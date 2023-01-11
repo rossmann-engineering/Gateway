@@ -62,7 +62,7 @@ async def main(url, user, password, nodes, write=False):
                 else:
                     #await child.set_attribute(node['value'], asyncio.DataValue(True))
                     #await child.set_value(node['value'])
-                    dv = ua.DataValue(ua.Variant(node['value'], ua.VariantType.Float))
+                    dv = ua.DataValue(ua.Variant(float(node['value']), ua.VariantType.Float))
                     await child.set_value(dv)
 
         #await child.set_value(42)
