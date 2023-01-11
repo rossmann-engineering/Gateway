@@ -60,8 +60,8 @@ async def main(url, user, password, nodes, write=False):
                 if not write:
                     node['value'] = await child.get_value()
                 else:
-                    await child.set_attribute(node['value'], asyncio.DataValue(True))
-                    #await child.set_value(node['value'])
+                    #await child.set_attribute(node['value'], asyncio.DataValue(True))
+                    await child.set_value(node['value'])
 
         #await child.set_value(42)
         #print(await child.get_value())
