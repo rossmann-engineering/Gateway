@@ -1,6 +1,7 @@
 import asyncio
 import logging
 import os
+import datetime
 
 from asyncua import Client
 from asyncua.crypto.security_policies import SecurityPolicyBasic256Sha256, SecurityPolicyBasic256
@@ -59,6 +60,8 @@ async def main(url, user, password, nodes, write=False):
                 if not write:
                     node['value'] = await child.get_value()
                 else:
+                    child.ServerTimestamp = datetime.now()
+                    child.SourceTimestamp = datetime.now()
                     await child.set_value(node['value'])
 
         #await child.set_value(42)
