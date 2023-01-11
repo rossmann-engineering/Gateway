@@ -3,7 +3,7 @@ import logging
 import os
 import datetime
 
-from asyncua import Client
+from asyncua import Client, ua
 from asyncua.crypto.security_policies import SecurityPolicyBasic256Sha256, SecurityPolicyBasic256
 
 class HelloClient:
@@ -61,7 +61,9 @@ async def main(url, user, password, nodes, write=False):
                     node['value'] = await child.get_value()
                 else:
                     #await child.set_attribute(node['value'], asyncio.DataValue(True))
-                    await child.set_value(node['value'])
+                    #await child.set_value(node['value'])
+                    dv = ua.DataValue(ua.Variant(node['value'], ua.VariantType.Double))
+                    await child.set_value(dv)
 
         #await child.set_value(42)
         #print(await child.get_value())
