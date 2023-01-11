@@ -17,7 +17,7 @@ class HelloClient:
         await self.client.disconnect()
 
 
-async def main(url, user, password, nodes):
+async def main(url, user, password, nodes, write=False):
     logging.getLogger('asyncio').setLevel(logging.ERROR)
 
     client = Client(url=url)
@@ -56,7 +56,10 @@ async def main(url, user, password, nodes):
                 print(await child.get_value())
             else:
                 child = client.get_node(node['address'])
-                node['value'] = await child.get_value()
+                if not write:
+                    node['value'] = await child.get_value()
+                else:
+                    await child.set_value()
 
         #await child.set_value(42)
         #print(await child.get_value())
