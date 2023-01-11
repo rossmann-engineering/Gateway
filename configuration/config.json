@@ -41,6 +41,15 @@
       "port": "4840",
       "password": "Peachbarrow793!",
       "user": "sr"
+    },
+    {
+      "name": "Phoenix Contact PLCnext AXC F2152",
+      "transportid": "3",
+      "type": "opcua",
+      "ipaddress": "192.168.71.5",
+      "port": "4840",
+      "password": "Peachbarrow793!",
+      "user": "sr"
     }
   ],
   "modbuscommand": [
@@ -475,6 +484,35 @@
         "1"
       ],
       "multiplefactor": 1
+    },
+    {
+      "address": "ns=5;s=Arp.Plc.Eclr/OPC01_EV21.EV21_SC2EV_uiWatchdog",
+      "name": "Watchdog from PLC",
+      "absolutethreshold": 0,
+      "transportid": "3",
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "threshold": 0,
+      "serverid": [
+        "1"
+      ],
+      "multiplefactor": 1
+    },
+    {
+      "address": "ns=5;s=Arp.Plc.Eclr/OPC01_EV21.EV21_EV2SC_uiWatchdog",
+      "name": "Watchdog to PLC",
+      "absolutethreshold": 0,
+      "transportid": "3",
+      "logmodbusdata": false,
+      "active": false,
+      "registerintervaltime": 1,
+      "threshold": 0,
+      "serverid": [
+        "1"
+      ],
+      "multiplefactor": 1,
+      "value": 0
     }
   ]
 }

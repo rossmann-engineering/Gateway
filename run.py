@@ -19,6 +19,7 @@ import logging
 import os, errno
 import pos_edge
 import datalogger
+import logic
 
 # ------------------------- Initiate logging Start
 packagedir = os.path.dirname(
@@ -69,6 +70,9 @@ if len(sys.argv) > 1:
 
 thread = threading.Thread(target=webserver.start, args=())
 thread.start()
+
+thread2 = threading.Thread(target=logic.run, args=())
+thread2.start()
 
 if len(config.get('mqttbroker', list())) > 0:
     thread4 = threading.Thread(target=mqtt.Clients.getInstance, args=())

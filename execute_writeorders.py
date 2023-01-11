@@ -70,7 +70,5 @@ def execute_writeorders():
                                         'Unable to Write to Modbus Register : ' + str(traceback.format_exc()))
                                 finally:
                                     modbusClient.close()
-
-                            break;
-
-                    break;
+                            break
+                    break
