@@ -20,6 +20,8 @@ def run():
                     asyncio.run(opc_ua.main('opc.tcp://' + device['ipaddress'] + ':' + device['port'], device['user'],
                                             device['password'], [watchdog_to_plc], write=True))
 
-            time.sleep(5)
+
         except Exception:
             logging.error('Exception in Logic: ' + str(traceback.format_exc()))
+        finally:
+            time.sleep(30)
