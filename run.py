@@ -57,6 +57,10 @@ handler2.setLevel(logging.ERROR)
 logging.getLogger().addHandler(handler2)
 handler2.setFormatter(formatter1)
 
+logging.getLogger('asyncio').setLevel(logging.CRITICAL)
+logging.getLogger('asyncua').setLevel(logging.CRITICAL)
+
+
 # ------------------------- Initiate logging End
 
 

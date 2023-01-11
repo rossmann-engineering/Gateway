@@ -19,7 +19,7 @@ class HelloClient:
 
 
 async def main(url, user, password, nodes, write=False):
-    logging.getLogger('asyncio').setLevel(logging.CRITICAL)
+
 
     client = Client(url=url)
     #client.set_user(user)
