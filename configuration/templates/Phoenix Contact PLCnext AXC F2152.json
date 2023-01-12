@@ -28,7 +28,7 @@
       "transportid": "config1",
       "type": "opcua",
       "ipaddress": "config3",
-      "port": "4840",
+      "port": "4840"
     }
   ],
   "readorders": [
