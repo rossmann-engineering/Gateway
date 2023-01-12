@@ -17,16 +17,6 @@
       "name": "IP Address",
       "variable": "config3",
       "init": "192.168.71.5"
-    },
-    {
-      "name": "User",
-      "variable": "config4",
-      "init": "sr"
-    },
-    {
-      "name": "Passsword",
-      "variable": "config5",
-      "init": "Peachbarrow793!"
     }
   ],
   "mqttbroker": [
@@ -39,8 +29,6 @@
       "type": "opcua",
       "ipaddress": "config3",
       "port": "4840",
-      "password": "config5",
-      "user": "config4"
     }
   ],
   "readorders": [

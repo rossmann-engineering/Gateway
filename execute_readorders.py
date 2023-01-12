@@ -109,7 +109,7 @@ def execute_readorders():
                     if ro.get('active', True):
                         values_to_read.append(ro)
             try:
-                asyncio.run(opc_ua.main('opc.tcp://' + device['ipaddress'] + ':' + device['port'], device['user'], device['password'], values_to_read))
+                asyncio.run(opc_ua.main('opc.tcp://' + device['ipaddress'] + ':' + device['port'], '', '', values_to_read))
             except:
                 logging.error('Unable to read from OPC-UA Server: ' + str(traceback.format_exc()))
 
