@@ -1,7 +1,7 @@
 {
   "readinterval": 2.0,
   "basicinterval": 60.0,
-  "loggingmultiplier": 1,
+  "loggingmultiplier": 10,
   "loglevel": "debug",
   "emailregisterlogfiles": "",
   "emailerrornotification": "",
