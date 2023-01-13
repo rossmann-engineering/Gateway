@@ -13,6 +13,8 @@ import json
 import ModbusClient
 import ssl
 import math
+import opc_ua
+import asyncio
 
 
 class Clients(object):
@@ -457,24 +459,31 @@ def send_mqtt_data(disconnected=False, connected=False):
                 power_max = 999
                 energy = 0
                 current = [0, 0, 0]
+                nr = 1
                 for ro in config['readorders']:
                     if (device['transportid'] == ro['transportid']):
                         if (ro['name'] == 'Charging state'):
+                            nr = ro.get('nr', 1)
                             status = float(ro.get('value', 0))
                         if (ro['name'] == 'Active Power'):
+                            nr = ro.get('nr', 1)
                             power = float(ro.get('value', 0))
                         if (ro['name'] == 'Charging current phase 1'):
+                            nr = ro.get('nr', 1)
                             current[0] = float(ro.get('value', 0))
                         if (ro['name'] == 'Charging current phase 2'):
+                            nr = ro.get('nr', 1)
                             current[1] = float(ro.get('value', 0))
                         if (ro['name'] == 'Charging current phase 3'):
+                            nr = ro.get('nr', 1)
                             current[2] = float(ro.get('value', 0))
                         if (ro['name'] == 'Energy delivered in charging session'):
+                            nr = ro.get('nr', 1)
                             energy = float(ro.get('value', 0))
 
 
 
-                payload = payload + ('{"nr":' + str(device['transportid']) + ', "Status": '+status+', "Power": ' + power + ', "Power_max": '+ power_max +', "Energy": ' + energy + ', "Current": ['+ current[0] +',' + current[1] + ','+ current[2] +']},')
+                payload = payload + ('{"nr":' + str(nr) + ', "Status": '+str(status)+', "Power": ' + str(power) + ', "Power_max": '+ str(power_max) +', "Energy": ' + str(energy) + ', "Current": ['+ str(current[0]) +',' + str(current[1]) + ','+ str(current[2]) +']},')
 
 
 
@@ -496,79 +505,47 @@ def send_mqtt_data(disconnected=False, connected=False):
 
 def execute_write_order(payload):
     """
-    Example Message:{"method":"setValue","params":true}
-    or {"method":"toggle3","params":{"toggle3":1}
+    {
+    "EVChargers":[
+    {"nr":1,
+    "Current":6000,}, {"nr":2,
+    "Current":7000,} ]
+    }
     :param payload: message received from MQTT-Broker
     """
     d = json.loads(payload)
-    if 'method' not in d or 'params' not in d:
+    if 'EVChargers' not in d:
         return
-    method = d['method']
-    params = d['params']
     config = cfg.Config.getConfig()
     # Search for matching RadOrder
-    cfg.Config.getInstance().lock.acquire()
     try:
-        if (not isinstance(params,
-                           dict)):  # Convert "params" to dictionary if Message Format: {"method":"setValue","params":true}
-            converted_dict = dict()
-            converted_dict[method] = params
-            params = converted_dict
-        for param in params:
-            dict_key = param
-            dict_value = params[param]
-            for t in config['readorders']:
-                readOrder = dict(t)
-                if ('dataarea' in readOrder) & ('address' in readOrder):
-                    if (readOrder['name'] == str(dict_key)) and (readOrder['dataarea'] == "Holding Register"):
-                        if 'serialPort' in config['devices'][0]:
-                            modbusClient = ModbusClient.ModbusClient(str(config.Devices[0]['serialPort']))
-                        # This is Modbus-TCP
-                        if 'ipaddress' in config['devices'][0]:
-                            if not ('port' in config['devices'][0]):
-                                config['devices'][0]['port'] = 502
-                            modbusClient = ModbusClient.ModbusClient(str(config['devices'][0]['ipaddress']),
-                                                                     int(config['devices'][0]['port']))
-                        # if not isinstance(params, dict):      # Message Format: {"method":"setValue","params":true}
-                        #    value = int(params)               # commented, because Message Format is converted at beginning
-                        # else:                                 # Message Format: {"method":"toggle3","params":{"toggle3":1}
-                        value = int(dict_value)
-                        if 'staticvalue' in readOrder:
-                            value = readOrder['staticvalue']
-                        valueChanged = False
-                        if 'value' in readOrder:
-                            valueChanged = True  # (value != readOrder['value'])
-                        else:
-                            valueChanged = True
-                        if valueChanged:
-                            # This is Modbus-RTU
-                            if 'serialPort' in config['devices'][0]:
-                                modbusClient.Parity = (config['devices'][0]['parity'])
-                                modbusClient.Baudrate = (config['devices'][0]['baudrate'])
-                                modbusClient.Stopbits = (config['devices'][0]['stopbits'])
-                            if 'ipaddress' in config['devices'][0]:
-                                if not ('port' in config['devices'][0]):
-                                    config['devices']['port'] = 502
-                                modbusClient = ModbusClient.ModbusClient(
-                                    str(config['devices'][0]['ipaddress']),
-                                    int(config['devices'][0]['port']))
-                            if 'unitidentifier' in config['devices'][0]:
-                                modbusClient.UnitIdentifier = (config['devices'][0]['unitidentifier'])
-                            if not modbusClient.is_connected():
-                                modbusClient.connect()
-                        register = (readOrder['address'])
-                        if not ('multiplefactor' in readOrder):
-                            readOrder['multiplefactor'] = 1
-                        valueToWrite = int(round(value * readOrder['multiplefactor']))
-                        modbusClient.write_single_register(register - 1, valueToWrite)
-                        readOrder['value'] = value
+        for charger in d['EVChargers']:
+            for device in config['devices']:
+                # Modbus Device
+                if device.get('name',
+                              'EV charger eCharge4Drivers : ABB fast charger') == "ABB Terra AC W22-T-RD-MC-0":
+                    if charger['nr'] == device.get('nr', 1):
+                        valueToWrite =  charger['Current'] * 1000
+                        register = 16640
+                        modbus_registers = ModbusClient.ConvertDoubleToTwoRegisters(valueToWrite)
+                        modbus_client = ModbusClient.ModbusClient(device['ipaddress'], device['port'])
+                        modbus_client.write_multiple_registers(register-1, modbus_registers)
+
                         logging.info(
                             'Write Order Executed Value: ' + str(valueToWrite) + " Register: " + str(register))
+                if device.get('name',
+                              'EV charger eCharge4Drivers : ABB fast charger') == "EV charger eCharge4Drivers : ABB fast charger":
+                    if charger['nr'] == device.get('nr1', 1) | charger['nr'] == device.get('nr2', 1):
+                        valueToWrite = charger['Current']
+                        ro = next(
+                            (item for item in config['readorders'] if item["name"] == "SetBudget"), dict())
+                        ro['value'] = valueToWrite
+                        asyncio.run(opc_ua.main('opc.tcp://' + device['ipaddress'] + ':' + str(device['port']), '',
+                                                '', [ro], write=True))
+
     except Exception as e:
         logging.error('Exception Execute Write Order received from MQTT-Broker: ' + str(traceback.format_exc()))
         return
-    finally:
-        cfg.Config.getInstance().lock.release()
 
 
 def datetime_to_unix_timestamp(dt):

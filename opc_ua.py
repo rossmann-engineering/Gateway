@@ -62,8 +62,15 @@ async def main(url, user, password, nodes, write=False):
                 else:
                     #await child.set_attribute(node['value'], asyncio.DataValue(True))
                     #await child.set_value(node['value'])
-                    dv = ua.DataValue(ua.Variant(int(node['value']), ua.VariantType.UInt16))
-                    await child.set_value(dv)
+                    if node['name'] == 'Watchdog to PLC':
+                        dv = ua.DataValue(ua.Variant(int(node['value']), ua.VariantType.UInt16))
+                        await child.set_value(dv)
+                    elif node['name'] == 'SetBudget':
+                        child.call_method(node['address'], node['value'])
+
+
+        # Calling a method
+        #res = await client.nodes.objects.call_method(f"{nsidx}:ServerMethod", 5)
 
         #await child.set_value(42)
         #print(await child.get_value())

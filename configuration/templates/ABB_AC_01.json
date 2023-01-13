@@ -17,6 +17,11 @@
       "name": "IP Address",
       "variable": "config3",
       "init": "192.168.71.12"
+    },
+    {
+      "name": "Charging Point nr",
+      "variable": "config6",
+      "init": 1
     }
   ],
   "mqttbroker": [
@@ -27,8 +32,9 @@
       "name": "ABB Terra AC W22-T-RD-MC-0",
       "transportid": "config1",
       "type": "Modbus",
+      "nr": "config6",
       "ipaddress": "config3",
-      "port": "502",
+      "port": 502,
       "unitidentifier": 1
     }
   ],
@@ -38,18 +44,6 @@
       "transportid": "config1",
       "startingaddress": 16384,
       "quantity": 30
-    },
-    {
-      "functioncode": "Write Multiple Registers",
-      "transportid": "config1",
-      "startingaddress": 16640,
-      "quantity": 2
-    },
-    {
-      "functioncode": "Write Single Register",
-      "transportid": "config1",
-      "startingaddress": 16645,
-      "quantity": 1
     }
   ],
   "readorders": [
@@ -57,6 +51,7 @@
       "address": 16390,
       "name": "Max rated/settable current",
       "bits": 32,
+      "nr": "config6",
       "absolutethreshold": 0,
       "transportid": "config1",
       "logmodbusdata": true,
@@ -74,6 +69,7 @@
       "address": 16392,
       "name": "Error Code",
       "bits": 32,
+      "nr": "config6",
       "absolutethreshold": 0,
       "transportid": "config1",
       "logmodbusdata": true,
@@ -91,6 +87,7 @@
       "address": 16394,
       "name": "Socket lock state",
       "bits": 16,
+      "nr": "config6",
       "absolutethreshold": 0,
       "transportid": "config1",
       "logmodbusdata": true,
@@ -108,6 +105,7 @@
       "address": 16396,
       "name": "Charging state",
       "bits": 16,
+      "nr": "config6",
       "absolutethreshold": 0,
       "transportid": "config1",
       "logmodbusdata": true,
@@ -125,6 +123,7 @@
       "address": 16398,
       "name": "Current charging current limit",
       "bits": 32,
+      "nr": "config6",
       "absolutethreshold": 0,
       "transportid": "config1",
       "logmodbusdata": true,
@@ -142,6 +141,7 @@
       "address": 16400,
       "name": "Charging current phase 1",
       "bits": 32,
+      "nr": "config6",
       "absolutethreshold": 0,
       "transportid": "config1",
       "logmodbusdata": true,
@@ -159,6 +159,7 @@
       "address": 16402,
       "name": "Charging current phase 2",
       "bits": 32,
+      "nr": "config6",
       "absolutethreshold": 0,
       "transportid": "config1",
       "logmodbusdata": true,
@@ -176,6 +177,7 @@
       "address": 16404,
       "name": "Charging current phase 3",
       "bits": 32,
+      "nr": "config6",
       "absolutethreshold": 0,
       "transportid": "config1",
       "logmodbusdata": true,
@@ -193,6 +195,7 @@
       "address": 16412,
       "name": "Active Power",
       "bits": 32,
+      "nr": "config6",
       "absolutethreshold": 0,
       "transportid": "config1",
       "logmodbusdata": true,
@@ -210,6 +213,7 @@
       "address": 16414,
       "name": "Energy delivered in charging session",
       "bits": 32,
+      "nr": "config6",
       "absolutethreshold": 0,
       "transportid": "config1",
       "logmodbusdata": true,
@@ -227,6 +231,7 @@
       "address": 16640,
       "name": "Set charging current limit",
       "bits": 32,
+      "nr": "config6",
       "absolutethreshold": 0,
       "transportid": "config1",
       "logmodbusdata": false,
@@ -244,6 +249,7 @@
       "address": 16645,
       "name": "Start/Stop Charging Session",
       "bits": 16,
+      "nr": "config6",
       "absolutethreshold": 0,
       "transportid": "config1",
       "logmodbusdata": false,

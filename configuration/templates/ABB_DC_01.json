@@ -37,6 +37,8 @@
       "name": "EV charger eCharge4Drivers : ABB fast charger",
       "transportid": "config1",
       "type": "opcua",
+      "nr1": "config6",
+      "nr2": "config7",
       "ipaddress": "config3",
       "port": "4840"
     }
@@ -206,7 +208,22 @@
       "multiplefactor": 1
     },
     {
-      "address": "ns=6;s=::Charger:OutletsView[1].Energy",
+      "address": "ns=6;s=::Outlet:SetBudget",
+      "name": "SetBudget",
+      "absolutethreshold": 0,
+      "transportid": "config1",
+      "logmodbusdata": false,
+      "active": false,
+      "nr": "config6",
+      "registerintervaltime": 1,
+      "threshold": 0,
+      "serverid": [
+        "config2"
+      ],
+      "multiplefactor": 1
+    },
+    {
+      "address": "ns=6;s=::Charger:OutletsView[2].Energy",
       "name": "Energy to EV battery during charging session outlet 2",
       "absolutethreshold": 0,
       "transportid": "config1",
@@ -221,7 +238,7 @@
       "multiplefactor": 1
     },
     {
-      "address": "ns=6;s=::Charger:OutletsView[1].State",
+      "address": "ns=6;s=::Charger:OutletsView[2].State",
       "name": "Status outlet 2",
       "absolutethreshold": 0,
       "transportid": "config1",
@@ -236,7 +253,7 @@
       "multiplefactor": 1
     },
     {
-      "address": "ns=6;s=::Charger:OutletsView[1].Cable",
+      "address": "ns=6;s=::Charger:OutletsView[2].Cable",
       "name": "True when charge cable is detected outlet 2",
       "absolutethreshold": 0,
       "transportid": "config1",
@@ -251,7 +268,7 @@
       "multiplefactor": 1
     },
     {
-      "address": "ns=6;s=::Charger:OutletsView[1].SOC",
+      "address": "ns=6;s=::Charger:OutletsView[2].SOC",
       "name": "State of charge value of the EV battery outlet 2",
       "absolutethreshold": 0,
       "transportid": "config1",
@@ -266,7 +283,7 @@
       "multiplefactor": 1
     },
     {
-      "address": "ns=6;s=::Charger:OutletsView[1].VehMaxAmp",
+      "address": "ns=6;s=::Charger:OutletsView[2].VehMaxAmp",
       "name": "Vehicle max. Amp outlet 2",
       "absolutethreshold": 0,
       "transportid": "config1",
@@ -281,7 +298,7 @@
       "multiplefactor": 1
     },
     {
-      "address": "ns=6;s=::Charger:OutletsView[1].VehMaxVolt",
+      "address": "ns=6;s=::Charger:OutletsView[2].VehMaxVolt",
       "name": "Vehicle max. Volt outlet 2",
       "absolutethreshold": 0,
       "transportid": "config1",
@@ -296,7 +313,7 @@
       "multiplefactor": 1
     },
     {
-      "address": "ns=6;s=::Charger:OutletsView[1].Volt",
+      "address": "ns=6;s=::Charger:OutletsView[2].Volt",
       "name": "DC voltage outlet 2",
       "absolutethreshold": 0,
       "transportid": "config1",
@@ -311,7 +328,7 @@
       "multiplefactor": 1
     },
     {
-      "address": "ns=6;s=::Charger:OutletsView[1].Amp",
+      "address": "ns=6;s=::Charger:OutletsView[2].Amp",
       "name": "DC current outlet 2",
       "absolutethreshold": 0,
       "transportid": "config1",
@@ -326,7 +343,7 @@
       "multiplefactor": 1
     },
     {
-      "address": "ns=6;s=::Charger:OutletsView[1].Budget",
+      "address": "ns=6;s=::Charger:OutletsView[2].Budget",
       "name": "AC Current setpoint outlet 2",
       "absolutethreshold": 0,
       "transportid": "config1",
