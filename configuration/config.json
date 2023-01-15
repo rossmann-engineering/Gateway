@@ -13,41 +13,72 @@
   "smtpenabletls": true,
   "mqttbroker": [
     {
-      "name": "EVERGi Cloud",
-      "address": "nats.evergi.be",
-      "port": "8883",
-      "tls": true,
-      "username": "PLC-test",
-      "password": "eyJ0eXAiOiJKV1QiLCJhbGciOiJlZDI1NTE5LW5rZXkifQ.eyJqdGkiOiJSRjVMSExJNlBaQUdPVlY0NFZPQk5LM1RDUkozT0RNWVJDTjNNWkRDVTNHVEdWVzJIVkNBIiwiaWF0IjoxNjcxNDQxMDkxLCJpc3MiOiJBQ1VFS0o3V1RMNkZFNzJBVDNQUVMzUkpONDdORzZRMlFJVjNDRE5OQ0pUSEhNWDZPREZZQlBSNyIsIm5hbWUiOiJQTEMtdGVzdCIsInN1YiI6IlVCV09FR1ZJTU82V0NENFY0TFlIUldTREszV0xPQVpRVDVYVUxXQ0lCVEdURERBS0c2TFFHSVlMIiwibmF0cyI6eyJwdWIiOnsiYWxsb3ciOlsiRVZFUkdpRVZTYy5QTEMtdGVzdC5wbGMyc2MiLCJFVkVSR2lFVlNjLlBMQy10ZXN0LnBsYzJzYzJwbGMiXX0sInN1YiI6eyJhbGxvdyI6WyJFVkVSR2lFVlNjLlBMQy10ZXN0LnBsYzJzYzJwbGMiLCJFVkVSR2lFVlNjLlBMQy10ZXN0LnNjMnBsYyJdfSwic3VicyI6LTEsImRhdGEiOi0xLCJwYXlsb2FkIjotMSwiYmVhcmVyX3Rva2VuIjp0cnVlLCJ0eXBlIjoidXNlciIsInZlcnNpb24iOjJ9fQ.A-xts8060ftcFhWDv-TPoRb8R6lxvjFL9lE1K61jPAxyGe_7UjHp_e8bixILzoJ97fLNbVqG1SGmnKJW5GBzDA",
-      "publishtopic": "EVERGiEVSc/PLC-test/plc2sc",
+      "name": "Thingsboard",
+      "address": "thingsboard.cloud",
+      "port": "1883",
+      "password": "PeMPJXQ2dbaOrvEcnMJP",
+      "publishtopic": "v1/devices/me/telemetry",
       "serverid": 1
     }
   ],
   "devices": [
     {
-      "transportid": "1",
-      "type": "opcua",
-      "ipaddress": "192.168.178.9",
-      "port": "4840",
-      "password": "Peachbarrow793!",
-      "user": "sr"
+      "transportid": 1,
+       "type": "Modbus",
+       "ipaddress": "127.0.0.1",
+       "port": "502",
+      "tls": false,
+       "unitidentifier": 1
     }
   ],
-  "modbuscommand": [],
+  "modbuscommand": [
+
+  ],
   "readorders": [
+ {
+       "staticvalue": 1,
+       "name": "Total AC Energy Inverter 1",
+       "bits": 32,
+       "absolutethreshold": 0,
+       "transportid": 1,
+       "logmodbusdata": false,
+       "active": true,
+       "registerintervaltime": 1,
+       "signed": false,
+       "dataarea": "Input Register",
+       "threshold": 0,
+       "serverid": [
+         1
+       ],
+       "multiplefactor": 1,
+       "value": 0
+     },
     {
-      "address": "ns=2;s=Application.GVL.iIntvar",
-      "name": "iIntvar",
-      "absolutethreshold": 0,
-      "transportid": "1",
-      "logmodbusdata": true,
-      "active": true,
-      "registerintervaltime": 1,
-      "threshold": 0,
-      "serverid": [
-        "1"
-      ],
-      "multiplefactor": 1
+       "address": 1001,
+       "name": "setInverter1",
+       "bits": 16,
+       "absolutethreshold": 0,
+       "transportid": 1,
+       "logmodbusdata": false,
+       "active": false,
+       "registerintervaltime": 1,
+       "signed": false,
+       "dataarea": "Holding Register",
+       "threshold": 0,
+       "serverid": [
+         1
+       ],
+       "multiplefactor": 1
+     }
+  ],
+  "rpcrequests": [
+    {
+      "name": "getValue",
+      "staticvalue": 50
+    },
+     {
+      "name": "getValue2",
+      "staticvalue": true
     }
   ]
 }

@@ -111,10 +111,15 @@ class Clients(object):
         requestId = msg.topic.replace('v1/devices/me/rpc/request/', '')
         is_rpc = False
         try:
-            msg.payload, is_rpc = execute_rpc(msg.payload)
+            response, is_rpc = execute_rpc(msg.payload)
+            if not validate_json(response):
+                msg.payload = json.dumps(response)
+            else:
+                msg.payload = response
         except Exception:
             logging.error('Exception could not process RPC: ' + str(traceback.format_exc()))
         client.publish('v1/devices/me/rpc/response/' + requestId, msg.payload)
+        logging.info('Message send to MQTT Broker ' + str(msg.payload))
         if not is_rpc:
             execute_write_order(msg.payload)
 
@@ -148,7 +153,7 @@ def validate_json(message):
     """
     try:
         jsonmessage = json.loads(message)
-    except ValueError as e:
+    except Exception as e:
         return False
 
     return True
@@ -259,7 +264,10 @@ def execute_rpc(payload):
                                 multiplefactor = rpcrequest.get('multiplefactor', 1)
                                 if multiplefactor == 0:
                                     multiplefactor = 1
-                                response = readorder.get('value', 0) / multiplefactor
+                                if type(readorder.get('value', 0) != bool):
+                                    response = readorder.get('value', 0) / multiplefactor
+                                else:
+                                    response = readorder.get('value', 0)
                                 break
 
         if is_rpc:
