@@ -10,14 +10,20 @@
    5.1 [Read Order](#readorder)  
    5.2 [Modbus command](#modbuscommand)  
    5.3 [Devices](#devices)  
-      >5.3.1 [Modbus Devices](#modbusdevices)
+      >5.3.1 [Modbus Devices](#modbusdevices)   
+   >5.3.2 [OPC-UA Devices](#opcuadevices) 
    
    5.4 [MQTT-Broker](#mqttbroker)  
 6. [Webserver](#webserver)  
     6.1 [Main Screen](#webservermainscreen)  
     6.2 [Config Import/Export](#webserverconfigimportexport)  
     6.3 [Connectivity](#webserverconnectivity)  
-    6.4 [GW Advance configuration](#webserveradvanceconfiguration)
+    6.4 [GW Advance configuration](#webserveradvanceconfiguration)  
+    6.5 [Modbus configuration](#modbusconfiguration)  
+    6.6 [Show log](#showlog)  
+    6.7 [Latest reading](#latestreading)  
+7. [Templates](#templates)  
+   
 
 <div id="introduction"/>
 
@@ -53,7 +59,7 @@ systemctl status gateway
 
 <div id="installinstructions"/>
 
-### 2.1 installinstructions
+### 2.1 install instructions
 
 The following instructions should give a rough guideline how to install the Gateway application on a raspberry pi
 
@@ -67,15 +73,23 @@ sudo apt-get install python3-pip
 
 3 Install dependencies
 
+<u>Via "requirements.txt":</u>  
+All dependencies are listed in "requirements.txt".
+To install the dependencies, open the main folder of the project and enter:  
+
+pip3 install -r requirements.txt  
+
+<u>Or manualy:</u>  
 pip3 install Flask
 pip3 install pyserial
 pip3 install requests
 pip3 install paho-mqtt
 pip3 install tornado
+pip3 install asyncua
 
 4 Clone git repository
 
-git clone https://github.com/PKwemo/gtrendMonitoring.git.
+git clone https://github.com/rossmann-engineering/Gateway.git.
 The command line may ask for yut Github credentials
 
 5 Create Linux Service (see section 2.)
@@ -91,6 +105,7 @@ The command line may ask for yut Github credentials
   - requests
   - paho-mqtt
   - tornado
+  - asyncua
 
 <div id="testistructions"/>
 
@@ -98,7 +113,7 @@ The command line may ask for yut Github credentials
 - Depending on the Fieldbus, the Gateway can be tested locally.
 - To Run a Modbus-TCP Server or Modbus-RTU Slave locally (for example www.EasyModbusTCP.NET), the IP-Address of the device has to be set to localhost for Modbus TCP, or a serial Bridge has to be set up for Modbus RTU
 - The Server Parameter has to be set to the MQTT-Broker the Data should be send to.
-- The default access credentials for the webserver are "wiseenergy" as username "123456" as password
+- The default access credentials for the webserver are "sre" as username "123456" as password
 
 <div id="configjsonstructure"/>
 
@@ -135,8 +150,8 @@ Element description:
 <div id="readorder"/>
 
 ###  5.1 Read Order
-Contains a list of Read Orders - These are tags read via Modbus-RTU or Modbus-TCP.
-The Modbus-RTU connection is mostly used. Please not that the value has to be a valid address space in the
+Contains a list of Read Orders - These are tags read via Modbus-RTU, Modbus-TCP, BacNet, Ethernet/IP or OPC-UA.
+The Modbus-TCP connection is mostly used. Please note that the value has to be a valid address space in the
 "modbuscommand" section of the config.json
 (Also used to Write Values if a command has been received)
 Root Element: "readorders"
@@ -212,7 +227,7 @@ Element Description:
 ### 5.3 Devices
 
 Contains a list of device descriptions. These are used to define the hardware to read the values from
-The Device description for deferent protocols looks slightly different.
+The Device description for different protocols looks slightly different.
 
 Root Element: "devices"
 
@@ -220,19 +235,50 @@ Root Element: "devices"
 
 #### 5.3.1 Modbus Devices
 ```json
+      {
+      "name": "ABB Terra AC W22-T-RD-MC-0",
       "transportid": 1,
       "type": "Modbus",
-      "ipaddress": "127.0.0.1",
-      "port": "502",
+      "nr": 1,
+      "ipaddress": "190.201.100.100",
+      "port": 502,
       "unitidentifier": 1
+    }
 ```
 
 Element Description:  
+- name: Name / Description of the Device
 - transportid: Integer Number which defines the Device in the Read Order section.  
-- type: "Modbus" or "Bacnet". If the element is missing it is Modbus.  
+- type: "Modbus", "Bacnet" or "OPCUA"". If the element is missing it is Modbus.  
 - ipaddress: IP-Address of the Modbus device.  
 - port: Port were the Modbus Server is listenening for incomming requests.  
-- unitidentifier: Modbus Slave-ID.
+- unitidentifier: Modbus Slave-ID.  
+- nr: Information for the MQTT Payload
+
+<div id="opcuadevices"/>
+
+#### 5.3.2 OPC-UA Devices
+```json
+      {
+      "name": "EV charger eCharge4Drivers : ABB fast charger",
+      "transportid": 1,
+      "type": "opcua",
+      "nr1": 1,
+      "nr2": 2,
+      "ipaddress": "190.201.100.100",
+      "port": "4840"
+    }
+```
+
+Element Description:  
+- name: Name / Description of the Device
+- transportid: Integer Number which defines the Device in the Read Order section.  
+- type: "Modbus", "Bacnet" or "OPCUA"". If the element is missing it is Modbus.  
+- ipaddress: IP-Address of the OPC-UA Server.  
+- port: Port were the OPC-UA is listenening for incomming requests.
+- nr1: Information for the MQTT Payload for the first charging point
+- nr2: Information for the MQTT Payload for the second charging Point
+
 
 <div id="mqttbroker"/>
 
@@ -243,14 +289,17 @@ Contains a list of Server descriptions. These are used to define the MQTT Server
 Root Element: "mqttbroker"
 
 ```json
-  "name": "Test",
-  "address": "sre-solutions.com",
-  "port": "1885",
-  "publishtopic": "v1/devices/me/telemetry",
-  "accesstoken": "preAneTCuLkD705s12ZD",
-  "username": "wiseenergy",
-  "password": "123456",
-  "serverid": 3
+  {
+      "name": "EVERGi Cloud",
+      "address": "nats.evergi.be",
+      "port": "8883",
+      "tls": true,
+      "username": "PLC-test",
+      "password": "",
+      "publishtopic": "EVERGiEVSc/PLC-test/plc2sc",
+      "subscribetopic": "EVERGiEVSc/PLC-test/sc2plc",
+      "serverid": 1
+    }
 ```
  
 Element Description:
@@ -258,8 +307,9 @@ Element Description:
 - name: Name of the MQTT-Broker definition.   
 - address: Address of the MQTT Broker.   
 - port: Port of the MQTT-Broker.  
+- tls: Activate / Deactivate TLS
 - publishtopic: Topic were the data are published to
-- accesstoken: accesstoken to verify the Gateway at the Broker.  
+- subscribetopic: Topic to subrcibe for incomming commands  
 - username: username to verify the connection to the Broker.  
 - password: password to verify the connection to the Broker.  
 - serverid: identifies the Server. Each Readorder has to refer to the Server were the data are pushed to.  
@@ -268,7 +318,7 @@ Element Description:
 
 ## 6. Webserver
 
-Standard Username: wiseenergy
+Standard Username: sre  
 Standard Password: 123456  
 Port: 5000  
 
@@ -283,8 +333,10 @@ The webserver allows to setup (nearly) all parameters within the config.json
 After the User and Password has been verified the Main Screen of the Webserver is shown automatically (or via the top menu "Home")
 
 At the top if the screen nect to the Logo the Software Version is shown  
-The 3G-Interface section shows the connection status of the Modem. These Information are OS-specific for Linux only
-The Gateway Properties section shows the Hardware of the Gateway. These Information are OS-specific for Linux only
+The 3G-Interface section shows the connection status of the Modem. These Information are OS-specific for Linux only  
+The Gateway Properties section shows the Hardware of the Gateway. These Information are OS-specific for Linux only  
+The Event-Counter shows the number of sent messages. The Event counter can be set to 0 using the Button "Reset Event counter"  
+The Application can be restarted using the Button "Restart Gateway"   
 
 <div id="webserverconfigimportexport"/>
 
@@ -300,13 +352,140 @@ The "Config Import/Export" tab allows the user to download the current configura
 
 ![image info](./pictures/webserver3.png)
 
-The Connectivity Tab provides Ingormation about the connection Status of the Modem connection and the Zerotier VPN Status. For test purposes AT-Commands can be send manually to the modem. The Response is displayed underneath the Input field.
+The Connectivity Tab provides Information about the connection Status of the Modem connection and the Zerotier VPN Status.
+
 
 <div id="webserveradvanceconfiguration"/>
 
 ### 6.4 GW Advance configuration
 
-The Gateway Advance configuration Tab allows to edit the Parameters of the config.json and to create new entries for each section. For a detailed description about the elements please see the config.json section.
+The Gateway Advance configuration Tab allows to edit the Parameters of the config.json and to create new entries for each section. For a detailed description about the elements please see the config.json section.  
 
+Templates can also be added via the GW Advance configuration. The Templates are defined in the /configuration/templates folder.
+Each Template has its own JSON Template definition. 
 
+![image info](./pictures/webserver8.png)  
+
+Before adding a Template to the configuration, it should be verified that the Transport-IDs and all other connection parameters doesn't conflict with previously defined Templates.  
+Use the other Sections in the GW Advance Configuration to verfify.
+
+<div id="modbusconfiguration"/>
+
+### 6.5 Modbus configuration
+
+The "Modbus configuration" Tab allows to manually send requests to a Modbus-TCP or RTU device. The Modbus Device is identified via the 
+Transport-ID, defined in the configuration. The result of the request, of an error is shown
+underneath the form. Also the availability of a Modbus device can be verified.
+
+![image info](./pictures/webserver4.png)
+
+<div id="showlog"/>
+
+### 6.6 Show Log
+
+The "Show log" Tab shows the content of the most recent logfile. The most recent Entry will be added at the top
+
+![image info](./pictures/webserver5.png)
+
+<div id="latestreading"/>
+
+### 6.7 Latest Reading
+
+At the top of the "Latest Reading" Tab, the most recent calculated values are displayed in table form.  
+Underneath the Table, a graph which is showing the last 24 hours for each Readorder appears. 
+The Readorder can be selected via the Drop-down menu.
+
+![image info](./pictures/webserver6.png)
+![image info](./pictures/webserver7.png)
+
+<div id="templates"/>
+
+## 7 Templates
+
+Templates allows to add predefined devices to the config.json, using the Webserver.  
+Templates are defined in the folder /configuration/templates. Each predefined device has its
+own template definition file.
+
+The structure has the following structure:
+
+```json
+{
+  "name": "ABB Terra AC W22-T-RD-MC-0",
+  "type": "modbus",
+  "config":
+  [
+    {
+      "name": "Transport ID",
+      "variable": "config1",
+      "init": 1
+    },
+    {
+      "name": "Server ID",
+      "variable": "config2",
+      "init": 1
+    },
+    {
+      "name": "IP Address",
+      "variable": "config3",
+      "init": "192.168.71.12"
+    },
+    {
+      "name": "Charging Point nr",
+      "variable": "config6",
+      "init": 1
+    }
+  ],
+  "mqttbroker": [
+
+  ],
+  "devices": [
+    {
+      "name": "ABB Terra AC W22-T-RD-MC-0",
+      "transportid": "config1",
+      "type": "Modbus",
+      "nr": "config6",
+      "ipaddress": "config3",
+      "port": 502,
+      "unitidentifier": 1
+    }
+  ],
+  "modbuscommand": [
+    {
+      "functioncode": "Read Holding Registers",
+      "transportid": "config1",
+      "startingaddress": 16384,
+      "quantity": 30
+    }
+  ],
+  "readorders": [
+    {
+      "address": 16390,
+      "name": "Max rated/settable current",
+      "bits": 32,
+      "nr": "config6",
+      "absolutethreshold": 0,
+      "transportid": "config1",
+      "logmodbusdata": true,
+      "active": true,
+      "registerintervaltime": 1,
+      "signed": false,
+      "dataarea": "Holding Register",
+      "threshold": 0,
+      "serverid": [
+        "config2"
+      ],
+      "multiplefactor": 1000
+    }
+  ]
+}
+```
+
+- name: Name / Decription of the Device
+- type: Fieldbus Type (modbus or opcua)
+- config: Configuration variables. These Variables appears in the Webserver form as user inputs. All usages of the config variables in the template will be replaces with the user input.
+- mqttbroker: Empty because globally defined in config.json  
+- devices: Device definition, as descibed in the config.json section.
+- readorders: Readorders, as described in the config.json section.
+
+An import of a template from the webserver will be ignored if the Transport-ID is not unique.
 
