@@ -14,9 +14,9 @@
   "mqttbroker": [
     {
       "name": "Thingsboard",
-      "address": "thingsboard.cloud",
+      "address": "cp.sre-solutions.com",
       "port": "1883",
-      "password": "PeMPJXQ2dbaOrvEcnMJP",
+      "password": "2F45SEunHyH8XloRlgck",
       "publishtopic": "v1/devices/me/telemetry",
       "serverid": 1
     }
