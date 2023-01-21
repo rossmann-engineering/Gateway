@@ -23,6 +23,8 @@
     6.6 [Show log](#showlog)  
     6.7 [Latest reading](#latestreading)  
 7. [Templates](#templates)  
+8. [Program structure](#programstructure)  
+   8.1 [configuration](#configuration)
    
 
 <div id="introduction"/>
@@ -34,9 +36,13 @@ Designed is the Application to run on a Linux Hardware, but it also runs under W
 
 The Application starts a webserver which allows the user to get informations about the current status und to change settings.
 
+The MQTT Data are stored in a SQLite Database (eh.db - table "mqttuploads"), in order to securely retain them if the connection to the MQTT-Broker broke-up.
+The MQTT Data are removed from the Database if the Payload has been successfully transferred to the Broker.  
+Also most recent values are stored in the database(table "dailycache"), for the Visualization in the webserver Graph, which shows the last 24 hours of each Readorder.
+
 The Application is configurable using a configuration file (config.json). This file can be edited using a texteditor or the Webserver.
 
-To start the Application the Python File "run.py" has to be executed
+To start the Application the Python File "run.py" has to be executed.
 
 <div id="linuxservice"/>
 
@@ -489,3 +495,59 @@ The structure has the following structure:
 
 An import of a template from the webserver will be ignored if the Transport-ID is not unique.
 
+<div id="programstructure"/>
+
+## 8 Program structure
+
+The main application is started via "run.py". The following independend Threads are started from run.py:
+
+- webserver
+- logic
+- one for each MQTT connection
+
+The start process is as follows:
+
+- Read Configuration from config.json
+- Set logging level according to the definition in config.json
+- Start webserver Thread
+- Start logic Thead
+- Read all values (Readorders from config.json)
+- calculate interval
+- Wait 15s
+- start main loop
+
+<div id="configuration"/>
+
+### 8.1 Configuration
+
+All configrations are stored in /configuration/config.json. The class "config" in config.py allows to read and write to config.json.
+
+To read the configuration as a dictionary:
+
+```python
+import config as cfg  
+config = cfg.Config.getConfig()
+```
+
+The configuration elements can now be accessed e.g. 
+
+```python
+config['readorders']
+```
+
+To search for a specific readorder:
+
+```python
+ro = next((item for item in config['readorders'] if item["name"] == "Watchdog to PLC"), dict())
+```
+
+Since the latest reading also added to the Readorderdictionary, the latest value can be accessed like
+
+```python
+value = ro['value']
+```
+
+or
+```python
+value = ro['latestreading']
+```
