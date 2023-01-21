@@ -12,8 +12,7 @@ def send_mail(address, filename=None, body=None):
     sent mail to selected email
     :param address: email address
     :param filename: name of file
-    :param body: gurke
-    :return: gurke
+    :param body: Text body sent via E-Mail
     """
     config = cfg.Config.getConfig()
 

@@ -108,7 +108,7 @@ class Clients(object):
         pass
 
     def on_message(self, client, userdata, msg):
-        """ receive message from mqtt gurke """
+        """ receive message from mqtt Broker """
 
         logging.info('Message Received from MQTT Broker ' + str(msg.payload))
         requestId = msg.topic.replace('v1/devices/me/rpc/request/', '')
@@ -122,7 +122,7 @@ class Clients(object):
             execute_write_order(msg.payload)
 
     def on_publish(self, client, userdata, mid):
-        """ publish to mqtt gurke """
+        """ on prublish callback funtion  """
 
         # DataLogger.logData('Publish successfully acknowledged mid: ' + str(mid))
         self.client['mid'] = mid
@@ -130,7 +130,7 @@ class Clients(object):
 
 def internet_on():
     """
-    connect to internet gurke
+    Ping google.com to verify if the internet connection is available
     :return: true or false
     """
     url = 'http://www.google.com/'
@@ -159,9 +159,9 @@ def validate_json(message):
 
 def publish_message(serverid, topic, payload):
     """
-    publish message to gurke
+    publish message to MQTT-Broker
     :param serverid: Server ID the Message refers to
-    :param topic: topic gurke
+    :param topic: Topic
     :param payload: message publish to topic
     """
     config = cfg.Config.getConfig()
@@ -271,7 +271,7 @@ def execute_rpc(payload):
 
 
 def send_attributes():
-    """ send attributes gurke """
+    """ send Thingsboard attributes """
     config = cfg.Config.getConfig()
     logging.info('Sending MQTT-Attributed...')
     for s in config['mqttbroker']:

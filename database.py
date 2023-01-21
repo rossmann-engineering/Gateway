@@ -100,7 +100,7 @@ def get_daily_values(conn, tag, serverid):
     :param conn: connection object
     :param tag: datetime of reading
     :param serverid: Server ID the Message refers to
-    :return: value gurke
+    :return: Dictionary containing the value and timestamp of the tag
     """
     try:
         cursor = conn.cursor()

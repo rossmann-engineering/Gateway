@@ -24,7 +24,8 @@
     6.7 [Latest reading](#latestreading)  
 7. [Templates](#templates)  
 8. [Program structure](#programstructure)  
-   8.1 [configuration](#configuration)
+   8.1 [configuration](#configuration)  
+   9.2 [MQTT connection](#mqttconnection)
    
 
 <div id="introduction"/>
@@ -551,3 +552,14 @@ or
 ```python
 value = ro['latestreading']
 ```
+
+<div id="mqttconnection"/>
+
+### 8.2 MQTT connection
+
+The Python file "mqtt.py" provides functions to connect to multiple MQTT Broker. The Broker connections are identified via the "serverid" element in "config.json".
+The class "Client" created as many instances of the mqtt client as server definitions are in config.json.
+
+After the connection has been successfully established, the client subscribes to the topic configured the configuration.
+
+The final message payload is created by the function "send_mqtt_data".

@@ -724,7 +724,7 @@ def modbusread():
 def modbuscheckconnectivity():
     """
     check connection with modbus
-    :return: status of connection gurke
+    :return: Template
     """
     readparameter = {}
     response = dict()

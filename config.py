@@ -60,7 +60,6 @@ class Config(object):
             self.read_version()
 
     def __geteventcounter(self):
-        """ gurke """
         # if eventcounter = none -> Try to read file
         if self.__eventcounter is None:
             try:
@@ -72,10 +71,6 @@ class Config(object):
         return self.__eventcounter
 
     def __seteventcounter(self, val):
-        """
-        gurke
-        :param val:
-        """
         # Write the value to file
         try:
             self.__eventcounter = val
@@ -89,7 +84,7 @@ class Config(object):
 
     def write_config(self):
         """
-        gurke
+        Write current config dictionary to config.json
         """
         if 'readorder' in self.config:
             for ro in self.config['readorder']:
@@ -102,7 +97,7 @@ class Config(object):
 
     def WritePythonSWVersion(self):
         """
-        gurke
+        Write new Python software version (Containing the current date)
         """
         try:
             with open('version.json', 'w') as f:

@@ -60,7 +60,7 @@ def logMQTTRegisterData(dataToWrite):
 
 def registerLogFileCSV():
     """
-    gurke
+    Write Values to CSV File
     """
     try:
         config = cfg.Config.getConfig()
@@ -145,11 +145,6 @@ def registerLogFileCSV():
 
 
 def __getDirSize(path):
-    """
-    gurke
-    :param path: gurke
-    :return: total size of gurke
-    """
     totalsize = 0
     for dirpath, dirnames, filenames in os.walk(path):
         for f in filenames:
@@ -159,10 +154,6 @@ def __getDirSize(path):
 
 
 def __deleteOldestFile(path):
-    """
-    deletes the oldest files
-    :param path: gurke
-    """
     list_of_files = os.listdir(path)
 
     list_of_files.sort()
@@ -173,12 +164,10 @@ def __deleteOldestFile(path):
 class MailHandler(StreamHandler):
     """ classdocs """
     def __init__(self):
-        """ gurke """
         StreamHandler.__init__(self)
         self.lastdtsend = None
 
     def emit(self, record):
-        """ gurke """
         if self.lastdtsend == None:
             self.lastdtsend = datetime.datetime(year=1970, month=1, day=1)
         if (datetime.datetime.now() > (self.lastdtsend + datetime.timedelta(hours=1))):
