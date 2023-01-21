@@ -97,7 +97,7 @@ pip3 install asyncua
 4 Clone git repository
 
 git clone https://github.com/rossmann-engineering/Gateway.git.
-The command line may ask for yut Github credentials
+The command line may ask for your Github credentials
 
 5 Create Linux Service (see section 2.)
 
@@ -282,7 +282,7 @@ Element Description:
 - transportid: Integer Number which defines the Device in the Read Order section.  
 - type: "Modbus", "Bacnet" or "OPCUA"". If the element is missing it is Modbus.  
 - ipaddress: IP-Address of the OPC-UA Server.  
-- port: Port were the OPC-UA is listenening for incomming requests.
+- port: Port were the OPC-UA is listening for incoming requests.
 - nr1: Information for the MQTT Payload for the first charging point
 - nr2: Information for the MQTT Payload for the second charging Point
 
@@ -316,7 +316,7 @@ Element Description:
 - port: Port of the MQTT-Broker.  
 - tls: Activate / Deactivate TLS
 - publishtopic: Topic were the data are published to
-- subscribetopic: Topic to subrcibe for incomming commands  
+- subscribetopic: Topic to subscribe for incoming commands  
 - username: username to verify the connection to the Broker.  
 - password: password to verify the connection to the Broker.  
 - serverid: identifies the Server. Each Readorder has to refer to the Server were the data are pushed to.  
@@ -339,7 +339,7 @@ The webserver allows to setup (nearly) all parameters within the config.json
 
 After the User and Password has been verified the Main Screen of the Webserver is shown automatically (or via the top menu "Home")
 
-At the top if the screen nect to the Logo the Software Version is shown  
+At the top if the screen next to the Logo the Software Version is shown  
 The 3G-Interface section shows the connection status of the Modem. These Information are OS-specific for Linux only  
 The Gateway Properties section shows the Hardware of the Gateway. These Information are OS-specific for Linux only  
 The Event-Counter shows the number of sent messages. The Event counter can be set to 0 using the Button "Reset Event counter"  
@@ -487,11 +487,11 @@ The structure has the following structure:
 }
 ```
 
-- name: Name / Decription of the Device
+- name: Name / Description of the Device
 - type: Fieldbus Type (modbus or opcua)
 - config: Configuration variables. These Variables appears in the Webserver form as user inputs. All usages of the config variables in the template will be replaces with the user input.
 - mqttbroker: Empty because globally defined in config.json  
-- devices: Device definition, as descibed in the config.json section.
+- devices: Device definition, as described in the config.json section.
 - readorders: Readorders, as described in the config.json section.
 
 An import of a template from the webserver will be ignored if the Transport-ID is not unique.
@@ -500,7 +500,7 @@ An import of a template from the webserver will be ignored if the Transport-ID i
 
 ## 8 Program structure
 
-The main application is started via "run.py". The following independend Threads are started from run.py:
+The main application is started via "run.py". The following independent Threads are started from run.py:
 
 - webserver
 - logic
@@ -521,7 +521,7 @@ The start process is as follows:
 
 ### 8.1 Configuration
 
-All configrations are stored in /configuration/config.json. The class "config" in config.py allows to read and write to config.json.
+All configurations are stored in /configuration/config.json. The class "config" in config.py allows to read and write to config.json.
 
 To read the configuration as a dictionary:
 
@@ -542,7 +542,7 @@ To search for a specific readorder:
 ro = next((item for item in config['readorders'] if item["name"] == "Watchdog to PLC"), dict())
 ```
 
-Since the latest reading also added to the Readorderdictionary, the latest value can be accessed like
+Since the latest reading also added to the Readorder dictionary, the latest value can be accessed like
 
 ```python
 value = ro['value']
