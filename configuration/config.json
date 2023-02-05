@@ -35,50 +35,16 @@
 
   ],
   "readorders": [
- {
-       "staticvalue": 1,
-       "name": "Total AC Energy Inverter 1",
-       "bits": 32,
-       "absolutethreshold": 0,
-       "transportid": 1,
-       "logmodbusdata": false,
-       "active": true,
-       "registerintervaltime": 1,
-       "signed": false,
-       "dataarea": "Input Register",
-       "threshold": 0,
-       "serverid": [
-         1
-       ],
-       "multiplefactor": 1,
-       "value": 0
-     },
-    {
-       "address": 1001,
-       "name": "setInverter1",
-       "bits": 16,
-       "absolutethreshold": 0,
-       "transportid": 1,
-       "logmodbusdata": false,
-       "active": false,
-       "registerintervaltime": 1,
-       "signed": false,
-       "dataarea": "Holding Register",
-       "threshold": 0,
-       "serverid": [
-         1
-       ],
-       "multiplefactor": 1
-     }
+
   ],
   "rpcrequests": [
     {
-      "name": "getValue",
+      "name": "getValue1",
       "staticvalue": 50
     },
      {
       "name": "getValue2",
-      "staticvalue": true
+      "staticvalue": 50
     }
   ]
 }
