@@ -67,6 +67,9 @@ webserver_thread.start()
 em_thread = threading.Thread(target=Evergi.EVERGi_LC.EM.read_em, args=())
 em_thread.start()
 
+evcs_thread = threading.Thread(target=Evergi.EVERGi_LC.EVCS.read_evcs, args=())
+evcs_thread.start()
+
 
 mqtt_thread = threading.Thread(target=Evergi.EVERGi_LC.MQTT.send_mqtt, args=())
 mqtt_thread.start()
