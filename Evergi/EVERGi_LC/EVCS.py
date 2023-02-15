@@ -20,10 +20,28 @@ def read_evcs():
         dt_evergi.DT_EVERGi_arrCS_50[1].Conf_uiEVSEx_Nr_10[0] = 1
         dt_evergi.DT_EVERGi_arrCS_50[1].Conf_uiWired = '123'
 
+        dt_evergi.DT_EVERGi_arrCS_50[1].PV_xComm_ok = False
+        dt_evergi.DT_EVERGi_arrCS_50[1].Conf_sType = 'ABB DC 01'
+        dt_evergi.DT_EVERGi_arrCS_50[1].Conf_sAdress = '192.168.71.49'
+        dt_evergi.DT_EVERGi_arrCS_50[1].Conf_uiPort = 4840
+        dt_evergi.DT_EVERGi_arrCS_50[1].Conf_uiNodeNr = 1
+        dt_evergi.DT_EVERGi_arrCS_50[1].Conf_uiEVSEx_Nr_10[0] = 2
+        dt_evergi.DT_EVERGi_arrCS_50[1].Conf_uiEVSEx_Nr_10[1] = 3
+        dt_evergi.DT_EVERGi_arrCS_50[1].Conf_uiWired = '123'
+
         for cs in dt_evergi.DT_EVERGi_arrCS_50:
             try:
                 if cs.Conf_sType == 'ABB AC 01':
                     dt_evergi.DT_EVERGi_arrEVSE_100[cs.Conf_uiEVSEx_Nr_10[0]].abb_ac_01.evcs_abb_ac_01(cs, dt_evergi.DT_EVERGi_arrEVSE_100[cs.Conf_uiEVSEx_Nr_10[0]])
+                if cs.Conf_sType == 'ABB DC 01':
+                    dt_evergi.DT_EVERGi_arrEVSE_100[cs.Conf_uiEVSEx_Nr_10[0]].abb_dc_01.evcs_abb_dc_01(cs,
+                                                                                                       dt_evergi.DT_EVERGi_arrEVSE_100[
+                                                                                                           cs.Conf_uiEVSEx_Nr_10[
+                                                                                                               0]], dt_evergi.DT_EVERGi_arrEVSE_100[
+                                                                                                           cs.Conf_uiEVSEx_Nr_10[
+                                                                                                               0]])
+
+
             except Exception:
                 logging.error('Exception reading from Chargers: ' + str(traceback.format_exc()))
                 time.sleep(5)
