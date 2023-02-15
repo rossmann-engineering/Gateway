@@ -1,65 +1,102 @@
 import ModbusClient
-from Evergi.DT_EVERGi import DT_EVERGI
 
-def evcs_abb_ac_01(cs, evse):
-    evse.PV_xComm_ok = False
-    modbusClient = ModbusClient.ModbusClient(cs.Conf_sAdress, cs.Conf_uiPort)
-    modbusClient.connect()
-    holding_registers1 = modbusClient.read_holdingregisters(16384, 30)
-    evse.Conf_uiNr = cs.Conf_uiEVSEx_Nr_10[1]
-    evse.Conf_uiType = 1
-    evse.Conf_uiNodeNr = cs.Conf_uiNodeNr
-    evse.PV_xComm_ok = True
-    evse.PV_rCurrent_max = holding_registers1[8] / 1000.0
-    evse.PV_rPower = holding_registers1[30]
-    R_EVSE1_udiErrorCode = holding_registers1[10]
-    R_EVSE1_udiSocketlockState = holding_registers1[12]
-    R_EVSE1_udiChargingState = holding_registers1[14]
-    R_EVSE1_rCurrent_SP = holding_registers1[16] / 1000.0
-    R_EVSE1_rCurrent1 = holding_registers1[16] / 1000.0
-    R_EVSE1_rCurrent2 = holding_registers1[16] / 1000.0
-    R_EVSE1_rCurrent3 = holding_registers1[16] / 1000.0
-    R_EVSE1_rVoltage1 = holding_registers1[16] / 1000.0
-    R_EVSE1_rVoltage2 = holding_registers1[16] / 1000.0
-    R_EVSE1_rVoltage3 = holding_registers1[16] / 1000.0
+class Evcs_abb_ac_01:
+    def __init__(self):
+        self.EVSE1_uiState = 0
+    def evcs_abb_ac_01(self, cs, evse):
+        evse.PV_xComm_ok = False
+        modbusClient = ModbusClient.ModbusClient(cs.Conf_sAdress, cs.Conf_uiPort)
+        modbusClient.connect()
+        holding_registers1 = modbusClient.read_holdingregisters(16384, 30)
+        evse.Conf_uiNr = cs.Conf_uiEVSEx_Nr_10[1]
+        evse.Conf_uiType = 1
+        evse.Conf_uiNodeNr = cs.Conf_uiNodeNr
+        evse.PV_xComm_ok = True
+        evse.PV_rCurrent_max = holding_registers1[8] / 1000.0
+        evse.PV_rPower = holding_registers1[30]
+        R_EVSE1_udiErrorCode = holding_registers1[10]
+        R_EVSE1_udiSocketlockState = holding_registers1[12]
+        R_EVSE1_udiChargingState = holding_registers1[14]
+        R_EVSE1_rCurrent_SP = holding_registers1[16] / 1000.0
+        R_EVSE1_rCurrent1 = holding_registers1[18] / 1000.0
+        R_EVSE1_rCurrent2 = holding_registers1[20] / 1000.0
+        R_EVSE1_rCurrent3 = holding_registers1[22] / 1000.0
+        R_EVSE1_rVoltage1 = holding_registers1[24] / 1000.0
+        R_EVSE1_rVoltage2 = holding_registers1[26] / 1000.0
+        R_EVSE1_rVoltage3 = holding_registers1[28] / 1000.0
 
-    # Copy the current to the right phase - To which phase of the grid/node is the charger connected
-    if cs.Conf_uiWired == '321':
-        evse.PV_rCurrent3 = R_EVSE1_rCurrent1
-        evse.PV_rCurrent2 = R_EVSE1_rCurrent2
-        evse.PV_rCurrent1 = R_EVSE1_rCurrent3
-    elif cs.Conf_uiWired == '312':
-        evse.PV_rCurrent3 = R_EVSE1_rCurrent1
-        evse.PV_rCurrent1 = R_EVSE1_rCurrent2
-        evse.PV_rCurrent2 = R_EVSE1_rCurrent3
-    elif cs.Conf_uiWired == '213':
-        evse.PV_rCurrent2 = R_EVSE1_rCurrent1
-        evse.PV_rCurrent1 = R_EVSE1_rCurrent2
-        evse.PV_rCurrent3 = R_EVSE1_rCurrent3
-    elif cs.Conf_uiWired == '231':
-        evse.PV_rCurrent2 = R_EVSE1_rCurrent1
-        evse.PV_rCurrent3 = R_EVSE1_rCurrent2
-        evse.PV_rCurrent1 = R_EVSE1_rCurrent3
-    elif cs.Conf_uiWired == '132':
-        evse.PV_rCurrent1 = R_EVSE1_rCurrent1
-        evse.PV_rCurrent3 = R_EVSE1_rCurrent2
-        evse.PV_rCurrent2 = R_EVSE1_rCurrent3
-    elif cs.Conf_uiWired == '1':
-        evse.PV_rCurrent1 = R_EVSE1_rCurrent1
-        evse.PV_rCurrent2 = 0
-        evse.PV_rCurrent3 = 0
-    elif cs.Conf_uiWired == '2':
-        evse.PV_rCurrent1 = 0
-        evse.PV_rCurrent2 = R_EVSE1_rCurrent2
-        evse.PV_rCurrent3 = 0
-    elif cs.Conf_uiWired == '3':
-        evse.PV_rCurrent1 = 0
-        evse.PV_rCurrent2 = 0
-        evse.PV_rCurrent3 = R_EVSE1_rCurrent3
-    else:
-        evse.PV_rCurrent1 = R_EVSE1_rCurrent1
-        evse.PV_rCurrent2 = R_EVSE1_rCurrent2
-        evse.PV_rCurrent3 = R_EVSE1_rCurrent3
+        # Copy the current to the right phase - To which phase of the grid/node is the charger connected
+        if cs.Conf_uiWired == '321':
+            evse.PV_rCurrent3 = R_EVSE1_rCurrent1
+            evse.PV_rCurrent2 = R_EVSE1_rCurrent2
+            evse.PV_rCurrent1 = R_EVSE1_rCurrent3
+        elif cs.Conf_uiWired == '312':
+            evse.PV_rCurrent3 = R_EVSE1_rCurrent1
+            evse.PV_rCurrent1 = R_EVSE1_rCurrent2
+            evse.PV_rCurrent2 = R_EVSE1_rCurrent3
+        elif cs.Conf_uiWired == '213':
+            evse.PV_rCurrent2 = R_EVSE1_rCurrent1
+            evse.PV_rCurrent1 = R_EVSE1_rCurrent2
+            evse.PV_rCurrent3 = R_EVSE1_rCurrent3
+        elif cs.Conf_uiWired == '231':
+            evse.PV_rCurrent2 = R_EVSE1_rCurrent1
+            evse.PV_rCurrent3 = R_EVSE1_rCurrent2
+            evse.PV_rCurrent1 = R_EVSE1_rCurrent3
+        elif cs.Conf_uiWired == '132':
+            evse.PV_rCurrent1 = R_EVSE1_rCurrent1
+            evse.PV_rCurrent3 = R_EVSE1_rCurrent2
+            evse.PV_rCurrent2 = R_EVSE1_rCurrent3
+        elif cs.Conf_uiWired == '1':
+            evse.PV_rCurrent1 = R_EVSE1_rCurrent1
+            evse.PV_rCurrent2 = 0
+            evse.PV_rCurrent3 = 0
+        elif cs.Conf_uiWired == '2':
+            evse.PV_rCurrent1 = 0
+            evse.PV_rCurrent2 = R_EVSE1_rCurrent2
+            evse.PV_rCurrent3 = 0
+        elif cs.Conf_uiWired == '3':
+            evse.PV_rCurrent1 = 0
+            evse.PV_rCurrent2 = 0
+            evse.PV_rCurrent3 = R_EVSE1_rCurrent3
+        else:
+            evse.PV_rCurrent1 = R_EVSE1_rCurrent1
+            evse.PV_rCurrent2 = R_EVSE1_rCurrent2
+            evse.PV_rCurrent3 = R_EVSE1_rCurrent3
+        #Initialisation when No EV connected to charger
+        if R_EVSE1_udiSocketlockState <= 1 and self.EVSE1_uiState>=100:
+            self.EVSE1_uiState = 10
+        elif R_EVSE1_udiSocketlockState <= 1:
+            self.EVSE1_uiState = 20
+
+        # Initialize
+        if self.EVSE1_uiState == 0:
+            self.EVSE1_uiState = 10
+        # Disconnected / Standby
+        elif self.EVSE1_uiState == 10:
+            self.EVSE1_uiState = 100
+        # Connected
+        elif self.EVSE1_uiState == 100:
+            if evse.PV_rPower > 0: # Car is charging, power is flowing
+                self.EVSE1_uiState = 110
+        # Charging
+        elif self.EVSE1_uiState == 120:
+            pass
+
+
+        # Charger Status
+        if not evse.PV_xComm_ok or R_EVSE1_udiErrorCode > 10:
+            evse.PV_uiState = 0             # Error
+        elif self.EVSE1_uiState >= 100:
+            evse.PV_uiState = 2             # EV Connected to charger
+        elif self.EVSE1_uiState >= 10:
+            evse.PV_uiState = 1             # No EV Connected to charger
+
+
+
+
+
+
+
 
 
 
@@ -199,4 +236,3 @@ def evcs_abb_ac_01(cs, evse):
             rCurrent_dev => EVSE1.Help_SP_rCurrent_dev);
     """
 
-    modbusClient.close()

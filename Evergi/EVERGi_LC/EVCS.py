@@ -23,7 +23,7 @@ def read_evcs():
         for cs in dt_evergi.DT_EVERGi_arrCS_50:
             try:
                 if cs.Conf_sType == 'ABB AC 01':
-                    evcs_abb_ac_01(cs, dt_evergi.DT_EVERGi_arrEVSE_100[cs.Conf_uiEVSEx_Nr_10[0]])
+                    dt_evergi.DT_EVERGi_arrEVSE_100[cs.Conf_uiEVSEx_Nr_10[0]].abb_ac_01.evcs_abb_ac_01(cs, dt_evergi.DT_EVERGi_arrEVSE_100[cs.Conf_uiEVSEx_Nr_10[0]])
             except Exception:
                 logging.error('Exception reading from Chargers: ' + str(traceback.format_exc()))
                 time.sleep(5)

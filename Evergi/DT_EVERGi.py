@@ -1,3 +1,5 @@
+import Evergi.EVERGi_LC.EVCS_COM.ABB_AC_01
+import Evergi.EVERGi_LC.EVCS_COM.ABB_DC_01
 class DT_EVERGI(object):
     """
     classdocs
@@ -76,6 +78,8 @@ class DT_EVERGi_EVSE:
         self.SPSc_uiComm: int            #Minutes since last message EVScheduler -> Local controller
         # Calculated internal variables
         self.Help_SP_rCurrent_dev: int   #[A] PV-SP, deviation between present value and setpoint
+        self.abb_ac_01 = Evergi.EVERGi_LC.EVCS_COM.ABB_AC_01.Evcs_abb_ac_01()
+        self.abb_dc_01 = Evergi.EVERGi_LC.EVCS_COM.ABB_DC_01.Evcs_abb_dc_01()
 
 class DT_EVERGi_CS:
     """
