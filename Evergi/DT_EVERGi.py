@@ -53,45 +53,45 @@ class DT_EVERGi_EVSE:
     Electric Vehicle Chargings Equipment / outlet / connector / socket
     """
     def __init__(self):
-        Conf_uiNr: int              #Number - used in EVScheduler - 0:disabled
-        Conf_uiType: int            #Type= 1: AC uni-directional, 2:AC bi-directional, 3:DC uni-directional, 4:DC bi-directional
-        Conf_uiNodeNr: int          #Number of the node to which the charging station is connected
+        self.Conf_uiNr: int              #Number - used in EVScheduler - 0:disabled
+        self.Conf_uiType: int            #Type= 1: AC uni-directional, 2:AC bi-directional, 3:DC uni-directional, 4:DC bi-directional
+        self.Conf_uiNodeNr: int          #Number of the node to which the charging station is connected
         #Present Values
-        PV_uiState: int             #0: Invalid ; 1: Cable not connected ; 2: Cable connected, no error ; 3: Error
-        PV_rPower: float            #[W] charging power (AC), +:flowing to the car
-        PV_rPower_max: float        #[W] Maximum charging power (AC) defined by charger - car - car SOC combination
-        PV_rEnergy: float           #[Wh] Energy to the car (AC) during the current charging session, +: energy inserted in the car
-        PV_rCurrent1: float         #[A] Charger current (AC) on line 1, +:flowing to the car
-        PV_rCurrent2: float         #[A] Charger current (AC) on line 2, +:flowing to the car
-        PV_rCurrent3: float         #[A] Charger current (AC) on line 3, +:flowing to the car
-        PV_rCurrent_max: float      #[W] Maximum charging current (AC) defined by charger - car - car SOC combination
-        PV_rCurrentDC: float        #[A] Charger current (DC), +:flowing to the car   - Only when DC charger
-        PV_rVoltageDC: float        #[V] Charger voltage (DC)                         - Only when DC charger
-        PV_rSOC: float              #[%] State Of Charge of the car                   - only when DC charger
-        PV_xComm_ok: bool           #TRUE= Communication EVSE/CS - Local controller ok
+        self.PV_uiState: int             #0: Invalid ; 1: Cable not connected ; 2: Cable connected, no error ; 3: Error
+        self.PV_rPower: float            #[W] charging power (AC), +:flowing to the car
+        self.PV_rPower_max: float        #[W] Maximum charging power (AC) defined by charger - car - car SOC combination
+        self.PV_rEnergy: float           #[Wh] Energy to the car (AC) during the current charging session, +: energy inserted in the car
+        self.PV_rCurrent1: float         #[A] Charger current (AC) on line 1, +:flowing to the car
+        self.PV_rCurrent2: float         #[A] Charger current (AC) on line 2, +:flowing to the car
+        self.PV_rCurrent3: float         #[A] Charger current (AC) on line 3, +:flowing to the car
+        self.PV_rCurrent_max: float      #[W] Maximum charging current (AC) defined by charger - car - car SOC combination
+        self.PV_rCurrentDC: float        #[A] Charger current (DC), +:flowing to the car   - Only when DC charger
+        self.PV_rVoltageDC: float        #[V] Charger voltage (DC)                         - Only when DC charger
+        self.PV_rSOC: float              #[%] State Of Charge of the car                   - only when DC charger
+        self.PV_xComm_ok: bool           #TRUE= Communication EVSE/CS - Local controller ok
         # Setpoint
-        SP_rCurrent: float          #[A] Charger current [AC], +:flowing to the car
+        self.SP_rCurrent: float          #[A] Charger current [AC], +:flowing to the car
         # Setpoint coming from EV Scheduler
-        SPSc_rCurrent: float        #[A] Charger current [AC], +:flowing to the car
-        SPSc_uiComm: int            #Minutes since last message EVScheduler -> Local controller
+        self.SPSc_rCurrent: float        #[A] Charger current [AC], +:flowing to the car
+        self.SPSc_uiComm: int            #Minutes since last message EVScheduler -> Local controller
         # Calculated internal variables
-        Help_SP_rCurrent_dev: int   #[A] PV-SP, deviation between present value and setpoint
+        self.Help_SP_rCurrent_dev: int   #[A] PV-SP, deviation between present value and setpoint
 
 class DT_EVERGi_CS:
     """
     Charging Station
     """
     def __init__(self):
-        Conf_sId: str               #Id / serial / location
-        Conf_sType: str             #Brand & type & version - for example: 'ABB_DC_01'
-        Conf_sAdress: str           #Communication adress - for example: opc.tcp://192.168.71.49:4840
-        Conf_uiPort: str            #Communication adress - port number
-        Conf_uiNodeNr: str          #Number of the node to which the charging station is connected
-        Conf_uiWired: str           #To which phase of the grid/node is the charger connected - example: 123 or 2 or 312
-        Conf_uiEVSEx_Nr_10 = list() #EVSEx Nr / Id - 0:disabled - One Charger Station can have multiple EVSE, link between those and the EVSEnr
+        self.Conf_sId = str()               #Id / serial / location
+        self.Conf_sType = str()            #Brand & type & version - for example: 'ABB_DC_01'
+        self.Conf_sAdress = str()           #Communication adress - for example: opc.tcp://192.168.71.49:4840
+        self.Conf_uiPort = int()            #Communication adress - port number
+        self.Conf_uiNodeNr = int()          #Number of the node to which the charging station is connected
+        self.Conf_uiWired = int()           #To which phase of the grid/node is the charger connected - example: 123 or 2 or 312
+        self.Conf_uiEVSEx_Nr_10 = list() #EVSEx Nr / Id - 0:disabled - One Charger Station can have multiple EVSE, link between those and the EVSEnr
         for x in range(10):
-            Conf_uiEVSEx_Nr_10.append(0)
-        PV_xComm_ok: bool           #TRUE= Communication Charging Station - Local controller ok
+            self.Conf_uiEVSEx_Nr_10.append(0)
+        self.PV_xComm_ok = bool()           #TRUE= Communication Charging Station - Local controller ok
 class DT_EVERGi_Grid:
     """
     Public grid connection - data to optimize for the pricing
