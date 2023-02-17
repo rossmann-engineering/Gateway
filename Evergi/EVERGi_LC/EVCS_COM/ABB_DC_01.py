@@ -6,6 +6,16 @@ class Evcs_abb_dc_01:
 
     def evcs_abb_dc_01(self, cs, evse1, evse2):
         try:
+            evse1.Conf_uiNr = cs.Conf_uiEVSEx_Nr_10[0]
+            evse1.Conf_uiType = 1
+            evse1.Conf_uiNodeNr = cs.Conf_uiNodeNr
+            evse1.PV_xComm_ok = False
+
+            evse2.Conf_uiNr = cs.Conf_uiEVSEx_Nr_10[1]
+            evse2.Conf_uiType = 1
+            evse2.Conf_uiNodeNr = cs.Conf_uiNodeNr
+            evse2.PV_xComm_ok = False
+
             values_to_read = list()
             dict_element = dict()
             dict_element['address'] = 'ns=6;s=::Charger:ChargerView.SerialNr'
@@ -65,5 +75,25 @@ class Evcs_abb_dc_01:
             values_to_read.append(dict_element)
 
             asyncio.run(opc_ua.main('opc.tcp://' + cs.Conf_sAdress + ':' + str(cs.Conf_uiPort), '', '', values_to_read))
+            evse1.PV_xComm_ok = True
+            evse2.PV_xComm_ok = True
+            evse1.PV_rCurrent_max = next((item for item in values_to_read if item["name"] == "Vehicle max. Amp outlet 1"), dict())['value']
+            evse2.PV_rCurrent_max = next((item for item in values_to_read if item["name"] == "Vehicle max. Amp outlet 2"), dict())['value']
+
+            evse1.PV_rPower = next((item for item in values_to_read if item["name"] == "DC voltage outlet 1"), dict())['value'] * next((item for item in values_to_read if item["name"] == "DC current outlet 1"), dict())['value']
+            evse2.PV_rPower = next((item for item in values_to_read if item["name"] == "DC voltage outlet 2"), dict())['value'] * next((item for item in values_to_read if item["name"] == "DC current outlet 2"), dict())['value']
+
+            evse1.PV_rCurrentDC = next((item for item in values_to_read if item["name"] == "DC current outlet 1"), dict())['value']
+            evse2.PV_rCurrentDC = next((item for item in values_to_read if item["name"] == "DC current outlet 2"), dict())['value']
+
+            evse1.PV_rVoltageDC = next((item for item in values_to_read if item["name"] == "DC voltage outlet 1"), dict())['value']
+            evse2.PV_rVoltageDC = next((item for item in values_to_read if item["name"] == "DC voltage outlet 2"), dict())['value']
+
+            evse1.PV_rSOC = next((item for item in values_to_read if item["name"] == "DC voltage outlet 1"), dict())['value']
+            evse2.PV_rSOC = next((item for item in values_to_read if item["name"] == "DC voltage outlet 2"), dict())['value']
+
+            evse1.PV_rEnergy = next((item for item in values_to_read if item["name"] == "Energy to EV battery during charging session outlet 1"), dict())['value']
+            evse2.PV_rEnergy = next((item for item in values_to_read if item["name"] == "Energy to EV battery during charging session outlet 2"), dict())['value']
+
         except:
             logging.error('Unable to read from OPC-UA Server: ' + str(traceback.format_exc()))

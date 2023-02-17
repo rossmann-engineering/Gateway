@@ -55,29 +55,29 @@ class DT_EVERGi_EVSE:
     Electric Vehicle Chargings Equipment / outlet / connector / socket
     """
     def __init__(self):
-        self.Conf_uiNr: int              #Number - used in EVScheduler - 0:disabled
-        self.Conf_uiType: int            #Type= 1: AC uni-directional, 2:AC bi-directional, 3:DC uni-directional, 4:DC bi-directional
-        self.Conf_uiNodeNr: int          #Number of the node to which the charging station is connected
+        self.Conf_uiNr = int()              #Number - used in EVScheduler - 0:disabled
+        self.Conf_uiType = int()            #Type= 1: AC uni-directional, 2:AC bi-directional, 3:DC uni-directional, 4:DC bi-directional
+        self.Conf_uiNodeNr = int()          #Number of the node to which the charging station is connected
         #Present Values
-        self.PV_uiState: int             #0: Invalid ; 1: Cable not connected ; 2: Cable connected, no error ; 3: Error
-        self.PV_rPower: float            #[W] charging power (AC), +:flowing to the car
-        self.PV_rPower_max: float        #[W] Maximum charging power (AC) defined by charger - car - car SOC combination
-        self.PV_rEnergy: float           #[Wh] Energy to the car (AC) during the current charging session, +: energy inserted in the car
-        self.PV_rCurrent1: float         #[A] Charger current (AC) on line 1, +:flowing to the car
-        self.PV_rCurrent2: float         #[A] Charger current (AC) on line 2, +:flowing to the car
-        self.PV_rCurrent3: float         #[A] Charger current (AC) on line 3, +:flowing to the car
-        self.PV_rCurrent_max: float      #[W] Maximum charging current (AC) defined by charger - car - car SOC combination
-        self.PV_rCurrentDC: float        #[A] Charger current (DC), +:flowing to the car   - Only when DC charger
-        self.PV_rVoltageDC: float        #[V] Charger voltage (DC)                         - Only when DC charger
-        self.PV_rSOC: float              #[%] State Of Charge of the car                   - only when DC charger
-        self.PV_xComm_ok: bool           #TRUE= Communication EVSE/CS - Local controller ok
+        self.PV_uiState = int()             #0: Invalid ; 1: Cable not connected ; 2: Cable connected, no error ; 3: Error
+        self.PV_rPower = float()            #[W] charging power (AC), +:flowing to the car
+        self.PV_rPower_max = float()        #[W] Maximum charging power (AC) defined by charger - car - car SOC combination
+        self.PV_rEnergy = float()          #[Wh] Energy to the car (AC) during the current charging session, +: energy inserted in the car
+        self.PV_rCurrent1 = float()         #[A] Charger current (AC) on line 1, +:flowing to the car
+        self.PV_rCurrent2 = float()         #[A] Charger current (AC) on line 2, +:flowing to the car
+        self.PV_rCurrent3 = float()         #[A] Charger current (AC) on line 3, +:flowing to the car
+        self.PV_rCurrent_max = float()      #[W] Maximum charging current (AC) defined by charger - car - car SOC combination
+        self.PV_rCurrentDC = float()        #[A] Charger current (DC), +:flowing to the car   - Only when DC charger
+        self.PV_rVoltageDC = float()        #[V] Charger voltage (DC)                         - Only when DC charger
+        self.PV_rSOC = float()              #[%] State Of Charge of the car                   - only when DC charger
+        self.PV_xComm_ok = bool()           #TRUE= Communication EVSE/CS - Local controller ok
         # Setpoint
-        self.SP_rCurrent: float          #[A] Charger current [AC], +:flowing to the car
+        self.SP_rCurrent = float()          #[A] Charger current [AC], +:flowing to the car
         # Setpoint coming from EV Scheduler
-        self.SPSc_rCurrent: float        #[A] Charger current [AC], +:flowing to the car
-        self.SPSc_uiComm: int            #Minutes since last message EVScheduler -> Local controller
+        self.SPSc_rCurrent = float()        #[A] Charger current [AC], +:flowing to the car
+        self.SPSc_uiComm = int()            #Minutes since last message EVScheduler -> Local controller
         # Calculated internal variables
-        self.Help_SP_rCurrent_dev: int   #[A] PV-SP, deviation between present value and setpoint
+        self.Help_SP_rCurrent_dev = int()   #[A] PV-SP, deviation between present value and setpoint
         self.abb_ac_01 = Evergi.EVERGi_LC.EVCS_COM.ABB_AC_01.Evcs_abb_ac_01()
         self.abb_dc_01 = Evergi.EVERGi_LC.EVCS_COM.ABB_DC_01.Evcs_abb_dc_01()
 
@@ -101,13 +101,13 @@ class DT_EVERGi_Grid:
     Public grid connection - data to optimize for the pricing
     """
     def __init__(self):
-        Conf_rCurrent_max: float    #[A] maximum current, limited by breaker/transformer/...
+        Conf_rCurrent_max = float()    #[A] maximum current, limited by breaker/transformer/...
         #Present Values
-        PV_rPower: float            #[Wh] Energy, +:energy consumed/taken from the grid
-        PV_rCurrent1: float         #[A] current on line 1, +:consumption
-        PV_rCurrent2: float         #[A] current on line 2, +:consumption
-        PV_rCurrent3: float         #[A] current on line 3, +:consumption
-        PV_xComm_ok: bool           #TRUE= Communication energy meter - Local controller ok
+        PV_rPower = float()            #[Wh] Energy, +:energy consumed/taken from the grid
+        PV_rCurrent1 = float()         #[A] current on line 1, +:consumption
+        PV_rCurrent2 = float()         #[A] current on line 2, +:consumption
+        PV_rCurrent3 = float()         #[A] current on line 3, +:consumption
+        PV_xComm_ok = bool()           #TRUE= Communication energy meter - Local controller ok
 
 class DT_EVERGi_Production:
     """
