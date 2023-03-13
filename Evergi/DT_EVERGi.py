@@ -1,5 +1,6 @@
 import Evergi.EVERGi_LC.EVCS_COM.ABB_AC_01
 import Evergi.EVERGi_LC.EVCS_COM.ABB_DC_01
+import database
 class DT_EVERGI(object):
     """
     classdocs
@@ -115,14 +116,14 @@ class DT_EVERGi_Production:
     """
     def __init__(self):
         #Configuration
-        Conf_uiNr: int = 0          #Number - used in EVScheduler - 0:disabled
-        Conf_uiNodeNr: int          #Number of the node to which the charging station is connected
+        self.Conf_uiNr = int()         #Number - used in EVScheduler - 0:disabled
+        self.Conf_uiNodeNr = int()          #Number of the node to which the charging station is connected
         #Present Values
-        PV_rPower: float            #[W] power, +:production -:consumption
-        PV_rCurrent1: float         #[A] current on line 1, +:production -:consumption
-        PV_rCurrent2: float         #[A] current on line 2, +:production -:consumption
-        PV_rCurrent3: float         #[A] current on line 3, +:production -:consumption
-        PV_xComm_ok: bool           #TRUE= Communication energy meter - Local controller ok
+        self.PV_rPower = float()            #[W] power, +:production -:consumption
+        self.PV_rCurrent1 = float()         #[A] current on line 1, +:production -:consumption
+        self.PV_rCurrent2 = float()         #[A] current on line 2, +:production -:consumption
+        self.PV_rCurrent3 = float()         #[A] current on line 3, +:production -:consumption
+        self.PV_xComm_ok = bool()           #TRUE= Communication energy meter - Local controller ok
 
 class DT_EVERGi_Node:
     """

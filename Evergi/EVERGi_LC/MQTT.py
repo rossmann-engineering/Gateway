@@ -16,6 +16,7 @@ import math
 import opc_ua
 import asyncio
 import Evergi.EVERGi_LC
+from Evergi.DT_EVERGi import DT_EVERGI
 
 
 class Clients(object):
@@ -40,8 +41,6 @@ class Clients(object):
         else:
             Clients.__instance = self
         logging.info('Thread MQTT started')
-        config = cfg.Config.getConfig()
-        cfg.Config.getInstance().mqttconnectionlost = True
         self.clients = list()
 
         # Contains the client instance (instance) and the server id (serverid)
@@ -66,12 +65,9 @@ class Clients(object):
 
 
         while not internet_on():
-            cfg.Config.getInstance().mqttconnectionlost = True
             logging.info('MQTT-Client - Wait for Internet connection available')
             time.sleep(2)
         try:
-            db_conn = database.connect("eh.db", '')
-            database.create_tables(db_conn)
 
 
             self.clients[loopcounter]['instance'].connect('nats.evergi.be', 8883, 6000)
@@ -151,6 +147,7 @@ def publish_message(serverid, topic, payload):
     try:
         logging.info('Store Message to Database, ServerID ' + str(serverid) + ' Message: ' + payload)
         if len(payload) > 5:
+            dt_evergi = DT_EVERGI.getInstance()
             db_conn = database.connect("eh.db", '')
             database.add_message_queue(db_conn, datetime.datetime.now(), serverid, topic, payload)
     except:
@@ -221,6 +218,8 @@ def send_mqtt_data():
     send mqtt data
     """
     logging.info('Sending MQTT-Data...')
+    dt_evergi = DT_EVERGI.getInstance()
+    db_conn = database.connect("eh.db", '')
 
 
     payload = '{"Time":' + str(int(datetime_to_unix_timestamp(datetime.datetime.now())/1000))
@@ -228,7 +227,7 @@ def send_mqtt_data():
     #Power and Energy for grid values
     power = 0
     energy = 0
-    for device in Evergi.EVERGi_LC.DT_EVERGi_arrProduction_50:
+    for device in dt_evergi.DT_EVERGi_arrProduction_50:
         power = device.PV_rPower
         energy = 0
 
@@ -236,7 +235,7 @@ def send_mqtt_data():
 
     #Add Production (Energymeters) to MQTT Message (We take the Transport ID as nr
     payload = payload + '"Production":['
-    for device in Evergi.EVERGi_LC.DT_EVERGi_arrProduction_50:
+    for device in dt_evergi.DT_EVERGi_arrProduction_50:
         power = device.PV_rPower
         payload = payload + ('{"nr":'+str(device.Conf_uiNr)+', "Power": '+str(power)+'},')
     # Remove last comma
@@ -247,7 +246,7 @@ def send_mqtt_data():
     # Nodes
     payload = payload + '"Node":['
 
-    for device in Evergi.EVERGi_LC.DT_EVERGi_arrProduction_50:
+    for device in dt_evergi.DT_EVERGi_arrProduction_50:
         power = device.PV_rPower
         current = [0, 0, 0]
         current[0] = device.PV_rCurrent1
@@ -264,7 +263,7 @@ def send_mqtt_data():
 
     # EVChargers:
     payload = payload + '"EVChargers":['
-    for device in Evergi.EVERGi_LC.DT_EVERGi_arrEVSE_100:
+    for device in dt_evergi.DT_EVERGi_arrEVSE_100:
 
         soc1 = 0
         status1 = 0

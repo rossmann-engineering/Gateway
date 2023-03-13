@@ -7,7 +7,7 @@ class Evcs_abb_ac_01:
         evse.PV_xComm_ok = False
         modbusClient = ModbusClient.ModbusClient(cs.Conf_sAdress, cs.Conf_uiPort)
         modbusClient.connect()
-        holding_registers1 = modbusClient.read_holdingregisters(16384, 30)
+        holding_registers1 = modbusClient.read_holdingregisters(16384, 31)
         evse.Conf_uiNr = cs.Conf_uiEVSEx_Nr_10[1]
         evse.Conf_uiType = 1
         evse.Conf_uiNodeNr = cs.Conf_uiNodeNr

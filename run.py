@@ -25,7 +25,13 @@ import Evergi.EVERGi_LC.EM
 import Evergi.EVERGi_LC.EVCS
 import Evergi.EVERGi_LC.LoadBalancing
 import Evergi.EVERGi_LC.MQTT
+from Evergi.DT_EVERGi import DT_EVERGI
+import database
 
+DT_EVERGI.getInstance()
+db_conn = database.connect("eh.db", '')
+database.create_tables(db_conn)
+time.sleep(1)
 # ------------------------- Initiate logging Start
 packagedir = os.path.dirname(
     os.path.abspath(__file__))  # get the Package directory, from there we get the subdirectoties

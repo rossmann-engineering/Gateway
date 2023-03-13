@@ -442,19 +442,18 @@ def latestreadings():
     parameter['latestreadings'] = list()
     config = cfg.Config.getConfig()
     db_conn = database.connect("eh.db", config.get('databasetype', ''))
-    for s in config['readorders']:
-        readOrder = dict(s)
+    all_values = database.get_all_daily_values(db_conn, 1)
+    for s in all_values:
         reading = {}
 
-        if ('nextwakeup' in readOrder) & ('registerintervaltime' in readOrder) & ('latestreading' in readOrder):
-            reading['timestamp'] = readOrder['nextwakeup'] + readOrder['registerintervaltime']
-            reading['value'] = readOrder['latestreading']
-            reading['tagname'] = readOrder['name']
-            serverid = readOrder['serverid'][0]
 
-            reading['history'] = database.get_daily_values(db_conn, reading['tagname'], serverid)
-            if reading['value'] != 65535:
-                parameter['latestreadings'].append(reading)
+        reading['timestamp'] = s['moment'][0]
+        reading['value'] = s['value'][0]
+        reading['tagname'] = s['tag']
+
+        reading['history'] = database.get_daily_values(db_conn, reading['tagname'], 1)
+
+        parameter['latestreadings'].append(reading)
 
     if logindistributor or loginadmin:
         return render_template('latestreadings.html', parameter=parameter, admin=loginadmin)

@@ -119,6 +119,38 @@ def get_daily_values(conn, tag, serverid):
     except:
         logging.error('Exception getting dailyvalues: ' + str(traceback.format_exc()))
 
+def get_all_daily_values(conn, serverid):
+    """
+    get daily value
+    :param conn: connection object
+    :param serverid: Server ID the Message refers to
+    :return: list of Dictionary containing the value and timestamp of the tag
+    """
+    try:
+        cursor = conn.cursor()
+        cursor.execute("SELECT rowid, moment ,serverid ,tag, value FROM dailycache ORDER by rowid DESC") #DESC LIMIT 1
+        data = cursor.fetchall()
+
+        returnvalue = list()
+        element = dict()
+
+        value = list()
+        moment = list()
+        for element in data:
+            ro = next((item for item in returnvalue if item["tag"] == element[3]), dict())
+            if 'tag' not in ro:
+                ro['value'] = list()
+                ro['moment'] = list()
+                ro['tag'] = element[3]
+                returnvalue.append(ro)
+            else:
+                ro['value'].append(element[4])
+                ro['moment'].append((datetime.datetime.strptime(element[1],"%Y-%m-%d %H:%M:00")))
+        cursor.close()
+        return returnvalue
+    except:
+        logging.error('Exception getting dailyvalues: ' + str(traceback.format_exc()))
+
 def get_message_queue(conn, serverid):
     """
     Retrieve first record from the database that needs to be sent
@@ -154,5 +186,5 @@ def delete_message_queue(conn, rowid):
 
 if __name__ == "__main__":
     db_conn = connect("eh.db")
-    create_tables(db_conn)
-    add_message_queue(db_conn, datetime.datetime.now(),5,"topic","hello mqtt")
+    values = get_all_daily_values(db_conn, 1)
+    print (values)
