@@ -15,7 +15,7 @@ def read_evcs():
 
         dt_evergi.DT_EVERGi_arrCS_50[1].PV_xComm_ok = False
         dt_evergi.DT_EVERGi_arrCS_50[1].Conf_sType = 'ABB AC 01'
-        dt_evergi.DT_EVERGi_arrCS_50[1].Conf_sAdress = '192.168.178.178'#'192.168.71.12'
+        dt_evergi.DT_EVERGi_arrCS_50[1].Conf_sAdress = '192.168.71.12'
         dt_evergi.DT_EVERGi_arrCS_50[1].Conf_uiPort = 502
         dt_evergi.DT_EVERGi_arrCS_50[1].Conf_uiNodeNr = 1
         dt_evergi.DT_EVERGi_arrCS_50[1].Conf_uiEVSEx_Nr_10[1] = 1

@@ -15,8 +15,8 @@ def read_em():
     while 1:
         try:
             dt_evergi.DT_EVERGi_arrProduction_50[1].PV_xComm_ok = False
-            #modbusClient = ModbusClient.ModbusClient('192.168.68.132', 502)
-            modbusClient = ModbusClient.ModbusClient('192.168.178.178', 502)
+            modbusClient = ModbusClient.ModbusClient('192.168.68.132', 502)
+            #modbusClient = ModbusClient.ModbusClient('192.168.178.178', 502)
             modbusClient.connect()
             holding_registers1 = modbusClient.read_holdingregisters(12152, 2)
             holding_registers2 = modbusClient.read_holdingregisters(11944, 6)
