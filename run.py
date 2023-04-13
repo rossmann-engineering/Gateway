@@ -45,7 +45,7 @@ except OSError as e:
 
 
 filename = os.path.join(directory, 'logdata.txt')
-logging.getLogger().setLevel(logging.DEBUG)
+logging.getLogger().setLevel(logging.INFO)
 # Add the log message handler to the logger
 handler1 = logging.handlers.RotatingFileHandler(
     filename, maxBytes=2000000, backupCount=5)

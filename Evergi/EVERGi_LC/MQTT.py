@@ -144,7 +144,9 @@ def publish_message(serverid, topic, payload):
     :param topic: Topic
     :param payload: message publish to topic
     """
+
     try:
+
         logging.info('Store Message to Database, ServerID ' + str(serverid) + ' Message: ' + payload)
         if len(payload) > 5:
             dt_evergi = DT_EVERGI.getInstance()
@@ -174,39 +176,37 @@ def publish_message(serverid, topic, payload):
                 logging.info('Message from Queue restored ' + str(element))
                 for t in Clients.getInstance().clients:
                     client = dict(t)
-                    if not 'serverid' in client:  # That can happen if the client is not yet initialized
-                        break
-                    if client['serverid'] == serverid:
-                        if not validate_json(element['payload']):
-                            logging.info('Message is no valid JSON (deleted): ' + str(element['payload']))
-                            database.delete_message_queue(db_conn, element['rowid'])
-                            break
-                        response = client['instance'].publish(element['topic'], element['payload'], qos=1)
-                        logging.info('Message Published to MQTT Broker ' + str(element['payload']) + " topic: " + str(
-                            element['topic']) + " Server-Response: " + str(response.rc) + "mid: " + str(response.mid))
-                        time.sleep(1)
-                        if response.rc == 0:
-                            for x in range(6):
-                                if response.is_published():
-                                    logging.info('Message Deleted from queue ' + str(
-                                        element['payload']) + " topic: " + str(
-                                        element['topic']) + " Server-Response: " + str(response.rc) + "mid: " + str(
-                                        response.mid))
 
-                                    datalogger.logMQTTRegisterData(
-                                        'MQTT send Payload to Serverid ' + str(serverid) + " Topic: " + str(
-                                            element['topic']) + " Payload: " + str(element['payload']))
-                                    database.delete_message_queue(db_conn, element['rowid'])
-                                    break
-                                else:
-                                    time.sleep(2)  # was 0.5 26.02.2020
-                            if x >= 5:
-                                cancelSend = True
+                    if not validate_json(element['payload']):
+                        logging.info('Message is no valid JSON (deleted): ' + str(element['payload']))
+                        database.delete_message_queue(db_conn, element['rowid'])
+                        break
+                    response = client['instance'].publish(element['topic'], element['payload'], qos=1)
+                    logging.info('Message Published to MQTT Broker ' + str(element['payload']) + " topic: " + str(
+                        element['topic']) + " Server-Response: " + str(response.rc) + "mid: " + str(response.mid))
+                    time.sleep(1)
+                    if response.rc == 0:
+                        for x in range(6):
+                            if response.is_published():
+                                logging.info('Message Deleted from queue ' + str(
+                                    element['payload']) + " topic: " + str(
+                                    element['topic']) + " Server-Response: " + str(response.rc) + "mid: " + str(
+                                    response.mid))
+
+                                datalogger.logMQTTRegisterData(
+                                    'MQTT send Payload to Serverid ' + str(serverid) + " Topic: " + str(
+                                        element['topic']) + " Payload: " + str(element['payload']))
+                                database.delete_message_queue(db_conn, element['rowid'])
                                 break
-                            pass
-                        else:
+                            else:
+                                time.sleep(2)  # was 0.5 26.02.2020
+                        if x >= 5:
                             cancelSend = True
                             break
+                        pass
+                    else:
+                        cancelSend = True
+                        break
 
 
     except:

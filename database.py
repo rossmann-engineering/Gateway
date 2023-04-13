@@ -186,5 +186,4 @@ def delete_message_queue(conn, rowid):
 
 if __name__ == "__main__":
     db_conn = connect("eh.db")
-    values = get_all_daily_values(db_conn, 1)
-    print (values)
+    create_tables(db_conn)
