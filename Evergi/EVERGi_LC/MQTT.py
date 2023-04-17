@@ -61,7 +61,7 @@ class Clients(object):
 
         username = "PLC-test"
         password = "eyJ0eXAiOiJKV1QiLCJhbGciOiJlZDI1NTE5LW5rZXkifQ.eyJqdGkiOiJSRjVMSExJNlBaQUdPVlY0NFZPQk5LM1RDUkozT0RNWVJDTjNNWkRDVTNHVEdWVzJIVkNBIiwiaWF0IjoxNjcxNDQxMDkxLCJpc3MiOiJBQ1VFS0o3V1RMNkZFNzJBVDNQUVMzUkpONDdORzZRMlFJVjNDRE5OQ0pUSEhNWDZPREZZQlBSNyIsIm5hbWUiOiJQTEMtdGVzdCIsInN1YiI6IlVCV09FR1ZJTU82V0NENFY0TFlIUldTREszV0xPQVpRVDVYVUxXQ0lCVEdURERBS0c2TFFHSVlMIiwibmF0cyI6eyJwdWIiOnsiYWxsb3ciOlsiRVZFUkdpRVZTYy5QTEMtdGVzdC5wbGMyc2MiLCJFVkVSR2lFVlNjLlBMQy10ZXN0LnBsYzJzYzJwbGMiXX0sInN1YiI6eyJhbGxvdyI6WyJFVkVSR2lFVlNjLlBMQy10ZXN0LnBsYzJzYzJwbGMiLCJFVkVSR2lFVlNjLlBMQy10ZXN0LnNjMnBsYyJdfSwic3VicyI6LTEsImRhdGEiOi0xLCJwYXlsb2FkIjotMSwiYmVhcmVyX3Rva2VuIjp0cnVlLCJ0eXBlIjoidXNlciIsInZlcnNpb24iOjJ9fQ.A-xts8060ftcFhWDv-TPoRb8R6lxvjFL9lE1K61jPAxyGe_7UjHp_e8bixILzoJ97fLNbVqG1SGmnKJW5GBzDA"
-        self.clients[loopcounter]['instance'].username_pw_set(password, username)
+        self.clients[loopcounter]['instance'].username_pw_set(username, password)
 
 
         while not internet_on():
@@ -295,15 +295,15 @@ def send_mqtt_data():
 
 
 
-        # Remove last comma
-        if payload[-1] == ',':
-            payload = payload[:-1]
-        payload = payload + ']}'
+    # Remove last comma
+    if payload[-1] == ',':
+        payload = payload[:-1]
+    payload = payload + ']}'
 
 
 
-        logging.info('Sending MQTT-Data to serverid' + str(1))
-        publish_message(1, 'EVERGiEVSc/PLC-test/plc2sc', payload)
+    logging.info('Sending MQTT-Data to serverid' + str(1))
+    publish_message(1, 'EVERGiEVSc/PLC-test/plc2sc', payload)
 
 
 def datetime_to_unix_timestamp(dt):
