@@ -4,3 +4,5 @@ requests
 paho-mqtt
 tornado
 asyncua
+ocpp
+websockets
